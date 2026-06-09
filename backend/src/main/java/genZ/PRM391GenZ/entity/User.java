@@ -1,4 +1,36 @@
 package genZ.PRM391GenZ.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "[User]")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
+
+    @Id
+    @Column(name = "UserId", length = 50)
+    private String userId;
+
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    @Column(name = "email", length = 255)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "Image_cccd", columnDefinition = "NVARCHAR(MAX)")
+    private String imageCccd;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RoleId")
+    private Role role;
 }
