@@ -80,3 +80,12 @@ CREATE TABLE Booking (
     FOREIGN KEY (UserId) REFERENCES [User](UserId),
     FOREIGN KEY (TypeBookingId) REFERENCES TypeBooking(TypeBookingId)
 );
+
+--Bảng lưu token
+CREATE TABLE PasswordResetToken (
+    token        VARCHAR(255) PRIMARY KEY,
+    expiryTime   DATETIME     NOT NULL,
+    isUsed       BIT          NOT NULL DEFAULT 0,
+    UserId       VARCHAR(50),
+    FOREIGN KEY (UserId) REFERENCES [User](UserId)
+);
