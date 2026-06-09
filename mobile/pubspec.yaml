@@ -43,9 +43,3 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-  fonts:
-    - family: AppFont
-      fonts:
-        - asset: assets/fonts/Nunito-Regular.ttf
-        - asset: assets/fonts/Nunito-Bold.ttf
-          weight: 700

@@ -5,63 +5,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Login, Forget password">
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/RoomController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/LoginResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/RegisterRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/ResetPasswordDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/Hotel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/PasswordResetToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/PriceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/Room.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TypeBooking.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TypeRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/BookingRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/HotelRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/PasswordResetTokenRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/RoomRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/JwtAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/UserDetailsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/config/app_config.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/config/app_theme.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/config/router.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/models/user_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/providers/auth_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/auth/login_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/auth/request_reset_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/auth/reset_password_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/services/api_client.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/services/auth_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/CorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/ResetRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/ApiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TokenForgetPassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/Prm391GenZApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/Prm391GenZApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/RoomController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ApiResponse$ApiResponseBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ApiResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginResponse$LoginResponseBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/RegisterRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto$ConfirmReset.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto$RequestReset.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Hotel$HotelBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Hotel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PasswordResetToken$PasswordResetTokenBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PasswordResetToken.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PriceConfig$PriceConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PriceConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Role$RoleBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/HotelRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/PasswordResetTokenRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/RoleRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/RoomRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/UserRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/JwtAuthFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/JwtService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/AuthService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/EmailService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/config/app_config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/config/app_config.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -85,28 +92,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.Prm391GenZApplication.executor": "Run",
-    "git-widget-placeholder": "cao",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/KY 8/PRM393/PRJ_PRM393/Project_PRM391/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cao&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/KY 8/PRM393/PRJ_PRM393/Project_PRM391/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Prm391GenZApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="PRM391GenZ" />
@@ -135,7 +142,30 @@
       <workItem from="1780932233109" duration="62000" />
       <workItem from="1780932608004" duration="1302000" />
       <workItem from="1780974431838" duration="2637000" />
+      <workItem from="1780978119670" duration="1499000" />
+      <workItem from="1780982872814" duration="2597000" />
+      <workItem from="1781014387487" duration="322000" />
+      <workItem from="1781015760447" duration="1166000" />
+      <workItem from="1781016948926" duration="2055000" />
+      <workItem from="1781019110324" duration="2825000" />
     </task>
+    <task id="LOCAL-00001" summary="Login, Forget password">
+      <option name="closed" value="true" />
+      <created>1780978167612</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1780978167612</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Login, Forget password">
+      <option name="closed" value="true" />
+      <created>1780978220738</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1780978220738</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
