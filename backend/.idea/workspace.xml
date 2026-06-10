@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Finish login, logout">
+      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/auth/register_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +99,8 @@
       <workItem from="1781015760447" duration="1166000" />
       <workItem from="1781016948926" duration="2055000" />
       <workItem from="1781019110324" duration="3500000" />
+      <workItem from="1781024158687" duration="198000" />
+      <workItem from="1781054186143" duration="3631000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />

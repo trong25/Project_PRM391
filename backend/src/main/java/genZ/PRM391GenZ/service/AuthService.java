@@ -87,6 +87,10 @@ public class AuthService {
             throw new RuntimeException("Email đã được sử dụng");
         }
 
+        if(userRepository.existsByPhone(request.getPhone())){
+            throw new RuntimeException("Số điện thoại đã được sử dụng");
+        }
+
         Role role = roleRepository.findById(request.getRoleId())
                 .orElseThrow(() -> new RuntimeException("Vai trò không tồn tại"));
 
