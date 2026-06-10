@@ -32,21 +32,24 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   final router = GoRouter(
     initialLocation: '/login',
-    refreshListenable: notifier,        // GoRouter tự gọi lại redirect khi auth thay đổi
+    refreshListenable: notifier, // GoRouter tự gọi lại redirect khi auth thay đổi
     redirect: (context, state) {
-      final authState = notifier.authState;
+      final isResetWithToken =
+          state.matchedLocation.startsWith('/reset-password') &&
+              (state.uri.queryParameters['token']?.isNotEmpty ?? false);
+      if (isResetWithToken) return null;
 
-      // Chờ khởi tạo xong mới redirect
+      final authState = notifier.authState;
       if (!authState.isInitialized) return null;
 
-      final isLoggedIn  = authState.isLoggedIn;
+      final isLoggedIn = authState.isLoggedIn;
       final isAuthRoute = state.matchedLocation.startsWith('/login') ||
           state.matchedLocation.startsWith('/register') ||
           state.matchedLocation.startsWith('/request-reset') ||
           state.matchedLocation.startsWith('/reset-password');
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn  &&  isAuthRoute) return _homeForRole(authState.user?.role);
+      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.role);
 
       return null;
     },
@@ -99,7 +102,9 @@ final routerProvider = Provider<GoRouter>((ref) {
 String _homeForRole(String? role) {
   if (role == null) return '/home';
   switch (role.toLowerCase()) {
-    case AppConfig.roleAdmin: return '/admin';
-    default:                  return '/home';
+    case AppConfig.roleAdmin:
+      return '/admin';
+    default:
+      return '/home';
   }
 }
