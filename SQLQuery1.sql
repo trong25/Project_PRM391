@@ -1,4 +1,4 @@
-﻿CREATE DATABASE GenzCinemaHotel
+CREATE DATABASE GenzCinemaHotel
 
 -- Bảng Hotel
 CREATE TABLE Hotel (
@@ -15,6 +15,8 @@ CREATE TABLE Role (
     RoleName NVARCHAR(100) NOT NULL
 );
 
+INSERT INTO Role VALUES('ADMIN', 'Administrator'),('STAFF', 'Staff'),('CUSTOMER', 'Customer');
+
 -- Bảng TypeRoom (Loại phòng)
 CREATE TABLE TypeRoom (
     TypeRoomId VARCHAR(50) PRIMARY KEY,
@@ -28,8 +30,6 @@ CREATE TABLE TypeBooking (
     BookingCode VARCHAR(50) NOT NULL,
     DurationHours INT NULL -- Có thể Null nếu là thuê theo giờ linh hoạt
 );
-
-
 
 -- Bảng User (Phụ thuộc vào Role)
 CREATE TABLE [User] (
@@ -79,4 +79,13 @@ CREATE TABLE Booking (
     FOREIGN KEY (RoomId) REFERENCES Room(RoomId),
     FOREIGN KEY (UserId) REFERENCES [User](UserId),
     FOREIGN KEY (TypeBookingId) REFERENCES TypeBooking(TypeBookingId)
+);
+
+--Bảng lưu token
+CREATE TABLE PasswordResetToken (
+    token        VARCHAR(255) PRIMARY KEY,
+    expiryTime   DATETIME     NOT NULL,
+    isUsed       BIT          NOT NULL DEFAULT 0,
+    UserId       VARCHAR(50),
+    FOREIGN KEY (UserId) REFERENCES [User](UserId)
 );
