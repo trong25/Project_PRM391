@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Finish login, logout">
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/auth/register_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" afterDir="false" />
-    </list>
+    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Finish register" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,7 +96,7 @@
       <workItem from="1781016948926" duration="2055000" />
       <workItem from="1781019110324" duration="3500000" />
       <workItem from="1781024158687" duration="198000" />
-      <workItem from="1781054186143" duration="3631000" />
+      <workItem from="1781054186143" duration="3966000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />
@@ -134,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781022223961</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Finish register">
+      <option name="closed" value="true" />
+      <created>1781060115417</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1781060115417</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +147,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login, Forget password" />
     <MESSAGE value="Finish login, logout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish login, logout" />
+    <MESSAGE value="Finish register" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish register" />
   </component>
 </project>

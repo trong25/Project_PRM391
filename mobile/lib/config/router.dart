@@ -6,22 +6,42 @@ import 'package:go_router/go_router.dart';
 import '../providers/auth_provider.dart';
 import '../config/app_config.dart';
 import '../screens/auth/login_screen.dart';
+import '../screens/auth/register_screen.dart';
 import '../screens/auth/request_reset_screen.dart';
 import '../screens/auth/reset_password_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/admin/admin_dashboard.dart';
 
-final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authProvider);
+// ── Listenable bridge: Riverpod → GoRouter ────────────────────────────────────
+// GoRouter cần một ChangeNotifier để biết khi nào chạy lại redirect.
+// Class này lắng nghe authProvider và notify GoRouter khi state thay đổi,
+// nhưng KHÔNG rebuild routerProvider → GoRouter không bị tạo lại.
+class _AuthNotifierListenable extends ChangeNotifier {
+  _AuthNotifierListenable(this._ref) {
+    _ref.listen<AuthState>(authProvider, (_, __) => notifyListeners());
+  }
+  final Ref _ref;
+  AuthState get authState => _ref.read(authProvider);
+}
 
-  return GoRouter(
+// ── Router provider ───────────────────────────────────────────────────────────
+// Dùng ref.read (không phải ref.watch) → Provider này chỉ chạy 1 lần duy nhất
+// → GoRouter không bao giờ bị tạo lại → initialLocation không reset.
+final routerProvider = Provider<GoRouter>((ref) {
+  final notifier = _AuthNotifierListenable(ref);
+
+  final router = GoRouter(
     initialLocation: '/login',
+    refreshListenable: notifier,        // GoRouter tự gọi lại redirect khi auth thay đổi
     redirect: (context, state) {
-      // Wait for auth init
+      final authState = notifier.authState;
+
+      // Chờ khởi tạo xong mới redirect
       if (!authState.isInitialized) return null;
 
-      final isLoggedIn    = authState.isLoggedIn;
-      final isAuthRoute   = state.matchedLocation.startsWith('/login') ||
+      final isLoggedIn  = authState.isLoggedIn;
+      final isAuthRoute = state.matchedLocation.startsWith('/login') ||
+          state.matchedLocation.startsWith('/register') ||
           state.matchedLocation.startsWith('/request-reset') ||
           state.matchedLocation.startsWith('/reset-password');
 
@@ -36,6 +56,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/login',
         name: 'login',
         builder: (_, __) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (_, __) => const RegisterScreen(),
       ),
       GoRoute(
         path: '/request-reset',
@@ -64,12 +89,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
+
+  // Hủy notifier khi provider bị dispose
+  ref.onDispose(notifier.dispose);
+
+  return router;
 });
 
 String _homeForRole(String? role) {
   if (role == null) return '/home';
   switch (role.toLowerCase()) {
-    case AppConfig.roleAdmin:   return '/admin';
-    default:                    return '/home';
+    case AppConfig.roleAdmin: return '/admin';
+    default:                  return '/home';
   }
 }

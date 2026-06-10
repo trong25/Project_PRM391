@@ -33,6 +33,28 @@ class AuthService {
     }
   }
 
+  // ─── Register ─────────────────────────────────────────────────────────
+
+  Future<void> register({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String password,
+    required String roleId,
+  }) async {
+    try {
+      await _dio.post('/auth/register', data: {
+        'fullName': fullName,
+        'email':    email,
+        'phone':    phone,
+        'password': password,
+        'roleId':   roleId,
+      });
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
   // ─── Logout ───────────────────────────────────────────────────────────
 
   Future<void> logout() async {
