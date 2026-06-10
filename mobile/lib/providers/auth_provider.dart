@@ -3,6 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user_model.dart';
 import '../services/auth_service.dart';
+import '../config/app_config.dart';
 
 // ── Service provider ──────────────────────────────────────────────────────────
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
@@ -61,6 +62,30 @@ class AuthNotifier extends StateNotifier<AuthState> {
       return true;
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> register({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String password,
+    String roleId = AppConfig.roleCustomerId,
+  }) async {
+    state = state.copyWith(isLoading: true, clearError: true);
+    try {
+      await _service.register(
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        password: password,
+        roleId: roleId,
+      );
+      state = state.copyWith(isLoading: false, isInitialized: true);
+      return true;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString(), isInitialized: true);
       return false;
     }
   }
