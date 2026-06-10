@@ -87,6 +87,10 @@ public class AuthService {
             throw new RuntimeException("Email đã được sử dụng");
         }
 
+        if (userRepository.existsByPhone(request.getPhone())) {
+            throw new RuntimeException("Số điện thoại đã được sử dụng");
+        }
+
         Role role = roleRepository.findById(request.getRoleId())
                 .orElseThrow(() -> new RuntimeException("Vai trò không tồn tại"));
 
@@ -110,8 +114,7 @@ public class AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại trong hệ thống"));
 
-        // Delete any existing tokens for this user to avoid duplicates
-        tokenRepository.deleteExpiredTokens(LocalDateTime.now());
+        tokenRepository.deleteByUser(user);
 
         String token = UUID.randomUUID().toString();
         LocalDateTime expiry = LocalDateTime.now().plusMinutes(resetTokenExpiryMinutes);
@@ -125,8 +128,6 @@ public class AuthService {
 
         tokenRepository.save(resetToken);
 
-        // Use deep link for Flutter: genzcinema://reset-password?token=xxx
-        // Or use web URL if you have a web frontend
         String resetLink = frontendUrl + "/reset-password?token=" + token;
 
         boolean sent = emailService.sendPasswordResetEmail(email, resetLink, user.getFullName());

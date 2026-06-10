@@ -15,6 +15,9 @@ class AppConfig {
   static const String roleStaff           = 'STAFF';
   static const String roleCustomer        = 'CUSTOMER';
 
+  // ── Role IDs (must match roleId in Role table) ────────────────────────
+  static const String roleCustomerId      = 'CUSTOMER';
+
   // ── App ───────────────────────────────────────────────────────────────
   static const String appName = 'GenzCinema Hotel';
 }
