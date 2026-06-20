@@ -42,6 +42,7 @@ genZ\PRM391GenZ\entity\Booking.class
 genZ\PRM391GenZ\config\CorsConfig.class
 genZ\PRM391GenZ\entity\User$UserBuilder.class
 genZ\PRM391GenZ\dto\ApiResponse$ApiResponseBuilder.class
+genZ\PRM391GenZ\config\UnicodeDataMigration.class
 genZ\PRM391GenZ\dto\ResetPasswordDto.class
 genZ\PRM391GenZ\dto\user\UserCreateDto.class
 genZ\PRM391GenZ\controller\BookingController.class

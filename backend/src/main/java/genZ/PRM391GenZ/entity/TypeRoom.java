@@ -15,7 +15,7 @@ public class TypeRoom {
     @Column(name = "TypeRoomId", length = 50)
     private String typeRoomId;
 
-    @Column(name = "TypeRoom", nullable = false)
+    @Column(name = "TypeRoom", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String typeRoom;
 }
 

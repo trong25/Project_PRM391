@@ -1,43 +1,71 @@
 package genZ.PRM391GenZ.service;
 
-import genZ.PRM391GenZ.entity.Booking;
+import genZ.PRM391GenZ.entity.Hotel;
 import genZ.PRM391GenZ.repository.BookingRepository;
+import genZ.PRM391GenZ.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
 
     private final BookingRepository bookingRepository;
-    
-    // Giả sử status thanh toán xong là "PAID" hoặc "Đã thanh toán"
-    private static final String PAID_STATUS = "Đã thanh toán";
+    private final HotelRepository hotelRepository;
 
     public BigDecimal calculateTotalRevenue(String timeFrame) {
         LocalDateTime[] range = getDateRange(timeFrame);
-        List<Booking> bookings = bookingRepository.findByStatusAndCheckOutBetween(PAID_STATUS, range[0], range[1]);
-        return sumRevenue(bookings);
+        return safeRevenue(bookingRepository.sumRevenueBetween(range[0], range[1]));
     }
 
     public BigDecimal calculateRevenueByHotel(String hotelId, String timeFrame) {
         LocalDateTime[] range = getDateRange(timeFrame);
-        List<Booking> bookings = bookingRepository.findByStatusAndRoom_Hotel_HotelIdAndCheckOutBetween(PAID_STATUS, hotelId, range[0], range[1]);
-        return sumRevenue(bookings);
+        return safeRevenue(bookingRepository.sumRevenueByHotelBetween(hotelId, range[0], range[1]));
     }
 
-    private BigDecimal sumRevenue(List<Booking> bookings) {
-        return bookings.stream()
-                .map(Booking::getTotalPrice)
-                .filter(price -> price != null)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    public Map<String, Object> getRevenueOverview() {
+        Map<String, Object> overview = new HashMap<>();
+        overview.put("total", buildRevenueMap(null));
+
+        List<Map<String, Object>> hotelsRevenue = new ArrayList<>();
+        for (Hotel hotel : hotelRepository.findAll()) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("hotelId", hotel.getHotelId());
+            item.put("hotelName", hotel.getName());
+            item.put("revenue", buildRevenueMap(hotel.getHotelId()));
+            hotelsRevenue.add(item);
+        }
+        overview.put("hotels", hotelsRevenue);
+
+        return overview;
+    }
+
+    private Map<String, BigDecimal> buildRevenueMap(String hotelId) {
+        Map<String, BigDecimal> revenue = new HashMap<>();
+        revenue.put("day", calculateRevenue(hotelId, "day"));
+        revenue.put("month", calculateRevenue(hotelId, "month"));
+        revenue.put("year", calculateRevenue(hotelId, "year"));
+        return revenue;
+    }
+
+    private BigDecimal calculateRevenue(String hotelId, String timeFrame) {
+        if (hotelId == null || hotelId.isBlank()) {
+            return calculateTotalRevenue(timeFrame);
+        }
+        return calculateRevenueByHotel(hotelId, timeFrame);
+    }
+
+    private BigDecimal safeRevenue(BigDecimal revenue) {
+        return revenue != null ? revenue : BigDecimal.ZERO;
     }
 
     private LocalDateTime[] getDateRange(String timeFrame) {

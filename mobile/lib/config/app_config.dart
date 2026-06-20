@@ -1,10 +1,25 @@
 // lib/config/app_config.dart
 
+import 'package:flutter/foundation.dart';
+
 class AppConfig {
   // ── API ─────────────────────────────────────────────────────────────
   // For Android emulator: use 10.0.2.2 instead of localhost
   // For physical device: use your machine's local IP e.g. 192.168.1.x
-  static const String baseUrl = 'http://localhost:8080/api';
+  static const String _configuredBaseUrl =
+      String.fromEnvironment('API_BASE_URL');
+
+  static String get baseUrl {
+    if (_configuredBaseUrl.isNotEmpty) return _configuredBaseUrl;
+    if (kIsWeb) return 'http://localhost:8080/api';
+
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 'http://10.0.2.2:8080/api';
+      default:
+        return 'http://localhost:8080/api';
+    }
+  }
 
   // ── JWT ──────────────────────────────────────────────────────────────
   static const String tokenKey    = 'jwt_token';

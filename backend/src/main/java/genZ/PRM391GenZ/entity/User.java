@@ -15,7 +15,7 @@ public class User {
     @Column(name = "UserId", length = 50)
     private String userId;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String fullName;
 
     @Column(name = "phone", length = 20)

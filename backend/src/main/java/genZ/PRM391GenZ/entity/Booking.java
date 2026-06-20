@@ -39,6 +39,6 @@ public class Booking {
     @Column(name = "totalPrice", precision = 18, scale = 2)
     private BigDecimal totalPrice;
 
-    @Column(name = "Status")
+    @Column(name = "Status", columnDefinition = "NVARCHAR(50)")
     private String status;
 }

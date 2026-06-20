@@ -18,6 +18,15 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
+    @GetMapping("/revenue/overview")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getRevenueOverview() {
+        return ResponseEntity.ok(ApiResponse.success(
+                "Tổng hợp doanh thu theo ngày, tháng, năm của từng chi nhánh",
+                dashboardService.getRevenueOverview()
+        ));
+    }
+
     @GetMapping("/revenue/total")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Map<String, BigDecimal>>> getTotalRevenue(
