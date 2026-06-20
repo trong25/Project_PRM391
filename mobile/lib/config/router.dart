@@ -49,7 +49,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           state.matchedLocation.startsWith('/reset-password');
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.role);
+      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.roleId);
 
       return null;
     },
@@ -99,11 +99,13 @@ final routerProvider = Provider<GoRouter>((ref) {
   return router;
 });
 
-String _homeForRole(String? role) {
-  if (role == null) return '/home';
-  switch (role.toLowerCase()) {
+String _homeForRole(String? roleId) {
+  if (roleId == null) return '/home';
+  switch (roleId.toUpperCase()) {
     case AppConfig.roleAdmin:
       return '/admin';
+    case AppConfig.roleStaff:
+      return '/home';
     default:
       return '/home';
   }

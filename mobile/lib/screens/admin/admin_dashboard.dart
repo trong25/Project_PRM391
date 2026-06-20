@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../config/app_theme.dart';
 import '../../providers/auth_provider.dart';
+import 'user/user_management_screen.dart';
+import 'room/room_management_screen.dart';
+import 'dashboard/admin_dashboard_screen.dart';
 
 class AdminDashboard extends ConsumerWidget {
   const AdminDashboard({super.key});
@@ -75,11 +78,35 @@ class AdminDashboard extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
 
-            _MenuTile(icon: Icons.hotel,        label: 'Quản lý phòng',       onTap: () {}),
-            _MenuTile(icon: Icons.book_online,  label: 'Quản lý booking',     onTap: () {}),
-            _MenuTile(icon: Icons.people,       label: 'Quản lý người dùng',  onTap: () {}),
-            _MenuTile(icon: Icons.price_change, label: 'Cấu hình giá',        onTap: () {}),
-            _MenuTile(icon: Icons.analytics,    label: 'Báo cáo doanh thu',   onTap: () {}),
+            _MenuTile(
+              icon: Icons.hotel,
+              label: 'Quản lý phòng',
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RoomManagementScreen())),
+            ),
+            _MenuTile(
+              icon: Icons.book_online,
+              label: 'Quản lý booking',
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Tính năng đang phát triển')),
+              ),
+            ),
+            _MenuTile(
+              icon: Icons.people,
+              label: 'Quản lý người dùng',
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const UserManagementScreen())),
+            ),
+            _MenuTile(
+              icon: Icons.price_change,
+              label: 'Cấu hình giá',
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Tính năng đang phát triển')),
+              ),
+            ),
+            _MenuTile(
+              icon: Icons.analytics,
+              label: 'Báo cáo doanh thu',
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminDashboardScreen())),
+            ),
           ],
         ),
       ),
