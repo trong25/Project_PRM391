@@ -52,9 +52,9 @@
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "Spring Boot.Prm391GenZApplication.executor": "Run",
-    "git-widget-placeholder": "cao",
+    "git-widget-placeholder": "thanh",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/KY 8/PRM393/PRJ_PRM393/Project_PRM391/backend",
+    "last_opened_file_path": "D:/Ky_8/PRM393_Project/Project_PRM391/backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,8 +78,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -106,6 +106,7 @@
       <workItem from="1781061706995" duration="636000" />
       <workItem from="1781070392880" duration="4088000" />
       <workItem from="1781081026087" duration="876000" />
+      <workItem from="1782108775556" duration="1622000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />
