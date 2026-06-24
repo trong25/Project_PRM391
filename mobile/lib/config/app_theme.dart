@@ -3,14 +3,21 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Brand colors matching the email template purple palette
-  static const Color primary     = Color(0xFF8B5CF6);
-  static const Color primaryDark = Color(0xFF6D28D9);
+  // Brand colors - gradient chủ đạo #9462FF -> #FF6565
+  static const Color primary     = Color(0xFF9462FF);
+  static const Color primaryDark = Color(0xFFFF6565);
   static const Color surface     = Color(0xFFF5F3FF);
   static const Color textPrimary = Color(0xFF2D1B44);
   static const Color textGray    = Color(0xFF6B7280);
   static const Color error       = Color(0xFFEF4444);
   static const Color success     = Color(0xFF10B981);
+
+  // Gradient chủ đạo dùng cho banner, button nổi bật, header...
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [primary, primaryDark],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   static ThemeData get light => ThemeData(
     useMaterial3: true,
