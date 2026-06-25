@@ -5,6 +5,8 @@ import genZ.PRM391GenZ.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -109,4 +111,58 @@ public class AuthController {
         // Add token blacklist here if needed.
         return ResponseEntity.ok(ApiResponse.success("Đăng xuất thành công"));
     }
-}
+
+    /**
+     * GET /api/auth/profile
+     * Yêu cầu request có header: Authorization: Bearer <token>
+     * (route này phải được Security Config yêu cầu xác thực, KHÔNG để public
+     * như /login, /register).
+     */
+    @GetMapping("/profile")
+    public ResponseEntity<ApiResponse<ProfileResponse>> getProfile(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            ProfileResponse response = authService.getCurrentProfile(userDetails.getUsername());
+            return ResponseEntity.ok(ApiResponse.success("Lấy thông tin thành công", response));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    /**
+     * PUT /api/auth/profile
+     * Body: { "email": "...", "phone": "..." }
+     * Cập nhật email / số điện thoại của user đang đăng nhập (lấy từ token).
+     */
+    @PutMapping("/profile")
+    public ResponseEntity<ApiResponse<ProfileResponse>> updateProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody UpdateProfileRequest request) {
+        try {
+            ProfileResponse response = authService.updateProfile(userDetails.getUsername(), request);
+            return ResponseEntity.ok(ApiResponse.success("Cập nhật thông tin thành công", response));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    /**
+     * PUT /api/auth/change-password
+     * Yêu cầu xác thực JWT (Authorization: Bearer <token>)
+     * Body: { "currentPassword": "...", "newPassword": "...", "confirmPassword": "..." }
+     */
+    @PutMapping("/change-password")
+    public ResponseEntity<ApiResponse<Void>> changePassword(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody ChangePasswordRequest request) {
+        try {
+            authService.changePassword(userDetails.getUsername(), request);
+            return ResponseEntity.ok(ApiResponse.success("Đổi mật khẩu thành công"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
+}
