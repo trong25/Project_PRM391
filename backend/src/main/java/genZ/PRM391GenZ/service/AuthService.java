@@ -87,6 +87,10 @@ public class AuthService {
             throw new RuntimeException("Email đã được sử dụng");
         }
 
+        if (userRepository.existsByPhone(request.getPhone())) {
+            throw new RuntimeException("Số điện thoại đã được sử dụng");
+        }
+
         Role role = roleRepository.findById(request.getRoleId())
                 .orElseThrow(() -> new RuntimeException("Vai trò không tồn tại"));
 
@@ -110,8 +114,7 @@ public class AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Email không tồn tại trong hệ thống"));
 
-        // Delete any existing tokens for this user to avoid duplicates
-        tokenRepository.deleteExpiredTokens(LocalDateTime.now());
+        tokenRepository.deleteByUser(user);
 
         String token = UUID.randomUUID().toString();
         LocalDateTime expiry = LocalDateTime.now().plusMinutes(resetTokenExpiryMinutes);
@@ -125,8 +128,6 @@ public class AuthService {
 
         tokenRepository.save(resetToken);
 
-        // Use deep link for Flutter: genzcinema://reset-password?token=xxx
-        // Or use web URL if you have a web frontend
         String resetLink = frontendUrl + "/reset-password?token=" + token;
 
         boolean sent = emailService.sendPasswordResetEmail(email, resetLink, user.getFullName());
@@ -174,5 +175,86 @@ public class AuthService {
         tokenRepository.save(resetToken);
 
         log.info("Password reset successfully for user: {}", user.getEmail());
+    }
+
+    // ─── Get Current Profile ───────────────────────────────────────────────────
+
+    public ProfileResponse getCurrentProfile(String currentEmail) {
+        User user = userRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new RuntimeException("Tài khoản không tồn tại"));
+
+        return toProfileResponse(user);
+    }
+
+    // ─── Update Profile (fullName, email, phone) ───────────────────────────────
+
+    @Transactional
+    public ProfileResponse updateProfile(String currentEmail, UpdateProfileRequest request) {
+        User user = userRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new RuntimeException("Tài khoản không tồn tại"));
+
+        String newFullName = request.getFullName().trim();
+        String newEmail = request.getEmail().trim();
+        String newPhone = request.getPhone().trim();
+
+        // Nếu đổi email, kiểm tra email mới chưa được dùng bởi user khác
+        if (!newEmail.equalsIgnoreCase(user.getEmail())
+                && userRepository.existsByEmail(newEmail)) {
+            throw new RuntimeException("Email đã được sử dụng");
+        }
+
+        // Nếu đổi sđt, kiểm tra sđt mới chưa được dùng bởi user khác
+        if (!newPhone.equals(user.getPhone())
+                && userRepository.existsByPhone(newPhone)) {
+            throw new RuntimeException("Số điện thoại đã được sử dụng");
+        }
+
+        user.setFullName(newFullName);
+        user.setEmail(newEmail);
+        user.setPhone(newPhone);
+        userRepository.save(user);
+
+        log.info("Profile updated for user: {}", user.getUserId());
+
+        return toProfileResponse(user);
+    }
+
+    // ─── Change Password (authenticated) ──────────────────────────────────────
+
+    @Transactional
+    public void changePassword(String currentEmail, ChangePasswordRequest request) {
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new RuntimeException("Mật khẩu mới và xác nhận mật khẩu không khớp");
+        }
+
+        User user = userRepository.findByEmail(currentEmail)
+                .orElseThrow(() -> new RuntimeException("Tài khoản không tồn tại"));
+
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new RuntimeException("Mật khẩu hiện tại không đúng");
+        }
+
+        if (request.getCurrentPassword().equals(request.getNewPassword())) {
+            throw new RuntimeException("Mật khẩu mới phải khác mật khẩu hiện tại");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        log.info("Password changed successfully for user: {}", user.getEmail());
+    }
+
+    private ProfileResponse toProfileResponse(User user) {
+        String roleName = user.getRole() != null ? user.getRole().getRoleName() : "CUSTOMER";
+        String roleId   = user.getRole() != null ? user.getRole().getRoleId()   : "";
+
+        return ProfileResponse.builder()
+                .userId(user.getUserId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .role(roleName)
+                .roleId(roleId)
+                .build();
     }
 }

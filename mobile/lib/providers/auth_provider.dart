@@ -3,6 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user_model.dart';
 import '../services/auth_service.dart';
+import '../config/app_config.dart';
 
 // ── Service provider ──────────────────────────────────────────────────────────
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
@@ -65,6 +66,30 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<bool> register({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String password,
+    String roleId = AppConfig.roleCustomerId,
+  }) async {
+    state = state.copyWith(isLoading: true, clearError: true);
+    try {
+      await _service.register(
+        fullName: fullName,
+        email: email,
+        phone: phone,
+        password: password,
+        roleId: roleId,
+      );
+      state = state.copyWith(isLoading: false, isInitialized: true);
+      return true;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString(), isInitialized: true);
+      return false;
+    }
+  }
+
   Future<void> logout() async {
     state = state.copyWith(isLoading: true);
     await _service.logout();
@@ -72,6 +97,27 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   void clearError() => state = state.copyWith(clearError: true);
+
+  Future<bool> updateProfile({
+    required String fullName,
+    required String email,
+    required String phone,
+  }) async {
+    state = state.copyWith(isLoading: true, clearError: true);
+    try {
+      final updatedUser = await _service.updateProfile(
+        fullName: fullName,
+        email:    email,
+        phone:    phone,
+        token:    state.user?.token ?? '',
+      );
+      state = state.copyWith(user: updatedUser, isLoading: false);
+      return true;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
+    }
+  }
 }
 
 // ── Provider ──────────────────────────────────────────────────────────────────
@@ -140,4 +186,126 @@ class ResetNotifier extends StateNotifier<ResetState> {
 
 final resetProvider = StateNotifierProvider<ResetNotifier, ResetState>((ref) {
   return ResetNotifier(ref.read(authServiceProvider));
+});
+
+// ── Change password state ─────────────────────────────────────────────────────
+class ChangePasswordState {
+  final bool    isLoading;
+  final String? error;
+  final bool    success;
+
+  const ChangePasswordState({
+    this.isLoading = false,
+    this.error,
+    this.success = false,
+  });
+
+  ChangePasswordState copyWith({
+    bool?    isLoading,
+    String?  error,
+    bool?    success,
+    bool     clearError = false,
+  }) {
+    return ChangePasswordState(
+      isLoading: isLoading ?? this.isLoading,
+      error:     clearError ? null : (error ?? this.error),
+      success:   success   ?? this.success,
+    );
+  }
+}
+
+class ChangePasswordNotifier extends StateNotifier<ChangePasswordState> {
+  final AuthService _service;
+  ChangePasswordNotifier(this._service) : super(const ChangePasswordState());
+
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    state = state.copyWith(isLoading: true, clearError: true, success: false);
+    try {
+      await _service.changePassword(
+        currentPassword: currentPassword,
+        newPassword:     newPassword,
+        confirmPassword: confirmPassword,
+      );
+      state = state.copyWith(isLoading: false, success: true);
+      return true;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
+    }
+  }
+
+  void reset() => state = const ChangePasswordState();
+}
+
+final changePasswordProvider =
+    StateNotifierProvider<ChangePasswordNotifier, ChangePasswordState>((ref) {
+  return ChangePasswordNotifier(ref.read(authServiceProvider));
+});
+
+// ── Update profile state ──────────────────────────────────────────────────────
+class UpdateProfileState {
+  final bool    isLoading;
+  final String? error;
+  final bool    success;
+
+  const UpdateProfileState({
+    this.isLoading = false,
+    this.error,
+    this.success = false,
+  });
+
+  UpdateProfileState copyWith({
+    bool?   isLoading,
+    String? error,
+    bool?   success,
+    bool    clearError = false,
+  }) {
+    return UpdateProfileState(
+      isLoading: isLoading ?? this.isLoading,
+      error:     clearError ? null : (error ?? this.error),
+      success:   success   ?? this.success,
+    );
+  }
+}
+
+class UpdateProfileNotifier extends StateNotifier<UpdateProfileState> {
+  final AuthNotifier _authNotifier;
+  UpdateProfileNotifier(this._authNotifier) : super(const UpdateProfileState());
+
+  Future<bool> updateProfile({
+    required String fullName,
+    required String email,
+    required String phone,
+  }) async {
+    state = state.copyWith(isLoading: true, clearError: true, success: false);
+    try {
+      final ok = await _authNotifier.updateProfile(
+        fullName: fullName,
+        email:    email,
+        phone:    phone,
+      );
+      if (ok) {
+        state = state.copyWith(isLoading: false, success: true);
+        return true;
+      } else {
+        // error already stored in authProvider, mirror it here
+        state = state.copyWith(isLoading: false, error: 'Cập nhật thất bại');
+        return false;
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+      return false;
+    }
+  }
+
+  void reset() => state = const UpdateProfileState();
+}
+
+final updateProfileProvider =
+    StateNotifierProvider<UpdateProfileNotifier, UpdateProfileState>((ref) {
+  return UpdateProfileNotifier(ref.read(authProvider.notifier));
 });

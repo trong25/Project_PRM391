@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/app_theme.dart';
 import 'config/router.dart';
+import 'config/app_scroll_behavior.dart';
 
 void main() {
   runApp(
@@ -21,6 +22,7 @@ class GenzCinemaApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
+      scrollBehavior: AppScrollBehavior(),
       title: 'GenzCinema Hotel',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,

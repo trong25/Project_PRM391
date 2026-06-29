@@ -189,6 +189,47 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         child: const Text('Đăng nhập'),
                       ),
                     ),
+
+                    const SizedBox(height: 24),
+
+                    // ── Divider ────────────────────────────────────────
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            'Chưa có tài khoản?',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // ── Register button ────────────────────────────────
+                    SizedBox(
+                      height: 50,
+                      child: OutlinedButton.icon(
+                        onPressed: () => context.push('/register'),
+                        icon: const Icon(Icons.person_add_outlined),
+                        label: const Text('Tạo tài khoản mới'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.primary,
+                          side: const BorderSide(color: AppTheme.primary),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),

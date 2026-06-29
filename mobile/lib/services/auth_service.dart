@@ -33,6 +33,28 @@ class AuthService {
     }
   }
 
+  // ─── Register ─────────────────────────────────────────────────────────
+
+  Future<void> register({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String password,
+    required String roleId,
+  }) async {
+    try {
+      await _dio.post('/auth/register', data: {
+        'fullName': fullName,
+        'email':    email,
+        'phone':    phone,
+        'password': password,
+        'roleId':   roleId,
+      });
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
   // ─── Logout ───────────────────────────────────────────────────────────
 
   Future<void> logout() async {
@@ -83,6 +105,51 @@ class AuthService {
         'password':        password,
         'confirmPassword': confirmPassword,
       });
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
+  // ─── Change Password (authenticated) ─────────────────────────────────
+
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      await _dio.put('/auth/change-password', data: {
+        'currentPassword': currentPassword,
+        'newPassword':     newPassword,
+        'confirmPassword': confirmPassword,
+      });
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
+  // ─── Update Profile ───────────────────────────────────────────────────
+
+  Future<UserModel> updateProfile({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String token,
+  }) async {
+    try {
+      final response = await _dio.put('/auth/profile', data: {
+        'fullName': fullName,
+        'email':    email,
+        'phone':    phone,
+      });
+
+      final data = response.data['data'];
+      final updatedUser = UserModel.fromJson(data, token);
+
+      // Persist updated user info
+      await _storage.write(key: AppConfig.userKey, value: jsonEncode(updatedUser.toJson()));
+
+      return updatedUser;
     } on DioException catch (e) {
       throw _parseError(e);
     }
