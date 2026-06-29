@@ -110,6 +110,51 @@ class AuthService {
     }
   }
 
+  // ─── Change Password (authenticated) ─────────────────────────────────
+
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      await _dio.put('/auth/change-password', data: {
+        'currentPassword': currentPassword,
+        'newPassword':     newPassword,
+        'confirmPassword': confirmPassword,
+      });
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
+  // ─── Update Profile ───────────────────────────────────────────────────
+
+  Future<UserModel> updateProfile({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String token,
+  }) async {
+    try {
+      final response = await _dio.put('/auth/profile', data: {
+        'fullName': fullName,
+        'email':    email,
+        'phone':    phone,
+      });
+
+      final data = response.data['data'];
+      final updatedUser = UserModel.fromJson(data, token);
+
+      // Persist updated user info
+      await _storage.write(key: AppConfig.userKey, value: jsonEncode(updatedUser.toJson()));
+
+      return updatedUser;
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
   // ─── Get Current User from storage ────────────────────────────────────
 
   Future<UserModel?> getCurrentUser() async {
