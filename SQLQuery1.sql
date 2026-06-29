@@ -1,4 +1,4 @@
-﻿CREATE DATABASE GenzCinemaHotel
+CREATE DATABASE GenzCinemaHotel
 
 -- Bảng Hotel
 CREATE TABLE Hotel (
