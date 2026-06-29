@@ -23,6 +23,7 @@ public class UnicodeDataMigration implements ApplicationRunner {
     private void migrateColumnsToUnicode() {
         jdbcTemplate.execute("ALTER TABLE Hotel ALTER COLUMN name NVARCHAR(255) NOT NULL");
         jdbcTemplate.execute("ALTER TABLE Hotel ALTER COLUMN address NVARCHAR(MAX) NULL");
+        jdbcTemplate.execute("ALTER TABLE Hotel ALTER COLUMN phone NVARCHAR(20) NULL");
         jdbcTemplate.execute("ALTER TABLE Room ALTER COLUMN nameRoom NVARCHAR(255) NOT NULL");
         jdbcTemplate.execute("ALTER TABLE Room ALTER COLUMN Status NVARCHAR(50) NULL");
         jdbcTemplate.execute("ALTER TABLE Booking ALTER COLUMN Status NVARCHAR(50) NULL");
@@ -32,12 +33,34 @@ public class UnicodeDataMigration implements ApplicationRunner {
     }
 
     private void repairSeedData() {
-        updateHotel("HOTEL001", "GenzCinema Hà Nội",
-                "123 Hoàn Kiếm, Hoàn Kiếm, Hà Nội");
-        updateHotel("HOTEL002", "GenzCinema TP. Hồ Chí Minh",
-                "456 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh");
-        updateHotel("HOTEL003", "GenzCinema Đà Nẵng",
-                "789 Bạch Đằng, Hải Châu, Đà Nẵng");
+        upsertHotel("HOTEL001", "GenZ Cinema Hà Đông",
+                "Lk13 Ngõ 2 Nguyễn Văn Lộc, Mộ Lao, Hà Đông, Hà Nội",
+                "0866 521 881");
+        upsertHotel("HOTEL002", "GenZ Cinema Đống Đa - Nguyễn Lương Bằng 180",
+                "Số 3 Ngõ 180 Nguyễn Lương Bằng, Quang Trung, Đống Đa, Hà Nội",
+                "0325 186 385");
+        upsertHotel("HOTEL003", "GenZ Cinema Hai Bà Trưng",
+                "130 Tân Khai, Vĩnh Hưng, Hai Bà Trưng, Hà Nội",
+                "0989 838 603");
+        upsertHotel("HOTEL004", "GenZ Cinema Thanh Xuân",
+                "103 Hoàng Ngân, Nhân Chính, Thanh Xuân, Hà Nội",
+                "0823 983 881");
+        upsertHotel("HOTEL005", "GenZ Cinema Cầu Giấy",
+                "24 Hoa Bằng, Yên Hoà, Cầu Giấy, Hà Nội",
+                "0877 155 379");
+        upsertHotel("HOTEL006", "GenZ Cinema Tây Hồ",
+                "135 Nhật Chiêu, Nhật Tân, Tây Hồ, Hà Nội",
+                "0838 408 881");
+        upsertHotel("HOTEL007", "GenZ Cinema Đống Đa - Nguyễn Lương Bằng 86-88",
+                "86 - 88 Nguyễn Lương Bằng, Quang Trung, Đống Đa, Hà Nội",
+                "081 601 8881");
+        upsertHotel("HOTEL008", "GenZ Cinema Bắc Từ Liêm",
+                "462 Hoàng Công Chất, Cầu Diễn, Bắc Từ Liêm, Hà Nội",
+                "0846 298 881");
+        upsertHotel("HOTEL009", "GenZ Cinema Thanh Trì",
+                "06-N05 khu tái định cư xóm chùa, Triều Khúc, Thanh Liệt, Thanh Trì, Hà Nội",
+                "0823 660 705");
+        refreshHotelRoomCounts();
 
         updateRoomStatus("Trống",
                 "ROOM-DN-101", "ROOM-DN-102", "ROOM-DN-301",
@@ -76,15 +99,39 @@ public class UnicodeDataMigration implements ApplicationRunner {
                 """);
     }
 
-    private void updateHotel(String hotelId, String name, String address) {
+    private void upsertHotel(String hotelId, String name, String address, String phone) {
+        int updatedRows = jdbcTemplate.update(
+                """
+                UPDATE Hotel
+                SET name = ?, address = ?, phone = ?
+                WHERE HotelId = ?
+                """,
+                name, address, phone, hotelId
+        );
+
+        if (updatedRows == 0) {
+            jdbcTemplate.update(
+                    """
+                    INSERT INTO Hotel (HotelId, name, address, countRoom, phone)
+                    VALUES (?, ?, ?, 0, ?)
+                    """,
+                    hotelId, name, address, phone
+            );
+        }
+    }
+
+    private void refreshHotelRoomCounts() {
         jdbcTemplate.update(
                 """
-                UPDATE Hotel SET name = ?, address = ?
-                WHERE HotelId = ?
-                  AND (name LIKE '%?%' OR name LIKE N'%�%'
-                       OR address LIKE '%?%' OR address LIKE N'%�%')
-                """,
-                name, address, hotelId
+                UPDATE h
+                SET countRoom = roomCounts.totalRooms
+                FROM Hotel h
+                CROSS APPLY (
+                    SELECT COUNT(*) AS totalRooms
+                    FROM Room r
+                    WHERE r.HotelId = h.HotelId
+                ) roomCounts
+                """
         );
     }
 

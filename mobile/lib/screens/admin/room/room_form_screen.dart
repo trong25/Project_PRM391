@@ -7,7 +7,9 @@ import '../../../providers/room_provider.dart';
 
 class RoomFormScreen extends ConsumerStatefulWidget {
   final RoomModel? room;
-  const RoomFormScreen({Key? key, this.room}) : super(key: key);
+  final String? initialHotelId;
+
+  const RoomFormScreen({super.key, this.room, this.initialHotelId});
 
   @override
   ConsumerState<RoomFormScreen> createState() => _RoomFormScreenState();
@@ -23,6 +25,7 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
   @override
   void initState() {
     super.initState();
+    _hotelId = widget.initialHotelId;
     if (widget.room != null) {
       _nameRoom = widget.room!.nameRoom;
       _hotelId = widget.room!.hotelId;
@@ -32,7 +35,9 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
   }
 
   void _submit() async {
-    if (_formKey.currentState!.validate() && _hotelId != null && _typeRoomId != null) {
+    if (_formKey.currentState!.validate() &&
+        _hotelId != null &&
+        _typeRoomId != null) {
       _formKey.currentState!.save();
       final api = ref.read(roomApiProvider);
 
@@ -53,10 +58,13 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
         ref.invalidate(roomsProvider);
         if (mounted) Navigator.pop(context);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Lỗi: $e')));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Lỗi: $e')));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Vui lòng chọn đầy đủ Chi nhánh và Loại phòng')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Vui lòng chọn đầy đủ Chi nhánh và Loại phòng')));
     }
   }
 
@@ -66,7 +74,8 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
     final typeRoomsAsync = ref.watch(typeRoomsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.room == null ? 'Tạo phòng mới' : 'Sửa phòng')),
+      appBar: AppBar(
+          title: Text(widget.room == null ? 'Tạo phòng mới' : 'Sửa phòng')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -75,7 +84,8 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
             children: [
               TextFormField(
                 initialValue: _nameRoom,
-                decoration: const InputDecoration(labelText: 'Tên phòng (VD: P101)'),
+                decoration:
+                    const InputDecoration(labelText: 'Tên phòng (VD: P101)'),
                 validator: (val) => val!.isEmpty ? 'Không được để trống' : null,
                 onSaved: (val) => _nameRoom = val!,
               ),
@@ -83,13 +93,18 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
               hotelsAsync.when(
                 data: (hotels) {
                   // Đảm bảo selected value tồn tại trong danh sách
-                  if (_hotelId != null && !hotels.any((h) => h.hotelId == _hotelId)) {
+                  if (_hotelId != null &&
+                      !hotels.any((h) => h.hotelId == _hotelId)) {
                     _hotelId = null;
                   }
                   return DropdownButtonFormField<String>(
-                    value: _hotelId,
-                    decoration: const InputDecoration(labelText: 'Chi nhánh khách sạn'),
-                    items: hotels.map((h) => DropdownMenuItem(value: h.hotelId, child: Text(h.name))).toList(),
+                    initialValue: _hotelId,
+                    decoration:
+                        const InputDecoration(labelText: 'Chi nhánh khách sạn'),
+                    items: hotels
+                        .map((h) => DropdownMenuItem(
+                            value: h.hotelId, child: Text(h.name)))
+                        .toList(),
                     onChanged: (val) => setState(() => _hotelId = val),
                     validator: (val) => val == null ? 'Bắt buộc chọn' : null,
                   );
@@ -101,13 +116,17 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
               typeRoomsAsync.when(
                 data: (typeRooms) {
                   // Đảm bảo selected value tồn tại
-                  if (_typeRoomId != null && !typeRooms.any((t) => t.typeRoomId == _typeRoomId)) {
+                  if (_typeRoomId != null &&
+                      !typeRooms.any((t) => t.typeRoomId == _typeRoomId)) {
                     _typeRoomId = null;
                   }
                   return DropdownButtonFormField<String>(
-                    value: _typeRoomId,
+                    initialValue: _typeRoomId,
                     decoration: const InputDecoration(labelText: 'Loại phòng'),
-                    items: typeRooms.map((t) => DropdownMenuItem(value: t.typeRoomId, child: Text(t.typeRoom))).toList(),
+                    items: typeRooms
+                        .map((t) => DropdownMenuItem(
+                            value: t.typeRoomId, child: Text(t.typeRoom)))
+                        .toList(),
                     onChanged: (val) => setState(() => _typeRoomId = val),
                     validator: (val) => val == null ? 'Bắt buộc chọn' : null,
                   );
@@ -117,11 +136,12 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _status,
+                initialValue: _status,
                 decoration: const InputDecoration(labelText: 'Trạng thái'),
                 items: const [
                   DropdownMenuItem(value: 'Trống', child: Text('Trống')),
-                  DropdownMenuItem(value: 'Đang thuê', child: Text('Đang thuê')),
+                  DropdownMenuItem(
+                      value: 'Đang thuê', child: Text('Đang thuê')),
                   DropdownMenuItem(value: 'Dọn dẹp', child: Text('Dọn dẹp')),
                   DropdownMenuItem(value: 'Bảo trì', child: Text('Bảo trì')),
                 ],

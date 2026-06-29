@@ -6,6 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/DashboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/DashboardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DashboardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DashboardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,31 +50,31 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.Prm391GenZApplication.executor": "Run",
-    "git-widget-placeholder": "thanh",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Ky_8/PRM393_Project/Project_PRM391/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;thanh&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Ky_8/PRM393_Project/Project_PRM391/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Prm391GenZApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="PRM391GenZ" />
@@ -106,7 +115,8 @@
       <workItem from="1781061706995" duration="636000" />
       <workItem from="1781070392880" duration="4088000" />
       <workItem from="1781081026087" duration="876000" />
-      <workItem from="1782108775556" duration="1622000" />
+      <workItem from="1782108775556" duration="1777000" />
+      <workItem from="1782714981879" duration="6207000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />

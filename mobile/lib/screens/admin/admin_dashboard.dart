@@ -1,7 +1,5 @@
 // lib/screens/admin/admin_dashboard.dart
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,9 +9,7 @@ import '../../config/app_theme.dart';
 import '../../models/dashboard_revenue_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/dashboard_provider.dart';
-import 'dashboard/admin_dashboard_screen.dart';
-import 'room/room_management_screen.dart';
-import 'user/user_management_screen.dart';
+import 'widgets/admin_bottom_navigation.dart';
 
 class AdminDashboard extends ConsumerWidget {
   const AdminDashboard({super.key});
@@ -39,6 +35,9 @@ class AdminDashboard extends ConsumerWidget {
           ),
         ],
       ),
+      bottomNavigationBar: const AdminBottomNavigation(
+        currentTab: AdminNavTab.home,
+      ),
       body: RefreshIndicator(
         onRefresh: () async => ref.refresh(revenueOverviewProvider.future),
         child: ListView(
@@ -61,6 +60,7 @@ class AdminDashboard extends ConsumerWidget {
             _DashboardRevenueSection(
               revenueAsync: revenueAsync,
               onRetry: () => ref.invalidate(revenueOverviewProvider),
+              onOpenRevenue: () => context.go('/admin/revenue'),
             ),
             const SizedBox(height: 24),
             const Row(
@@ -106,18 +106,12 @@ class AdminDashboard extends ConsumerWidget {
             _MenuTile(
               icon: Icons.analytics,
               label: 'Báo cáo doanh thu',
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
-              ),
+              onTap: () => context.go('/admin/revenue'),
             ),
             _MenuTile(
               icon: Icons.hotel,
               label: 'Quản lý phòng',
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const RoomManagementScreen()),
-              ),
+              onTap: () => context.go('/admin/rooms'),
             ),
             _MenuTile(
               icon: Icons.book_online,
@@ -129,10 +123,7 @@ class AdminDashboard extends ConsumerWidget {
             _MenuTile(
               icon: Icons.people,
               label: 'Quản lý người dùng',
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const UserManagementScreen()),
-              ),
+              onTap: () => context.go('/admin/account'),
             ),
             _MenuTile(
               icon: Icons.price_change,
@@ -151,32 +142,20 @@ class AdminDashboard extends ConsumerWidget {
 class _DashboardRevenueSection extends StatelessWidget {
   final AsyncValue<RevenueOverview> revenueAsync;
   final VoidCallback onRetry;
+  final VoidCallback onOpenRevenue;
 
   const _DashboardRevenueSection({
     required this.revenueAsync,
     required this.onRetry,
+    required this.onOpenRevenue,
   });
 
   @override
   Widget build(BuildContext context) {
     return revenueAsync.when(
-      data: (overview) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _RevenueSummaryCard(
-            title: 'Tổng doanh thu',
-            icon: Icons.payments,
-            revenue: overview.total,
-          ),
-          const SizedBox(height: 12),
-          if (overview.hotels.isEmpty)
-            const _RevenueEmptyCard()
-          else
-            _BranchRevenueCarousel(
-              hotels: overview.hotels,
-              onHotelTap: (hotel) => _showRevenueDetail(context, hotel),
-            ),
-        ],
+      data: (overview) => _RevenueSnapshotCard(
+        overview: overview,
+        onOpenRevenue: onOpenRevenue,
       ),
       loading: () => const _RevenueLoadingCard(),
       error: (error, stackTrace) => _RevenueErrorCard(
@@ -187,212 +166,21 @@ class _DashboardRevenueSection extends StatelessWidget {
   }
 }
 
-class _BranchRevenueCarousel extends StatefulWidget {
-  final List<HotelRevenue> hotels;
-  final ValueChanged<HotelRevenue> onHotelTap;
+class _RevenueSnapshotCard extends StatelessWidget {
+  final RevenueOverview overview;
+  final VoidCallback onOpenRevenue;
 
-  const _BranchRevenueCarousel({
-    required this.hotels,
-    required this.onHotelTap,
-  });
-
-  @override
-  State<_BranchRevenueCarousel> createState() => _BranchRevenueCarouselState();
-}
-
-class _BranchRevenueCarouselState extends State<_BranchRevenueCarousel> {
-  late final PageController _pageController;
-  Timer? _timer;
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-    _startAutoSlide();
-  }
-
-  @override
-  void didUpdateWidget(covariant _BranchRevenueCarousel oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (_currentPage >= widget.hotels.length) {
-      _currentPage = 0;
-      if (_pageController.hasClients) {
-        _pageController.jumpToPage(0);
-      }
-    }
-    if (oldWidget.hotels.length != widget.hotels.length) {
-      _startAutoSlide();
-    }
-  }
-
-  void _startAutoSlide() {
-    _timer?.cancel();
-    if (widget.hotels.length < 2) return;
-    _timer = Timer.periodic(const Duration(seconds: 4), (_) {
-      if (!_pageController.hasClients) return;
-      final nextPage = (_currentPage + 1) % widget.hotels.length;
-      _pageController.animateToPage(
-        nextPage,
-        duration: const Duration(milliseconds: 450),
-        curve: Curves.easeInOutCubic,
-      );
-    });
-  }
-
-  void _goToPage(int page) {
-    final target = (page + widget.hotels.length) % widget.hotels.length;
-    _pageController.animateToPage(
-      target,
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeOutCubic,
-    );
-    _startAutoSlide();
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isNarrow = constraints.maxWidth < 560;
-        return Card(
-          margin: EdgeInsets.zero,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF3E8FF),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.storefront,
-                        color: AppTheme.primaryDark,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const Expanded(
-                      child: Text(
-                        'Doanh thu chi nhánh',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w800,
-                          color: AppTheme.textPrimary,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF4F4F5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        '${_currentPage + 1}/${widget.hotels.length}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppTheme.textGray,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-                const Divider(height: 1),
-                const SizedBox(height: 14),
-                SizedBox(
-                  height: isNarrow ? 320 : 118,
-                  child: PageView.builder(
-                    controller: _pageController,
-                    itemCount: widget.hotels.length,
-                    onPageChanged: (page) {
-                      setState(() => _currentPage = page);
-                      _startAutoSlide();
-                    },
-                    itemBuilder: (context, index) {
-                      final hotel = widget.hotels[index];
-                      return _BranchRevenueCard(
-                        hotel: hotel,
-                        onTap: () => widget.onHotelTap(hotel),
-                      );
-                    },
-                  ),
-                ),
-                if (widget.hotels.length > 1)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        tooltip: 'Chi nhánh trước',
-                        onPressed: () => _goToPage(_currentPage - 1),
-                        icon: const Icon(Icons.chevron_left),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(
-                          widget.hotels.length,
-                          (index) => AnimatedContainer(
-                            duration: const Duration(milliseconds: 250),
-                            width: index == _currentPage ? 22 : 7,
-                            height: 7,
-                            margin: const EdgeInsets.symmetric(horizontal: 3),
-                            decoration: BoxDecoration(
-                              color: index == _currentPage
-                                  ? AppTheme.primaryDark
-                                  : const Color(0xFFD1D5DB),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: 'Chi nhánh tiếp theo',
-                        onPressed: () => _goToPage(_currentPage + 1),
-                        icon: const Icon(Icons.chevron_right),
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _RevenueSummaryCard extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final RevenueBreakdown revenue;
-
-  const _RevenueSummaryCard({
-    required this.title,
-    required this.icon,
-    required this.revenue,
+  const _RevenueSnapshotCard({
+    required this.overview,
+    required this.onOpenRevenue,
   });
 
   @override
   Widget build(BuildContext context) {
+    final topHotels = _topHotelsByMonth(overview.hotels).take(3).toList();
+
     return Card(
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -400,137 +188,144 @@ class _RevenueSummaryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: const Color(0xFF0F766E)),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      color: AppTheme.textPrimary,
-                    ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE6F7F2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.payments_outlined,
+                    color: Color(0xFF0F766E),
                   ),
                 ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Doanh thu tháng này',
+                        style: TextStyle(
+                          color: AppTheme.textPrimary,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        'Tổng quan nhanh toàn hệ thống',
+                        style: TextStyle(
+                          color: AppTheme.textGray,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  tooltip: 'Xem báo cáo',
+                  onPressed: onOpenRevenue,
+                  icon: const Icon(Icons.arrow_forward),
+                ),
               ],
+            ),
+            const SizedBox(height: 16),
+            FittedBox(
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.scaleDown,
+              child: Text(
+                _formatCurrency(overview.total.month),
+                style: const TextStyle(
+                  color: Color(0xFF0F766E),
+                  fontSize: 30,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
             ),
             const SizedBox(height: 14),
-            _RevenueGrid(revenue: revenue),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BranchRevenueCard extends StatelessWidget {
-  final HotelRevenue hotel;
-  final VoidCallback onTap;
-
-  const _BranchRevenueCard({
-    required this.hotel,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    hotel.hotelName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: AppTheme.textPrimary,
-                    ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isNarrow = constraints.maxWidth < 560;
+                final chips = [
+                  _MiniRevenueChip(
+                    label: 'Hôm nay',
+                    value: overview.total.day,
+                    icon: Icons.today_outlined,
                   ),
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Xem chi tiết',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: AppTheme.primaryDark,
+                  _MiniRevenueChip(
+                    label: '7 ngày',
+                    value: overview.total.week,
+                    icon: Icons.date_range_outlined,
                   ),
-                ),
-                const SizedBox(width: 3),
-                const Icon(
-                  Icons.arrow_outward,
-                  color: AppTheme.primaryDark,
-                  size: 16,
-                ),
-              ],
+                  _MiniRevenueChip(
+                    label: 'Tháng trước',
+                    value: overview.total.lastMonth,
+                    icon: Icons.history_outlined,
+                  ),
+                  _MiniRevenueChip(
+                    label: 'Năm nay',
+                    value: overview.total.year,
+                    icon: Icons.query_stats_outlined,
+                  ),
+                ];
+
+                if (isNarrow) {
+                  return Column(
+                    children: [
+                      for (var index = 0; index < chips.length; index++) ...[
+                        chips[index],
+                        if (index < chips.length - 1) const SizedBox(height: 8),
+                      ],
+                    ],
+                  );
+                }
+
+                return Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    for (final chip in chips)
+                      SizedBox(
+                        width: (constraints.maxWidth - 10) / 2,
+                        child: chip,
+                      ),
+                  ],
+                );
+              },
             ),
-            const SizedBox(height: 12),
-            _RevenueGrid(revenue: hotel.revenue),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _RevenueGrid extends StatelessWidget {
-  final RevenueBreakdown revenue;
-
-  const _RevenueGrid({required this.revenue});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isNarrow = constraints.maxWidth < 560;
-        final tiles = [
-          _RevenueTile(label: 'Hôm nay', value: revenue.day),
-          _RevenueTile(label: 'Tháng này', value: revenue.month),
-          _RevenueTile(label: 'Năm nay', value: revenue.year),
-        ];
-
-        if (isNarrow) {
-          return Column(
-            children: tiles
-                .map(
-                  (tile) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: tile,
-                  ),
-                )
-                .toList(),
-          );
-        }
-
-        return Row(
-          children: [
-            for (var index = 0; index < tiles.length; index++) ...[
-              Expanded(child: tiles[index]),
-              if (index < tiles.length - 1) const SizedBox(width: 10),
+            if (topHotels.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+              const Text(
+                'Chi nhánh nổi bật',
+                style: TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 8),
+              for (var index = 0; index < topHotels.length; index++)
+                _TopHotelRow(rank: index + 1, hotel: topHotels[index]),
             ],
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }
 
-class _RevenueTile extends StatelessWidget {
+class _MiniRevenueChip extends StatelessWidget {
   final String label;
   final double value;
+  final IconData icon;
 
-  const _RevenueTile({
+  const _MiniRevenueChip({
     required this.label,
     required this.value,
+    required this.icon,
   });
 
   @override
@@ -543,22 +338,91 @@ class _RevenueTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: const Color(0xFFE5E7EB)),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12, color: AppTheme.textGray),
+          Icon(icon, color: AppTheme.primaryDark, size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: AppTheme.textGray,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  _formatCompactCurrency(value),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 6),
+        ],
+      ),
+    );
+  }
+}
+
+class _TopHotelRow extends StatelessWidget {
+  final int rank;
+  final HotelRevenue hotel;
+
+  const _TopHotelRow({
+    required this.rank,
+    required this.hotel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Row(
+        children: [
+          Container(
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color:
+                  rank == 1 ? const Color(0xFFFFF7ED) : const Color(0xFFF4F4F5),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              '#$rank',
+              style: TextStyle(
+                color: rank == 1 ? const Color(0xFFEA580C) : AppTheme.textGray,
+                fontWeight: FontWeight.w900,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              hotel.hotelName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: AppTheme.textPrimary,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
           Text(
-            _formatCurrency(value),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            _formatCompactCurrency(hotel.revenue.month),
             style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
               color: Color(0xFF0F766E),
+              fontWeight: FontWeight.w900,
             ),
           ),
         ],
@@ -573,6 +437,7 @@ class _RevenueLoadingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Card(
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: EdgeInsets.all(20),
         child: Row(
@@ -603,6 +468,7 @@ class _RevenueErrorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -636,23 +502,6 @@ class _RevenueErrorCard extends StatelessWidget {
               label: const Text('Thử lại'),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _RevenueEmptyCard extends StatelessWidget {
-  const _RevenueEmptyCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Card(
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Text(
-          'Chưa có chi nhánh để hiển thị doanh thu',
-          style: TextStyle(color: AppTheme.textGray),
         ),
       ),
     );
@@ -734,69 +583,20 @@ class _MenuTile extends StatelessWidget {
   }
 }
 
-void _showRevenueDetail(BuildContext context, HotelRevenue hotel) {
-  showModalBottomSheet(
-    context: context,
-    showDragHandle: true,
-    builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              hotel.hotelName,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              hotel.hotelId,
-              style: const TextStyle(color: AppTheme.textGray),
-            ),
-            const SizedBox(height: 16),
-            _DetailRow(label: 'Doanh thu hôm nay', value: hotel.revenue.day),
-            _DetailRow(
-                label: 'Doanh thu tháng này', value: hotel.revenue.month),
-            _DetailRow(label: 'Doanh thu năm nay', value: hotel.revenue.year),
-          ],
-        ),
-      );
-    },
-  );
-}
-
-class _DetailRow extends StatelessWidget {
-  final String label;
-  final double value;
-
-  const _DetailRow({
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(label, style: const TextStyle(fontSize: 15)),
-          ),
-          Text(
-            _formatCurrency(value),
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
-          ),
-        ],
-      ),
-    );
-  }
+List<HotelRevenue> _topHotelsByMonth(List<HotelRevenue> hotels) {
+  return [...hotels]
+    ..sort((a, b) => b.revenue.month.compareTo(a.revenue.month));
 }
 
 String _formatCurrency(double value) {
   return NumberFormat.currency(locale: 'vi_VN', symbol: 'VNĐ').format(value);
+}
+
+String _formatCompactCurrency(double value) {
+  final formatter = NumberFormat.compactCurrency(
+    locale: 'vi_VN',
+    symbol: 'VNĐ',
+    decimalDigits: 1,
+  );
+  return formatter.format(value);
 }

@@ -27,6 +27,32 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 0,
+        onDestinationSelected: (index) => _handleBottomAction(context, index),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: 'Trang chủ',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.hotel_outlined),
+            selectedIcon: Icon(Icons.hotel),
+            label: 'Phòng',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.book_online_outlined),
+            selectedIcon: Icon(Icons.book_online),
+            label: 'Đặt phòng',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person),
+            label: 'Hồ sơ',
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -50,7 +76,9 @@ class HomeScreen extends ConsumerWidget {
                   Text(
                     'Xin chào, ${user?.fullName ?? 'Khách'}!',
                     style: const TextStyle(
-                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -67,7 +95,9 @@ class HomeScreen extends ConsumerWidget {
             const Text(
               'Chức năng',
               style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: AppTheme.textPrimary,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.textPrimary,
               ),
             ),
             const SizedBox(height: 16),
@@ -111,15 +141,32 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
+void _handleBottomAction(BuildContext context, int index) {
+  if (index == 0) return;
+
+  final message = switch (index) {
+    1 => 'Tính năng phòng trống đang phát triển',
+    2 => 'Tính năng đặt phòng đang phát triển',
+    3 => 'Tính năng hồ sơ đang phát triển',
+    _ => 'Tính năng đang phát triển',
+  };
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(message)),
+  );
+}
+
 class _ActionCard extends StatelessWidget {
   final IconData icon;
-  final String   label;
-  final Color    color;
+  final String label;
+  final Color color;
   final VoidCallback onTap;
 
   const _ActionCard({
-    required this.icon, required this.label,
-    required this.color, required this.onTap,
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
   });
 
   @override
@@ -135,9 +182,12 @@ class _ActionCard extends StatelessWidget {
             children: [
               Icon(icon, color: color, size: 32),
               const SizedBox(height: 8),
-              Text(label, style: TextStyle(
-                color: color, fontWeight: FontWeight.w600, fontSize: 13,
-              )),
+              Text(label,
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  )),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 // lib/services/dashboard_api_service.dart
 
 import 'package:dio/dio.dart';
+
 import '../models/dashboard_revenue_model.dart';
 import 'api_client.dart';
 
@@ -29,7 +30,10 @@ class DashboardApiService {
 
   Future<double> getTotalRevenue(String timeFrame) async {
     try {
-      final response = await _dio.get('/dashboard/revenue/total', queryParameters: {'timeFrame': timeFrame});
+      final response = await _dio.get(
+        '/dashboard/revenue/total',
+        queryParameters: {'timeFrame': timeFrame},
+      );
       if (response.data['success'] == true) {
         return (response.data['data']['revenue'] as num?)?.toDouble() ?? 0.0;
       }
@@ -41,7 +45,10 @@ class DashboardApiService {
 
   Future<double> getHotelRevenue(String hotelId, String timeFrame) async {
     try {
-      final response = await _dio.get('/dashboard/revenue/hotel/$hotelId', queryParameters: {'timeFrame': timeFrame});
+      final response = await _dio.get(
+        '/dashboard/revenue/hotel/$hotelId',
+        queryParameters: {'timeFrame': timeFrame},
+      );
       if (response.data['success'] == true) {
         return (response.data['data']['revenue'] as num?)?.toDouble() ?? 0.0;
       }

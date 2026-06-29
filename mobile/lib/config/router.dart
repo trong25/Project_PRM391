@@ -11,6 +11,9 @@ import '../screens/auth/request_reset_screen.dart';
 import '../screens/auth/reset_password_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/admin/admin_dashboard.dart';
+import '../screens/admin/dashboard/admin_dashboard_screen.dart';
+import '../screens/admin/room/room_management_screen.dart';
+import '../screens/admin/user/user_management_screen.dart';
 
 // ── Listenable bridge: Riverpod → GoRouter ────────────────────────────────────
 // GoRouter cần một ChangeNotifier để biết khi nào chạy lại redirect.
@@ -89,6 +92,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/admin',
         name: 'admin',
         builder: (_, __) => const AdminDashboard(),
+      ),
+      GoRoute(
+        path: '/admin/revenue',
+        name: 'admin-revenue',
+        builder: (_, __) => const AdminDashboardScreen(),
+      ),
+      GoRoute(
+        path: '/admin/rooms',
+        name: 'admin-rooms',
+        builder: (_, __) => const RoomManagementScreen(),
+      ),
+      GoRoute(
+        path: '/admin/account',
+        name: 'admin-account',
+        builder: (_, __) => const UserManagementScreen(),
       ),
     ],
   );

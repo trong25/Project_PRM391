@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../providers/user_provider.dart';
+import '../widgets/admin_bottom_navigation.dart';
 import 'add_edit_user_screen.dart';
 
 class UserManagementScreen extends ConsumerWidget {
@@ -22,6 +23,9 @@ class UserManagementScreen extends ConsumerWidget {
               Tab(text: 'Giám đốc CN'),
             ],
           ),
+        ),
+        bottomNavigationBar: const AdminBottomNavigation(
+          currentTab: AdminNavTab.account,
         ),
         body: const TabBarView(
           children: [

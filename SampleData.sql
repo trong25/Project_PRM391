@@ -10,9 +10,15 @@ GO
 -- 1. HOTELS (Chi nhánh khách sạn)
 -- =============================================
 INSERT INTO Hotel (HotelId, name, address, countRoom, phone) VALUES
-('HOTEL001', N'GenzCinema Hà Nội', N'123 Hồ Hoàn Kiếm, Hoàn Kiếm, Hà Nội', 20, '024-1234-5678'),
-('HOTEL002', N'GenzCinema TP. Hồ Chí Minh', N'456 Nguyễn Huệ, Quận 1, TP.HCM', 30, '028-8765-4321'),
-('HOTEL003', N'GenzCinema Đà Nẵng', N'789 Bạch Đằng, Hải Châu, Đà Nẵng', 15, '0236-1122-334');
+('HOTEL001', N'GenZ Cinema Hà Đông', N'Lk13 Ngõ 2 Nguyễn Văn Lộc, Mộ Lao, Hà Đông, Hà Nội', 6, '0866 521 881'),
+('HOTEL002', N'GenZ Cinema Đống Đa - Nguyễn Lương Bằng 180', N'Số 3 Ngõ 180 Nguyễn Lương Bằng, Quang Trung, Đống Đa, Hà Nội', 7, '0325 186 385'),
+('HOTEL003', N'GenZ Cinema Hai Bà Trưng', N'130 Tân Khai, Vĩnh Hưng, Hai Bà Trưng, Hà Nội', 4, '0989 838 603'),
+('HOTEL004', N'GenZ Cinema Thanh Xuân', N'103 Hoàng Ngân, Nhân Chính, Thanh Xuân, Hà Nội', 0, '0823 983 881'),
+('HOTEL005', N'GenZ Cinema Cầu Giấy', N'24 Hoa Bằng, Yên Hoà, Cầu Giấy, Hà Nội', 0, '0877 155 379'),
+('HOTEL006', N'GenZ Cinema Tây Hồ', N'135 Nhật Chiêu, Nhật Tân, Tây Hồ, Hà Nội', 0, '0838 408 881'),
+('HOTEL007', N'GenZ Cinema Đống Đa - Nguyễn Lương Bằng 86-88', N'86 - 88 Nguyễn Lương Bằng, Quang Trung, Đống Đa, Hà Nội', 0, '081 601 8881'),
+('HOTEL008', N'GenZ Cinema Bắc Từ Liêm', N'462 Hoàng Công Chất, Cầu Diễn, Bắc Từ Liêm, Hà Nội', 0, '0846 298 881'),
+('HOTEL009', N'GenZ Cinema Thanh Trì', N'06-N05 khu tái định cư xóm chùa, Triều Khúc, Thanh Liệt, Thanh Trì, Hà Nội', 0, '0823 660 705');
 GO
 
 -- =============================================
