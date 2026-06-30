@@ -11,6 +11,9 @@ import '../screens/auth/request_reset_screen.dart';
 import '../screens/auth/reset_password_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/admin/admin_dashboard.dart';
+import '../screens/customer/room/room_list_screen.dart';
+import '../screens/customer/room/room_detail_screen.dart';
+import '../screens/customer/saved/saved_screen.dart';
 
 // ── Listenable bridge: Riverpod → GoRouter ────────────────────────────────────
 // GoRouter cần một ChangeNotifier để biết khi nào chạy lại redirect.
@@ -89,6 +92,31 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/admin',
         name: 'admin',
         builder: (_, __) => const AdminDashboard(),
+      ),
+
+      // ── Saved routes ─────────────────────────────────────────────────
+      GoRoute(
+        path: '/saved',
+        name: 'saved',
+        builder: (_, __) => const SavedScreen(),
+      ),
+
+      // ── Room routes ───────────────────────────────────────────────────
+      GoRoute(
+        path: '/rooms',
+        name: 'rooms',
+        builder: (_, state) {
+          final typeFilter = state.uri.queryParameters['type'];
+          return RoomListScreen(typeFilter: typeFilter);
+        },
+      ),
+      GoRoute(
+        path: '/rooms/:id',
+        name: 'room-detail',
+        builder: (_, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return RoomDetailScreen(roomId: id);
+        },
       ),
     ],
   );

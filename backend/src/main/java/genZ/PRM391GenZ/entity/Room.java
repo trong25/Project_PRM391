@@ -1,5 +1,6 @@
 package genZ.PRM391GenZ.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Room {
 
     @Id
@@ -28,4 +30,7 @@ public class Room {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HotelId")
     private Hotel hotel;
+
+    @Column(name = "imageUrl", columnDefinition = "NVARCHAR(MAX)")
+    private String imageUrl;
 }

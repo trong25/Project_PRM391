@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../config/app_theme.dart';
-import '../../providers/auth_provider.dart';
+import '../../widgets/app_bottom_nav_bar.dart';
 import 'dart:async';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -15,8 +15,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  int _currentIndex = 0;
-
   // Kỹ thuật "giả vô hạn": itemCount rất lớn, luôn lấy index % banners.length
   // để hiển thị đúng ảnh. Nhờ vậy PageView không cần nhảy (jump) về trang đầu
   // khi hết danh sách, tránh hiện tượng giật khi tự động chuyển hoặc vuốt liên tục.
@@ -84,80 +82,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  void _onTapAccount(BuildContext context) {
-    final user = ref.read(authProvider).user;
-    final bool isLoggedIn = user != null;
-
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (ctx) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 12),
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-              const SizedBox(height: 8),
-              if (!isLoggedIn)
-                ListTile(
-                  leading: const Icon(Icons.login, color: AppTheme.primary),
-                  title: const Text('Đăng nhập'),
-                  onTap: () {
-                    Navigator.pop(ctx);
-                    context.go('/login');
-                  },
-                )
-              else ...[
-                ListTile(
-                  leading: const Icon(Icons.person, color: AppTheme.primary),
-                  title: const Text('Tài khoản'),
-                  onTap: () {
-                    Navigator.pop(ctx);
-                    context.push('/account');
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout, color: AppTheme.primaryDark),
-                  title: const Text('Đăng xuất'),
-                  onTap: () async {
-                    Navigator.pop(ctx);
-                    await ref.read(authProvider.notifier).logout();
-                    if (context.mounted) context.go('/login');
-                  },
-                ),
-              ],
-              const SizedBox(height: 12),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _onBottomNavTap(int index) {
-    if (index == 3) {
-      // Tài khoản
-      _onTapAccount(context);
-      return;
-    }
-    if (index == 0) {
-      setState(() => _currentIndex = 0);
-      return;
-    }
-    // Đã lưu, Đặt chỗ: để chờ
-    _onComingSoon(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,11 +99,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: 16),
               _buildQuickActions(context),
               const SizedBox(height: 24),
-              _buildSectionHeader('Combo HOT', context),
+              _buildSectionHeader('Combo HOT', context,
+                  onViewMore: () => context.push('/rooms')),
               const SizedBox(height: 12),
               _buildComboHot(context),
               const SizedBox(height: 24),
-              _buildSectionHeader('Đặc biệt', context),
+              _buildSectionHeader('Đặc biệt', context,
+                  onViewMore: () => context.push('/rooms')),
               const SizedBox(height: 12),
               _buildRoomTypesCard(context),
               const SizedBox(height: 12),
@@ -191,7 +117,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
+      bottomNavigationBar: const AppBottomNavBar(currentIndex: 0),
     );
   }
 
@@ -296,7 +222,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildSectionHeader(String title, BuildContext context) {
+  Widget _buildSectionHeader(String title, BuildContext context, {VoidCallback? onViewMore}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -308,6 +234,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             color: AppTheme.textPrimary,
           ),
         ),
+        if (onViewMore != null)
+          GestureDetector(
+            onTap: onViewMore,
+            child: const Text(
+              'Xem thêm',
+              style: TextStyle(
+                fontSize: 13,
+                color: AppTheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -334,7 +272,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               return Padding(
                 padding: EdgeInsets.only(right: _comboSpacing),
                 child: GestureDetector(
-                  onTap: () => _onComingSoon(context),
+                  onTap: () => context.push('/rooms'),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.asset(
@@ -354,20 +292,54 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildRoomTypesCard(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: _buildTypeCard(context, 'QUEEN', 'Phòng Queen', '96k/h',
+            Icons.movie_outlined, 'Máy chiếu')),
+        const SizedBox(width: 12),
+        Expanded(child: _buildTypeCard(context, 'KING', 'Phòng King', '106k/h',
+            Icons.tv_outlined, 'Máy chiếu + PC Couple')),
+      ],
+    );
+  }
+
+  Widget _buildTypeCard(BuildContext context, String typeId, String name,
+      String price, IconData icon, String feature) {
     return GestureDetector(
-      onTap: () => _onComingSoon(context),
+      onTap: () => context.push('/rooms?type=$typeId'),
       child: Container(
-        width: double.infinity,
-        height: 100,
-        alignment: Alignment.center,
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: AppTheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: const Color(0xFFE5E7EB)),
         ),
-        child: const Text(
-          'Các Hạng Phòng',
-          style: TextStyle(color: AppTheme.textPrimary),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ShaderMask(
+              shaderCallback: (b) => AppTheme.primaryGradient.createShader(b),
+              child: Icon(icon, color: Colors.white, size: 28),
+            ),
+            const SizedBox(height: 8),
+            Text(name,
+                style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary)),
+            const SizedBox(height: 2),
+            ShaderMask(
+              shaderCallback: (b) => AppTheme.primaryGradient.createShader(b),
+              child: Text(price,
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white)),
+            ),
+            const SizedBox(height: 4),
+            Text(feature,
+                style: TextStyle(fontSize: 11, color: Colors.grey.shade500)),
+          ],
         ),
       ),
     );
@@ -388,80 +360,4 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildBottomNavBar() {
-    final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Trang chủ'},
-      {'icon': Icons.bookmark_border, 'activeIcon': Icons.bookmark, 'label': 'Đã lưu'},
-      {'icon': Icons.work_outline, 'activeIcon': Icons.work, 'label': 'Đặt chỗ'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Tài khoản'},
-    ];
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            children: List.generate(items.length, (index) {
-              final bool isSelected = index == _currentIndex;
-              final item = items[index];
-
-              return Expanded(
-                child: InkWell(
-                  onTap: () => _onBottomNavTap(index),
-                  child: isSelected
-                      ? ShaderMask(
-                    shaderCallback: (bounds) =>
-                        AppTheme.primaryGradient.createShader(bounds),
-                    child: _buildNavItemContent(
-                      icon: item['activeIcon'] as IconData,
-                      label: item['label'] as String,
-                      color: Colors.white,
-                    ),
-                  )
-                      : _buildNavItemContent(
-                    icon: item['icon'] as IconData,
-                    label: item['label'] as String,
-                    color: AppTheme.textGray,
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItemContent({
-    required IconData icon,
-    required String label,
-    required Color color,
-  }) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: color,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
-  }
 }
