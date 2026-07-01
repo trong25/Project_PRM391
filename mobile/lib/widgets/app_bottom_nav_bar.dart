@@ -66,7 +66,10 @@ class AppBottomNavBar extends ConsumerWidget {
                 ListTile(
                   leading: const Icon(Icons.person, color: AppTheme.primary),
                   title: const Text('Tài khoản'),
-                  onTap: () => Navigator.pop(ctx),
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    context.push('/profile');
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.logout, color: AppTheme.primaryDark),
