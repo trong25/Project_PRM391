@@ -51,7 +51,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           state.matchedLocation.startsWith('/reset-password');
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.role);
+      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.roleId);
+      if (isLoggedIn &&
+          state.matchedLocation.startsWith('/admin') &&
+          !_isAdminRole(authState.user?.roleId)) {
+        return '/home';
+      }
 
       return null;
     },

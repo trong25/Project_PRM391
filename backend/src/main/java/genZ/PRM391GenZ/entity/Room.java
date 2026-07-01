@@ -17,14 +17,14 @@ public class Room {
     @Column(name = "RoomId", length = 50)
     private String roomId;
 
-    @Column(name = "nameRoom", nullable = false)
+    @Column(name = "nameRoom", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String nameRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TypeRoomId")
     private TypeRoom typeRoom;
 
-    @Column(name = "Status")
+    @Column(name = "Status", columnDefinition = "NVARCHAR(50)")
     private String status;
 
     @ManyToOne(fetch = FetchType.EAGER)

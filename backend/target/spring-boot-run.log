@@ -1,0 +1,1795 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< genZ:PRM391GenZ >---------------------------
+[INFO] Building PRM391GenZ 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.6:run (default-cli) > test-compile @ PRM391GenZ >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ PRM391GenZ ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ PRM391GenZ ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ PRM391GenZ ---
+[INFO] skip non existing resourceDirectory D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ PRM391GenZ ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.6:run (default-cli) < test-compile @ PRM391GenZ <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.6:run (default-cli) @ PRM391GenZ ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.6)
+
+2026-06-20T23:16:52.309+07:00  INFO 27880 --- [           main] genZ.PRM391GenZ.Prm391GenZApplication    : Starting Prm391GenZApplication using Java 17.0.12 with PID 27880 (D:\Ky_8\PRM393_Project\Project_PRM391\backend\target\classes started by admin in D:\Ky_8\PRM393_Project\Project_PRM391\backend)
+2026-06-20T23:16:52.311+07:00  INFO 27880 --- [           main] genZ.PRM391GenZ.Prm391GenZApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-06-20T23:16:52.799+07:00  INFO 27880 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-20T23:16:52.859+07:00  INFO 27880 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 7 JPA repository interfaces.
+2026-06-20T23:16:53.323+07:00  INFO 27880 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-20T23:16:53.333+07:00  INFO 27880 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-20T23:16:53.334+07:00  INFO 27880 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2026-06-20T23:16:53.375+07:00  INFO 27880 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2026-06-20T23:16:53.376+07:00  INFO 27880 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1039 ms
+2026-06-20T23:16:53.509+07:00  INFO 27880 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-20T23:16:53.546+07:00  INFO 27880 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2026-06-20T23:16:53.579+07:00  INFO 27880 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-20T23:16:53.773+07:00  INFO 27880 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-20T23:16:53.798+07:00  INFO 27880 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-20T23:16:54.092+07:00  INFO 27880 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: ba95a793-6d23-4efb-9db3-d7406f1f9309
+2026-06-20T23:16:54.094+07:00  INFO 27880 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-20T23:16:54.179+07:00  WARN 27880 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-20T23:16:54.198+07:00  INFO 27880 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 16.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-20T23:16:55.316+07:00  INFO 27880 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-20T23:16:55.929+07:00 DEBUG 27880 --- [           main] org.hibernate.SQL                        : 
+    alter table [User] 
+       alter column Image_cccd NVARCHAR(MAX)
+2026-06-20T23:16:55.936+07:00 DEBUG 27880 --- [           main] org.hibernate.SQL                        : 
+    alter table Booking 
+       alter column Status NVARCHAR(50)
+2026-06-20T23:16:55.942+07:00 DEBUG 27880 --- [           main] org.hibernate.SQL                        : 
+    alter table Hotel 
+       alter column address NVARCHAR(MAX)
+2026-06-20T23:16:55.948+07:00 DEBUG 27880 --- [           main] org.hibernate.SQL                        : 
+    alter table Room 
+       alter column Status NVARCHAR(50)
+2026-06-20T23:16:56.369+07:00  INFO 27880 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-20T23:16:57.239+07:00  INFO 27880 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-20T23:16:57.882+07:00  INFO 27880 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2026-06-20T23:16:58.801+07:00  WARN 27880 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-20T23:16:59.798+07:00  WARN 27880 --- [           main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2026-06-20T23:17:00.215+07:00  INFO 27880 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api'
+2026-06-20T23:17:00.232+07:00  INFO 27880 --- [           main] genZ.PRM391GenZ.Prm391GenZApplication    : Started Prm391GenZApplication in 8.196 seconds (process running for 8.447)
+2026-06-20T23:17:25.942+07:00  INFO 27880 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-20T23:17:25.943+07:00  INFO 27880 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-20T23:17:25.945+07:00  INFO 27880 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-06-20T23:17:26.422+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:17:26.501+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:17:26.669+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.690+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.696+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.716+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0
+2026-06-20T23:17:26.736+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.748+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.753+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.757+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.762+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.765+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.771+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.775+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:26.780+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:17:54.143+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:17:54.162+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:17:54.177+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoomId,
+        r1_0.HotelId,
+        r1_0.nameRoom,
+        r1_0.Status,
+        r1_0.TypeRoomId 
+    from
+        Room r1_0
+2026-06-20T23:17:54.208+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        tr1_0.TypeRoomId,
+        tr1_0.TypeRoom 
+    from
+        TypeRoom tr1_0 
+    where
+        tr1_0.TypeRoomId=?
+2026-06-20T23:17:54.219+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0 
+    where
+        h1_0.HotelId=?
+2026-06-20T23:17:54.226+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        tr1_0.TypeRoomId,
+        tr1_0.TypeRoom 
+    from
+        TypeRoom tr1_0 
+    where
+        tr1_0.TypeRoomId=?
+2026-06-20T23:17:54.229+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        tr1_0.TypeRoomId,
+        tr1_0.TypeRoom 
+    from
+        TypeRoom tr1_0 
+    where
+        tr1_0.TypeRoomId=?
+2026-06-20T23:17:54.232+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0 
+    where
+        h1_0.HotelId=?
+2026-06-20T23:17:54.237+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        tr1_0.TypeRoomId,
+        tr1_0.TypeRoom 
+    from
+        TypeRoom tr1_0 
+    where
+        tr1_0.TypeRoomId=?
+2026-06-20T23:17:54.240+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        tr1_0.TypeRoomId,
+        tr1_0.TypeRoom 
+    from
+        TypeRoom tr1_0 
+    where
+        tr1_0.TypeRoomId=?
+2026-06-20T23:17:54.244+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0 
+    where
+        h1_0.HotelId=?
+2026-06-20T23:18:13.606+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:18:13.635+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:13.672+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:18:13.676+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:13.682+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:13.685+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:17.768+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:18:17.783+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:17.798+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:18:17.802+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:17.805+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:17.808+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:27.664+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:18:27.681+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:27.875+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        [User] u1_0 
+    left join
+        Role r1_0 
+            on r1_0.RoleId=u1_0.RoleId 
+    where
+        u1_0.UserId=?
+2026-06-20T23:18:27.894+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:27.907+07:00  INFO 27880 --- [io-8080-exec-10] genZ.PRM391GenZ.service.UserService      : Updated user: an.nguyen@genzcinema.com
+2026-06-20T23:18:27.959+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    update
+        [User] 
+    set
+        email=?,
+        full_name=?,
+        Image_cccd=?,
+        password=?,
+        phone=?,
+        RoleId=? 
+    where
+        UserId=?
+2026-06-20T23:18:28.106+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:18:28.109+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:28.118+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:18:28.122+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:28.126+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:28.129+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:29.678+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:18:29.684+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:29.694+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:18:29.697+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:29.700+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:29.704+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:39.957+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:18:39.960+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:39.965+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:18:39.970+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:39.978+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:18:39.983+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:05.473+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:05.479+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:05.503+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:05.507+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:05.664+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        [User] u1_0 
+    left join
+        Role r1_0 
+            on r1_0.RoleId=u1_0.RoleId 
+    where
+        u1_0.UserId=?
+2026-06-20T23:19:05.681+07:00  INFO 27880 --- [nio-8080-exec-8] genZ.PRM391GenZ.service.UserService      : Created new user: tuanthanh592004@gmail.com
+2026-06-20T23:19:05.688+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    insert 
+    into
+        [User]
+        (
+            email, full_name, Image_cccd, password, phone, RoleId, UserId
+        ) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2026-06-20T23:19:05.885+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:05.889+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:05.899+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:19:05.903+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:05.906+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:05.910+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:08.743+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:08.751+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:08.760+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:19:08.764+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:08.768+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:08.771+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:18.244+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:18.255+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:18.269+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        [User] u1_0 
+    left join
+        Role r1_0 
+            on r1_0.RoleId=u1_0.RoleId 
+    where
+        u1_0.UserId=?
+2026-06-20T23:19:18.274+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:18.278+07:00  INFO 27880 --- [nio-8080-exec-6] genZ.PRM391GenZ.service.UserService      : Updated user: dung.pham@genzcinema.com
+2026-06-20T23:19:18.280+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    update
+        [User] 
+    set
+        email=?,
+        full_name=?,
+        Image_cccd=?,
+        password=?,
+        phone=?,
+        RoleId=? 
+    where
+        UserId=?
+2026-06-20T23:19:18.421+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:18.424+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:18.431+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:19:18.433+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:18.435+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:18.437+07:00 DEBUG 27880 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:21.986+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:22.001+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:22.026+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        [User] u1_0 
+    left join
+        Role r1_0 
+            on r1_0.RoleId=u1_0.RoleId 
+    where
+        u1_0.UserId=?
+2026-06-20T23:19:22.036+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:22.039+07:00  INFO 27880 --- [nio-8080-exec-8] genZ.PRM391GenZ.service.UserService      : Updated user: an.nguyen@genzcinema.com
+2026-06-20T23:19:22.041+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    update
+        [User] 
+    set
+        email=?,
+        full_name=?,
+        Image_cccd=?,
+        password=?,
+        phone=?,
+        RoleId=? 
+    where
+        UserId=?
+2026-06-20T23:19:22.164+07:00 DEBUG 27880 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:19:22.168+07:00 DEBUG 27880 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:22.177+07:00 DEBUG 27880 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0
+2026-06-20T23:19:22.182+07:00 DEBUG 27880 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:22.184+07:00 DEBUG 27880 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:19:22.187+07:00 DEBUG 27880 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:23:42.441+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:23:42.467+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:23:42.487+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.494+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.497+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.502+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0
+2026-06-20T23:23:42.509+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.516+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.520+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.523+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.529+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.533+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.536+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.539+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:23:42.542+07:00 DEBUG 27880 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.476+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:24:05.501+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:24:05.512+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.518+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.521+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.526+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0
+2026-06-20T23:24:05.534+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.544+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.549+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.552+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.556+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.560+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.564+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.568+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:05.572+07:00 DEBUG 27880 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.391+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:24:09.402+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:24:09.410+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.418+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.420+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.426+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0
+2026-06-20T23:24:09.434+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.451+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.454+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.463+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.470+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.473+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.475+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.478+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:24:09.480+07:00 DEBUG 27880 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.160+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:25:18.168+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:25:18.311+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:25:18.318+07:00 DEBUG 27880 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:25:18.746+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.UserId,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.Image_cccd,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.RoleId 
+    from
+        [User] u1_0 
+    where
+        u1_0.email=?
+2026-06-20T23:25:18.749+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        r1_0.RoleId,
+        r1_0.RoleName 
+    from
+        Role r1_0 
+    where
+        r1_0.RoleId=?
+2026-06-20T23:25:18.756+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.763+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.765+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    where
+        b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.770+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        h1_0.HotelId,
+        h1_0.address,
+        h1_0.countRoom,
+        h1_0.name,
+        h1_0.phone 
+    from
+        Hotel h1_0
+2026-06-20T23:25:18.778+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.787+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.793+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.796+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.800+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.803+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.806+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.810+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
+2026-06-20T23:25:18.814+07:00 DEBUG 27880 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(b1_0.totalPrice), 0) 
+    from
+        Booking b1_0 
+    join
+        Room r1_0 
+            on r1_0.RoomId=b1_0.RoomId 
+    where
+        r1_0.HotelId=? 
+        and b1_0.checkOut between ? and ? 
+        and b1_0.totalPrice is not null
