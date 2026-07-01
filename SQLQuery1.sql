@@ -67,6 +67,9 @@ CREATE TABLE Booking (
     checkOut DATETIME NULL,
     totalPrice DECIMAL(18, 2),
     Status NVARCHAR(50), -- Trạng thái Booking (VD: Đã thanh toán, Chưa thanh toán, Đã hủy)
+    voucherCode VARCHAR(50) NULL,
+    discountAmount DECIMAL(18, 2) NULL DEFAULT 0.00,
+    note NVARCHAR(MAX) NULL,
     
     FOREIGN KEY (RoomId) REFERENCES Room(RoomId),
     FOREIGN KEY (UserId) REFERENCES [User](UserId),

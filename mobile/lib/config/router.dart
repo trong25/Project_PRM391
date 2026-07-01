@@ -14,6 +14,9 @@ import '../screens/admin/admin_dashboard.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
+import '../screens/customer/booking/booking_screen.dart';
+import '../providers/room_provider.dart';
+import '../models/room_model.dart';
 
 // ── Listenable bridge: Riverpod → GoRouter ────────────────────────────────────
 // GoRouter cần một ChangeNotifier để biết khi nào chạy lại redirect.
@@ -118,6 +121,20 @@ final routerProvider = Provider<GoRouter>((ref) {
           return RoomDetailScreen(roomId: id);
         },
       ),
+      GoRoute(
+        path: '/rooms/:id/booking',
+        name: 'room-booking',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          final extra = state.extra;
+          if (extra != null) {
+            // Room đã được truyền trực tiếp từ màn hình chi tiết
+            return BookingScreen(room: extra as RoomModel);
+          }
+          // Fallback: load room rồi mới mở BookingScreen
+          return _RoomBookingLoader(roomId: id);
+        },
+      ),
     ],
   );
 
@@ -136,3 +153,26 @@ String _homeForRole(String? role) {
       return '/home';
   }
 }
+
+// ── Helper: load room rồi mở BookingScreen (fallback khi không có extra) ─────
+class _RoomBookingLoader extends ConsumerWidget {
+  final String roomId;
+  const _RoomBookingLoader({required this.roomId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final detailState = ref.watch(roomDetailProvider(roomId));
+
+    if (detailState.isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (detailState.room == null) {
+      return const Scaffold(
+        body: Center(child: Text('Không tìm thấy phòng')),
+      );
+    }
+    return BookingScreen(room: detailState.room!);
+  }
+}

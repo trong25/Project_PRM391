@@ -96,6 +96,7 @@ class _RoomListScreenState extends ConsumerState<RoomListScreen> {
 
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (_) => _FilterSheet(
@@ -417,14 +418,15 @@ class _RoomListScreenState extends ConsumerState<RoomListScreen> {
           children: [
             Expanded(child: _buildRoomImage(room.imageUrl)),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     '${room.nameRoom} - $typeLabel',
                     style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: AppTheme.textPrimary),
                     maxLines: 1,
@@ -435,21 +437,23 @@ class _RoomListScreenState extends ConsumerState<RoomListScreen> {
                     shaderCallback: (bounds) =>
                         AppTheme.primaryGradient.createShader(bounds),
                     child: Text(priceText,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 11,
                             fontWeight: FontWeight.w500,
                             color: Colors.white)),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Row(
                     children: [
                       const Icon(Icons.location_on_outlined,
-                          size: 11, color: AppTheme.textGray),
+                          size: 10, color: AppTheme.textGray),
                       const SizedBox(width: 2),
                       Expanded(
                         child: Text(address,
                             style: const TextStyle(
-                                fontSize: 11, color: AppTheme.textGray),
+                                fontSize: 10, color: AppTheme.textGray),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis),
                       ),
@@ -553,48 +557,62 @@ class _FilterSheetState extends State<_FilterSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 40, height: 4,
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(4)),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(widget.title,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.textPrimary)),
-          const SizedBox(height: 12),
-          ...widget.options.map((opt) => _buildOption(opt)),
-          const SizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                widget.onSelect(_current);
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+    final maxHeight = MediaQuery.of(context).size.height * 0.75;
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: maxHeight),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Handle bar
+            Center(
+              child: Container(
+                width: 40, height: 4,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(4)),
               ),
-              child: const Text('Áp dụng',
-                  style: TextStyle(fontWeight: FontWeight.w600)),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Text(widget.title,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary)),
+            const SizedBox(height: 12),
+            // Scrollable options list
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: widget.options.map((opt) => _buildOption(opt)).toList(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Fixed apply button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  widget.onSelect(_current);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text('Áp dụng',
+                    style: TextStyle(fontWeight: FontWeight.w600)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

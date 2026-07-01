@@ -541,10 +541,10 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
           ),
           child: ElevatedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Chức năng đặt phòng đang phát triển')),
-              );
+              final room = ref.read(roomDetailProvider(widget.roomId)).room;
+              if (room != null) {
+                context.push('/rooms/${room.roomId}/booking', extra: room);
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
