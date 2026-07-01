@@ -12,8 +12,10 @@ class TypeRoomModel {
   });
 
   factory TypeRoomModel.fromJson(Map<String, dynamic> json) => TypeRoomModel(
-        typeRoomId: json['typeRoomId'] as String? ?? '',
-        typeRoom: json['typeRoom'] as String? ?? '',
+        typeRoomId: json['typeRoomId']?.toString() ?? '',
+        typeRoom: json['typeRoom']?.toString() ??
+            json['typeRoomName']?.toString() ??
+            '',
         pricePerHour: (json['pricePerHour'] as num?)?.toDouble(),
       );
 }
@@ -28,17 +30,20 @@ class HotelModel {
   const HotelModel({
     required this.hotelId,
     required this.name,
-    required this.address,
+    this.address = '',
     this.phone,
     this.imageUrl,
   });
 
   factory HotelModel.fromJson(Map<String, dynamic> json) => HotelModel(
-        hotelId: json['hotelId'] as String? ?? '',
-        name: json['name'] as String? ?? '',
-        address: json['address'] as String? ?? '',
-        phone: json['phone'] as String?,
-        imageUrl: json['imageUrl'] as String?,
+        hotelId: json['hotelId']?.toString() ?? '',
+        name: json['name']?.toString() ??
+            json['hotelName']?.toString() ??
+            json['nameHotel']?.toString() ??
+            '',
+        address: json['address']?.toString() ?? '',
+        phone: json['phone']?.toString(),
+        imageUrl: json['imageUrl']?.toString(),
       );
 }
 
@@ -46,29 +51,74 @@ class RoomModel {
   final String roomId;
   final String nameRoom;
   final TypeRoomModel? typeRoom;
-  final String? status;
   final HotelModel? hotel;
+  final String? status;
   final String? imageUrl;
+  final String? _typeRoomId;
+  final String? _typeRoomName;
+  final String? _hotelId;
+  final String? _hotelName;
 
   const RoomModel({
     required this.roomId,
     required this.nameRoom,
     this.typeRoom,
-    this.status,
     this.hotel,
+    this.status,
     this.imageUrl,
-  });
+    String? typeRoomId,
+    String? typeRoomName,
+    String? hotelId,
+    String? hotelName,
+  })  : _typeRoomId = typeRoomId,
+        _typeRoomName = typeRoomName,
+        _hotelId = hotelId,
+        _hotelName = hotelName;
 
-  factory RoomModel.fromJson(Map<String, dynamic> json) => RoomModel(
-        roomId: json['roomId'] as String? ?? '',
-        nameRoom: json['nameRoom'] as String? ?? '',
-        typeRoom: json['typeRoom'] != null
-            ? TypeRoomModel.fromJson(json['typeRoom'] as Map<String, dynamic>)
-            : null,
-        status: json['status'] as String?,
-        hotel: json['hotel'] != null
-            ? HotelModel.fromJson(json['hotel'] as Map<String, dynamic>)
-            : null,
-        imageUrl: json['imageUrl'] as String?,
-      );
+  String? get typeRoomId => _typeRoomId ?? typeRoom?.typeRoomId;
+
+  String? get typeRoomName => _typeRoomName ?? typeRoom?.typeRoom;
+
+  String? get hotelId => _hotelId ?? hotel?.hotelId;
+
+  String? get hotelName => _hotelName ?? hotel?.name;
+
+  factory RoomModel.fromJson(Map<String, dynamic> json) {
+    final typeRoomJson = _asMap(json['typeRoom']);
+    final hotelJson = _asMap(json['hotel']);
+
+    return RoomModel(
+      roomId: json['roomId']?.toString() ?? '',
+      nameRoom: json['nameRoom']?.toString() ??
+          json['roomName']?.toString() ??
+          json['name']?.toString() ??
+          '',
+      typeRoom:
+          typeRoomJson == null ? null : TypeRoomModel.fromJson(typeRoomJson),
+      hotel: hotelJson == null ? null : HotelModel.fromJson(hotelJson),
+      typeRoomId: json['typeRoomId']?.toString(),
+      typeRoomName: json['typeRoomName']?.toString(),
+      hotelId: json['hotelId']?.toString(),
+      hotelName: json['hotelName']?.toString(),
+      status: json['status']?.toString(),
+      imageUrl: json['imageUrl']?.toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (roomId.isNotEmpty) 'roomId': roomId,
+      'nameRoom': nameRoom,
+      'typeRoomId': typeRoomId,
+      'hotelId': hotelId,
+      'status': status,
+      if (imageUrl != null) 'imageUrl': imageUrl,
+    };
+  }
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  if (value is Map<String, dynamic>) return value;
+  if (value is Map) return Map<String, dynamic>.from(value);
+  return null;
 }

@@ -1,13 +1,14 @@
 // lib/providers/room_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../models/room_model.dart';
+import '../services/room_api_service.dart';
 import '../services/room_service.dart';
 
-// ── Service provider ──────────────────────────────────────────────────────────
 final roomServiceProvider = Provider<RoomService>((_) => RoomService());
+final roomApiProvider = Provider<RoomApiService>((_) => RoomApiService());
 
-// ── State: danh sách phòng ────────────────────────────────────────────────────
 class RoomListState {
   final List<RoomModel> rooms;
   final bool isLoading;
@@ -23,12 +24,13 @@ class RoomListState {
     List<RoomModel>? rooms,
     bool? isLoading,
     String? error,
-  }) =>
-      RoomListState(
-        rooms: rooms ?? this.rooms,
-        isLoading: isLoading ?? this.isLoading,
-        error: error,
-      );
+  }) {
+    return RoomListState(
+      rooms: rooms ?? this.rooms,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
 }
 
 class RoomListNotifier extends StateNotifier<RoomListState> {
@@ -47,11 +49,6 @@ class RoomListNotifier extends StateNotifier<RoomListState> {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
-
-  // Lọc theo loại phòng
-  void filterByType(String? typeRoomId) {
-    // TODO: gọi API hoặc filter local
-  }
 }
 
 final roomListProvider =
@@ -59,7 +56,6 @@ final roomListProvider =
   return RoomListNotifier(ref.read(roomServiceProvider));
 });
 
-// ── State: chi tiết phòng ─────────────────────────────────────────────────────
 class RoomDetailState {
   final RoomModel? room;
   final bool isLoading;
@@ -71,12 +67,13 @@ class RoomDetailState {
     RoomModel? room,
     bool? isLoading,
     String? error,
-  }) =>
-      RoomDetailState(
-        room: room ?? this.room,
-        isLoading: isLoading ?? this.isLoading,
-        error: error,
-      );
+  }) {
+    return RoomDetailState(
+      room: room ?? this.room,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
 }
 
 class RoomDetailNotifier extends StateNotifier<RoomDetailState> {
@@ -99,7 +96,23 @@ final roomDetailProvider =
     StateNotifierProvider.family<RoomDetailNotifier, RoomDetailState, String>(
         (ref, roomId) {
   final notifier = RoomDetailNotifier(ref.read(roomServiceProvider));
-  // Auto-load khi provider được tạo
   Future.microtask(() => notifier.loadRoom(roomId));
   return notifier;
+});
+
+final roomsProvider =
+    FutureProvider.family<List<RoomModel>, String?>((ref, hotelId) async {
+  final api = ref.watch(roomApiProvider);
+  if (hotelId != null && hotelId.isNotEmpty) {
+    return api.getRoomsByHotel(hotelId);
+  }
+  return api.getAllRooms();
+});
+
+final hotelsProvider = FutureProvider<List<HotelModel>>((ref) async {
+  return ref.watch(roomApiProvider).getHotels();
+});
+
+final typeRoomsProvider = FutureProvider<List<TypeRoomModel>>((ref) async {
+  return ref.watch(roomApiProvider).getTypeRooms();
 });

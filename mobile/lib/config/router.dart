@@ -1,40 +1,44 @@
-
 // lib/config/router.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../providers/auth_provider.dart';
+
 import '../config/app_config.dart';
+import '../models/room_model.dart';
+import '../providers/auth_provider.dart';
+import '../providers/room_provider.dart';
+import '../screens/admin/admin_dashboard.dart';
+import '../screens/admin/dashboard/admin_dashboard_screen.dart';
+import '../screens/admin/room/room_management_screen.dart';
+import '../screens/admin/user/user_management_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/auth/request_reset_screen.dart';
 import '../screens/auth/reset_password_screen.dart';
-import '../screens/home/home_screen.dart';
-import '../screens/admin/admin_dashboard.dart';
+import '../screens/customer/booking/booking_screen.dart';
 import '../screens/customer/profile_screen.dart';
+import '../screens/customer/room/room_detail_screen.dart';
+import '../screens/customer/room/room_list_screen.dart';
+import '../screens/customer/saved/saved_screen.dart';
+import '../screens/home/home_screen.dart';
 
-// ── Listenable bridge: Riverpod → GoRouter ────────────────────────────────────
-// GoRouter cần một ChangeNotifier để biết khi nào chạy lại redirect.
-// Class này lắng nghe authProvider và notify GoRouter khi state thay đổi,
-// nhưng KHÔNG rebuild routerProvider → GoRouter không bị tạo lại.
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
     _ref.listen<AuthState>(authProvider, (_, __) => notifyListeners());
   }
+
   final Ref _ref;
+
   AuthState get authState => _ref.read(authProvider);
 }
 
-// ── Router provider ───────────────────────────────────────────────────────────
-// Dùng ref.read (không phải ref.watch) → Provider này chỉ chạy 1 lần duy nhất
-// → GoRouter không bao giờ bị tạo lại → initialLocation không reset.
 final routerProvider = Provider<GoRouter>((ref) {
   final notifier = _AuthNotifierListenable(ref);
 
   final router = GoRouter(
     initialLocation: '/login',
-    refreshListenable: notifier, // GoRouter tự gọi lại redirect khi auth thay đổi
+    refreshListenable: notifier,
     redirect: (context, state) {
       final isResetWithToken =
           state.matchedLocation.startsWith('/reset-password') &&
@@ -51,17 +55,18 @@ final routerProvider = Provider<GoRouter>((ref) {
           state.matchedLocation.startsWith('/reset-password');
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.roleId);
+      if (isLoggedIn && isAuthRoute) {
+        return _homeForRole(authState.user?.roleId ?? authState.user?.role);
+      }
       if (isLoggedIn &&
           state.matchedLocation.startsWith('/admin') &&
-          !_isAdminRole(authState.user?.roleId)) {
+          !_isAdminRole(authState.user?.roleId ?? authState.user?.role)) {
         return '/home';
       }
 
       return null;
     },
     routes: [
-      // ── Auth routes ──────────────────────────────────────────────────
       GoRoute(
         path: '/login',
         name: 'login',
@@ -85,17 +90,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           return ResetPasswordScreen(token: token);
         },
       ),
-
-      // ── App routes ────────────────────────────────────────────────────
       GoRoute(
         path: '/home',
         name: 'home',
         builder: (_, __) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/admin',
-        name: 'admin',
-        builder: (_, __) => const AdminDashboard(),
       ),
       GoRoute(
         path: '/account',
@@ -107,132 +105,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'profile',
         builder: (_, __) => const ProfileScreen(),
       ),
-    ],
-  );
-
-  // Hủy notifier khi provider bị dispose
-  ref.onDispose(notifier.dispose);
-
-  return router;
-});
-
-String _homeForRole(String? role) {
-  if (role == null) return '/home';
-  switch (role.toLowerCase()) {
-    case AppConfig.roleAdmin:
-      return '/admin';
-    default:
-      return '/home';
-  }
-}
-
-// lib/config/router.dart
-
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import '../providers/auth_provider.dart';
-import '../config/app_config.dart';
-import '../screens/auth/login_screen.dart';
-import '../screens/auth/register_screen.dart';
-import '../screens/auth/request_reset_screen.dart';
-import '../screens/auth/reset_password_screen.dart';
-import '../screens/home/home_screen.dart';
-import '../screens/admin/admin_dashboard.dart';
-import '../screens/customer/room/room_list_screen.dart';
-import '../screens/customer/room/room_detail_screen.dart';
-import '../screens/customer/saved/saved_screen.dart';
-import '../screens/customer/booking/booking_screen.dart';
-import '../providers/room_provider.dart';
-import '../models/room_model.dart';
-
-// ── Listenable bridge: Riverpod → GoRouter ────────────────────────────────────
-// GoRouter cần một ChangeNotifier để biết khi nào chạy lại redirect.
-// Class này lắng nghe authProvider và notify GoRouter khi state thay đổi,
-// nhưng KHÔNG rebuild routerProvider → GoRouter không bị tạo lại.
-class _AuthNotifierListenable extends ChangeNotifier {
-  _AuthNotifierListenable(this._ref) {
-    _ref.listen<AuthState>(authProvider, (_, __) => notifyListeners());
-  }
-  final Ref _ref;
-  AuthState get authState => _ref.read(authProvider);
-}
-
-// ── Router provider ───────────────────────────────────────────────────────────
-// Dùng ref.read (không phải ref.watch) → Provider này chỉ chạy 1 lần duy nhất
-// → GoRouter không bao giờ bị tạo lại → initialLocation không reset.
-final routerProvider = Provider<GoRouter>((ref) {
-  final notifier = _AuthNotifierListenable(ref);
-
-  final router = GoRouter(
-    initialLocation: '/login',
-    refreshListenable: notifier, // GoRouter tự gọi lại redirect khi auth thay đổi
-    redirect: (context, state) {
-      final isResetWithToken =
-          state.matchedLocation.startsWith('/reset-password') &&
-              (state.uri.queryParameters['token']?.isNotEmpty ?? false);
-      if (isResetWithToken) return null;
-
-      final authState = notifier.authState;
-      if (!authState.isInitialized) return null;
-
-      final isLoggedIn = authState.isLoggedIn;
-      final isAuthRoute = state.matchedLocation.startsWith('/login') ||
-          state.matchedLocation.startsWith('/register') ||
-          state.matchedLocation.startsWith('/request-reset') ||
-          state.matchedLocation.startsWith('/reset-password');
-
-      if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.role);
-
-      return null;
-    },
-    routes: [
-      // ── Auth routes ──────────────────────────────────────────────────
-      GoRoute(
-        path: '/login',
-        name: 'login',
-        builder: (_, __) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: '/register',
-        name: 'register',
-        builder: (_, __) => const RegisterScreen(),
-      ),
-      GoRoute(
-        path: '/request-reset',
-        name: 'request-reset',
-        builder: (_, __) => const RequestResetScreen(),
-      ),
-      GoRoute(
-        path: '/reset-password',
-        name: 'reset-password',
-        builder: (context, state) {
-          final token = state.uri.queryParameters['token'] ?? '';
-          return ResetPasswordScreen(token: token);
-        },
-      ),
-
-      // ── App routes ────────────────────────────────────────────────────
-      GoRoute(
-        path: '/home',
-        name: 'home',
-        builder: (_, __) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/admin',
-        name: 'admin',
-        builder: (_, __) => const AdminDashboard(),
-      ),
-
-      // ── Saved routes ─────────────────────────────────────────────────
       GoRoute(
         path: '/saved',
         name: 'saved',
         builder: (_, __) => const SavedScreen(),
       ),
-
-      // ── Room routes ───────────────────────────────────────────────────
       GoRoute(
         path: '/rooms',
         name: 'rooms',
@@ -255,36 +132,48 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final id = state.pathParameters['id'] ?? '';
           final extra = state.extra;
-          if (extra != null) {
-            // Room đã được truyền trực tiếp từ màn hình chi tiết
-            return BookingScreen(room: extra as RoomModel);
-          }
-          // Fallback: load room rồi mới mở BookingScreen
+          if (extra is RoomModel) return BookingScreen(room: extra);
           return _RoomBookingLoader(roomId: id);
         },
+      ),
+      GoRoute(
+        path: '/admin',
+        name: 'admin',
+        builder: (_, __) => const AdminDashboard(),
+      ),
+      GoRoute(
+        path: '/admin/revenue',
+        name: 'admin-revenue',
+        builder: (_, __) => const AdminDashboardScreen(),
+      ),
+      GoRoute(
+        path: '/admin/rooms',
+        name: 'admin-rooms',
+        builder: (_, __) => const RoomManagementScreen(),
+      ),
+      GoRoute(
+        path: '/admin/account',
+        name: 'admin-account',
+        builder: (_, __) => const UserManagementScreen(),
       ),
     ],
   );
 
-  // Hủy notifier khi provider bị dispose
   ref.onDispose(notifier.dispose);
-
   return router;
 });
 
-String _homeForRole(String? role) {
-  if (role == null) return '/home';
-  switch (role.toLowerCase()) {
-    case AppConfig.roleAdmin:
-      return '/admin';
-    default:
-      return '/home';
-  }
+String _homeForRole(String? roleId) {
+  return _isAdminRole(roleId) ? '/admin' : '/home';
 }
 
-// ── Helper: load room rồi mở BookingScreen (fallback khi không có extra) ─────
+bool _isAdminRole(String? roleId) {
+  return roleId?.toUpperCase() == AppConfig.roleAdmin;
+}
+
 class _RoomBookingLoader extends ConsumerWidget {
   final String roomId;
+
   const _RoomBookingLoader({required this.roomId});
 
   @override
@@ -304,4 +193,3 @@ class _RoomBookingLoader extends ConsumerWidget {
     return BookingScreen(room: detailState.room!);
   }
 }
-

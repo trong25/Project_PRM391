@@ -2,7 +2,6 @@
 
 import 'package:dio/dio.dart';
 import '../models/room_model.dart';
-import '../models/category_models.dart';
 import 'api_client.dart';
 
 class RoomApiService {
