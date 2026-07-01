@@ -18,6 +18,10 @@ class DashboardApiService {
       }
       throw Exception(response.data['message'] ?? 'Không tải được doanh thu');
     } on DioException catch (e) {
+      if (e.response?.statusCode == 403) {
+        throw Exception('Bạn không có quyền xem doanh thu. Vui lòng đăng nhập bằng tài khoản admin.');
+      }
+
       final data = e.response?.data;
       if (data is Map && data['message'] != null) {
         throw Exception(data['message']);

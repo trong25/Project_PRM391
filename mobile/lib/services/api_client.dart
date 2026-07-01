@@ -21,7 +21,8 @@ class ApiClient {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         final token = await _storage.read(key: AppConfig.tokenKey);
-        if (token != null) {
+        final isAuthEndpoint = options.path.startsWith('/auth/');
+        if (!isAuthEndpoint && token != null && token.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $token';
         }
         return handler.next(options);

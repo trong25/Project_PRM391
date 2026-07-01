@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/DashboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/DashboardService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DashboardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DashboardService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +107,9 @@
       <workItem from="1781070392880" duration="4088000" />
       <workItem from="1781081026087" duration="876000" />
       <workItem from="1782108775556" duration="1777000" />
-      <workItem from="1782714981879" duration="6207000" />
+      <workItem from="1782714981879" duration="6363000" />
+      <workItem from="1782894061726" duration="23000" />
+      <workItem from="1782895464079" duration="3133000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />

@@ -73,6 +73,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               ),
               const SizedBox(height: 12),
               _TotalRevenueHero(
+                overview: overview,
                 period: _period,
                 revenue: _valueForPeriod(overview.total, _period),
                 breakdown: overview.total,
@@ -94,8 +95,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                   onHotelTap: (hotel) => _showRevenueDetail(context, hotel),
                 ),
                 const SizedBox(height: 16),
-                _RevenueDistribution(
-                  hotels: _sortHotelsByPeriod(overview.hotels, _period),
+                _RevenueInsights(
+                  overview: overview,
                   period: _period,
                 ),
               ],
@@ -135,7 +136,7 @@ class _RevenueTrendPanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _SectionHeader(
-              icon: Icons.insights_outlined,
+              icon: Icons.bar_chart_rounded,
               title: 'Xu hướng doanh thu',
             ),
             const SizedBox(height: 12),
@@ -175,25 +176,30 @@ class _RevenueTrendBars extends StatelessWidget {
     final maxRevenue = points.fold<double>(
         0, (max, point) => point.value > max ? point.value : max);
 
-    return Column(
-      children: [
-        for (var index = 0; index < points.length; index++) ...[
-          _RevenueTrendRow(
-            point: points[index],
-            maxRevenue: maxRevenue,
-          ),
-          if (index < points.length - 1) const SizedBox(height: 10),
-        ],
-      ],
+    return SizedBox(
+      height: 236,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            for (final point in points)
+              _RevenueTrendColumn(
+                point: point,
+                maxRevenue: maxRevenue,
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class _RevenueTrendRow extends StatelessWidget {
+class _RevenueTrendColumn extends StatelessWidget {
   final RevenuePoint point;
   final double maxRevenue;
 
-  const _RevenueTrendRow({
+  const _RevenueTrendColumn({
     required this.point,
     required this.maxRevenue,
   });
@@ -203,48 +209,51 @@ class _RevenueTrendRow extends StatelessWidget {
     final ratio =
         maxRevenue <= 0 ? 0.0 : (point.value / maxRevenue).clamp(0, 1);
 
-    return Row(
-      children: [
-        SizedBox(
-          width: 76,
-          child: Text(
+    final barHeight = 24 + (126 * ratio.toDouble());
+
+    return SizedBox(
+      width: 54,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            height: 28,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                _formatCompactCurrency(point.value),
+                style: const TextStyle(
+                  color: AppTheme.textGray,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Container(
+            width: 28,
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: point.value == maxRevenue && maxRevenue > 0
+                  ? const Color(0xFF0F766E)
+                  : AppTheme.primary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
             point.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: AppTheme.textGray,
+              fontSize: 12,
               fontWeight: FontWeight.w700,
             ),
           ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(
-              value: ratio.toDouble(),
-              minHeight: 12,
-              backgroundColor: const Color(0xFFE5E7EB),
-              color: AppTheme.primaryDark,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        SizedBox(
-          width: 92,
-          child: Text(
-            _formatCompactCurrency(point.value),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.right,
-            style: const TextStyle(
-              color: Color(0xFF0F766E),
-              fontSize: 12,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -277,21 +286,22 @@ class _PeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Wrap(
-          spacing: 8,
-          runSpacing: 8,
+    return Container(
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
           children: [
             for (final period in _RevenuePeriod.values)
-              ChoiceChip(
-                label: Text(period.label),
-                avatar: Icon(_iconForPeriod(period), size: 18),
+              _PeriodSegment(
+                period: period,
                 selected: selected == period,
-                showCheckmark: false,
-                onSelected: (_) => onChanged(period),
+                onTap: () => onChanged(period),
               ),
           ],
         ),
@@ -300,12 +310,62 @@ class _PeriodSelector extends StatelessWidget {
   }
 }
 
+class _PeriodSegment extends StatelessWidget {
+  final _RevenuePeriod period;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _PeriodSegment({
+    required this.period,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 4),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(7),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+          decoration: BoxDecoration(
+            color: selected ? AppTheme.textPrimary : Colors.transparent,
+            borderRadius: BorderRadius.circular(7),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                _iconForPeriod(period),
+                size: 17,
+                color: selected ? Colors.white : AppTheme.textGray,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                period.label,
+                style: TextStyle(
+                  color: selected ? Colors.white : AppTheme.textGray,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _TotalRevenueHero extends StatelessWidget {
+  final RevenueOverview overview;
   final _RevenuePeriod period;
   final double revenue;
   final RevenueBreakdown breakdown;
 
   const _TotalRevenueHero({
+    required this.overview,
     required this.period,
     required this.revenue,
     required this.breakdown,
@@ -313,6 +373,9 @@ class _TotalRevenueHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final change = _changeForPeriod(overview, period);
+    final topHotel = _topHotelForPeriod(overview.hotels, period);
+
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -330,7 +393,7 @@ class _TotalRevenueHero extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
-                    Icons.payments_outlined,
+                    Icons.analytics_outlined,
                     color: Color(0xFF0F766E),
                   ),
                 ),
@@ -347,7 +410,7 @@ class _TotalRevenueHero extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        period.label,
+                        period.detailLabel,
                         style: const TextStyle(
                           color: AppTheme.textPrimary,
                           fontSize: 18,
@@ -357,6 +420,8 @@ class _TotalRevenueHero extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(width: 10),
+                _ChangePill(change: change),
               ],
             ),
             const SizedBox(height: 18),
@@ -372,10 +437,155 @@ class _TotalRevenueHero extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 14),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final stats = [
+                  _HeroStat(
+                    icon: Icons.trending_up,
+                    label: 'So với kỳ trước',
+                    value: change == null
+                        ? 'Chưa đủ dữ liệu'
+                        : _formatPercentChange(change.percent),
+                    tone: change == null || change.percent >= 0
+                        ? const Color(0xFF0F766E)
+                        : AppTheme.error,
+                  ),
+                  _HeroStat(
+                    icon: Icons.storefront_outlined,
+                    label: 'Chi nhánh tốt nhất',
+                    value: topHotel?.hotelName ?? 'Chưa có dữ liệu',
+                    tone: AppTheme.primaryDark,
+                  ),
+                ];
+
+                if (constraints.maxWidth < 560) {
+                  return Column(
+                    children: [
+                      for (var index = 0; index < stats.length; index++) ...[
+                        stats[index],
+                        if (index < stats.length - 1)
+                          const SizedBox(height: 8),
+                      ],
+                    ],
+                  );
+                }
+
+                return Row(
+                  children: [
+                    for (var index = 0; index < stats.length; index++) ...[
+                      Expanded(child: stats[index]),
+                      if (index < stats.length - 1) const SizedBox(width: 8),
+                    ],
+                  ],
+                );
+              },
+            ),
             const SizedBox(height: 16),
             _BreakdownChips(revenue: breakdown, selected: period),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ChangePill extends StatelessWidget {
+  final _RevenueChange? change;
+
+  const _ChangePill({required this.change});
+
+  @override
+  Widget build(BuildContext context) {
+    final isPositive = change == null || change!.percent >= 0;
+    final color = change == null
+        ? AppTheme.textGray
+        : isPositive
+            ? const Color(0xFF0F766E)
+            : AppTheme.error;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            isPositive ? Icons.arrow_upward : Icons.arrow_downward,
+            size: 16,
+            color: color,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            change == null ? 'N/A' : _formatPercentChange(change!.percent),
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeroStat extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color tone;
+
+  const _HeroStat({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.tone,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: tone, size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: AppTheme.textGray,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -493,26 +703,32 @@ class _BranchLeaderboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final visibleHotels = hotels.take(8).toList();
+
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _SectionHeader(
-              icon: Icons.leaderboard_outlined,
+              icon: Icons.table_chart_outlined,
               title: 'Xếp hạng chi nhánh',
             ),
-            const SizedBox(height: 8),
-            for (var index = 0; index < hotels.length; index++)
-              _BranchRankTile(
+            const SizedBox(height: 12),
+            const _BranchTableHeader(),
+            const Divider(height: 18),
+            for (var index = 0; index < visibleHotels.length; index++) ...[
+              _BranchRevenueRow(
                 rank: index + 1,
-                hotel: hotels[index],
+                hotel: visibleHotels[index],
                 period: period,
                 totalRevenue: totalRevenue,
-                onTap: () => onHotelTap(hotels[index]),
+                onTap: () => onHotelTap(visibleHotels[index]),
               ),
+              if (index < visibleHotels.length - 1) const Divider(height: 18),
+            ],
           ],
         ),
       ),
@@ -520,14 +736,63 @@ class _BranchLeaderboard extends StatelessWidget {
   }
 }
 
-class _BranchRankTile extends StatelessWidget {
+class _BranchTableHeader extends StatelessWidget {
+  const _BranchTableHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      children: [
+        SizedBox(width: 42),
+        Expanded(
+          flex: 3,
+          child: Text(
+            'Chi nhánh',
+            style: TextStyle(
+              color: AppTheme.textGray,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(
+            'Doanh thu',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: AppTheme.textGray,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        SizedBox(width: 12),
+        SizedBox(
+          width: 66,
+          child: Text(
+            'Tỷ trọng',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: AppTheme.textGray,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BranchRevenueRow extends StatelessWidget {
   final int rank;
   final HotelRevenue hotel;
   final _RevenuePeriod period;
   final double totalRevenue;
   final VoidCallback onTap;
 
-  const _BranchRankTile({
+  const _BranchRevenueRow({
     required this.rank,
     required this.hotel,
     required this.period,
@@ -538,68 +803,101 @@ class _BranchRankTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final revenue = _valueForPeriod(hotel.revenue, period);
-    final ratio =
-        totalRevenue <= 0 ? 0.0 : (revenue / totalRevenue).clamp(0, 1);
+    final share = totalRevenue <= 0 ? 0.0 : revenue / totalRevenue;
+    final monthChange = hotel.revenue.lastMonth <= 0
+        ? null
+        : (hotel.revenue.month - hotel.revenue.lastMonth) /
+            hotel.revenue.lastMonth;
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
             _RankBadge(rank: rank),
-            const SizedBox(width: 12),
+            const SizedBox(width: 8),
             Expanded(
+              flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          hotel.hotelName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: AppTheme.textPrimary,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        _formatCompactCurrency(revenue),
-                        style: const TextStyle(
-                          color: Color(0xFF0F766E),
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: ratio.toDouble(),
-                      minHeight: 7,
-                      backgroundColor: const Color(0xFFE5E7EB),
-                      color: rank == 1
-                          ? const Color(0xFF0F766E)
-                          : AppTheme.primary,
+                  Text(
+                    hotel.hotelName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppTheme.textPrimary,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
+                  const SizedBox(height: 4),
+                  _HotelChangeText(change: monthChange),
                 ],
               ),
             ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.chevron_right,
-              color: AppTheme.textGray,
-              size: 20,
+            Expanded(
+              flex: 2,
+              child: Text(
+                _formatCompactCurrency(revenue),
+                textAlign: TextAlign.right,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Color(0xFF0F766E),
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            SizedBox(
+              width: 66,
+              child: Text(
+                NumberFormat.percentPattern('vi_VN').format(share),
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: AppTheme.textPrimary,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _HotelChangeText extends StatelessWidget {
+  final double? change;
+
+  const _HotelChangeText({required this.change});
+
+  @override
+  Widget build(BuildContext context) {
+    if (change == null) {
+      return const Text(
+        'Chưa có mốc so sánh',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: AppTheme.textGray,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
+      );
+    }
+
+    final isPositive = change! >= 0;
+    return Text(
+      '${isPositive ? 'Tăng' : 'Giảm'} ${_formatPercentChange(change!)} so với tháng trước',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        color: isPositive ? const Color(0xFF0F766E) : AppTheme.error,
+        fontSize: 12,
+        fontWeight: FontWeight.w700,
       ),
     );
   }
@@ -632,6 +930,186 @@ class _RankBadge extends StatelessWidget {
   }
 }
 
+class _RevenueInsights extends StatelessWidget {
+  final RevenueOverview overview;
+  final _RevenuePeriod period;
+
+  const _RevenueInsights({
+    required this.overview,
+    required this.period,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final points = _pointsForTrend(overview.trends, _trendViewForPeriod(period));
+    final peakPoint = _peakPoint(points);
+    final lowPoint = _lowestPositivePoint(points);
+    final topHotel = _topHotelForPeriod(overview.hotels, period);
+    final weakHotel = _weakHotelForPeriod(overview.hotels, period);
+
+    final cards = [
+      _InsightCard(
+        icon: Icons.emoji_events_outlined,
+        title: 'Mốc tổng cao nhất',
+        value: peakPoint == null
+            ? 'Chưa có dữ liệu'
+            : peakPoint.label,
+        subtitle: peakPoint == null
+            ? 'Tính trên tổng doanh thu toàn hệ thống'
+            : 'Tổng toàn hệ thống: ${_formatCompactCurrency(peakPoint.value)}',
+        color: const Color(0xFF0F766E),
+      ),
+      _InsightCard(
+        icon: Icons.south_east_outlined,
+        title: 'Mốc tổng thấp nhất',
+        value: lowPoint == null
+            ? 'Chưa có dữ liệu'
+            : lowPoint.label,
+        subtitle: lowPoint == null
+            ? 'Tính trên tổng doanh thu toàn hệ thống'
+            : 'Tổng toàn hệ thống: ${_formatCompactCurrency(lowPoint.value)} · không tính mốc 0 VNĐ',
+        color: const Color(0xFFEA580C),
+      ),
+      _InsightCard(
+        icon: Icons.storefront_outlined,
+        title: 'Chi nhánh dẫn đầu',
+        value: topHotel == null
+            ? 'Chưa có dữ liệu'
+            : topHotel.hotelName,
+        subtitle: topHotel == null
+            ? 'Tính theo kỳ đang chọn'
+            : 'Doanh thu kỳ này: ${_formatCompactCurrency(_valueForPeriod(topHotel.revenue, period))}',
+        color: AppTheme.primaryDark,
+      ),
+      _InsightCard(
+        icon: Icons.warning_amber_outlined,
+        title: 'Chi nhánh cần chú ý',
+        value: weakHotel == null
+            ? 'Chưa có dữ liệu'
+            : weakHotel.hotelName,
+        subtitle: weakHotel == null
+            ? 'Tính theo kỳ đang chọn'
+            : 'Đang thấp nhất trong kỳ đang chọn',
+        color: AppTheme.error,
+      ),
+    ];
+
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _SectionHeader(
+              icon: Icons.lightbulb_outline,
+              title: 'Nhận định nhanh',
+            ),
+            const SizedBox(height: 12),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isWide = constraints.maxWidth >= 620;
+                return Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    for (final card in cards)
+                      SizedBox(
+                        width: isWide
+                            ? (constraints.maxWidth - 10) / 2
+                            : constraints.maxWidth,
+                        child: card,
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InsightCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
+  final String subtitle;
+  final Color color;
+
+  const _InsightCard({
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: color, size: 19),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: AppTheme.textGray,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppTheme.textPrimary,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppTheme.textGray,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ignore: unused_element
 class _RevenueDistribution extends StatelessWidget {
   final List<HotelRevenue> hotels;
   final _RevenuePeriod period;
@@ -947,6 +1425,99 @@ IconData _iconForPeriod(_RevenuePeriod period) {
     _RevenuePeriod.lastMonth => Icons.history_outlined,
     _RevenuePeriod.year => Icons.query_stats_outlined,
   };
+}
+
+class _RevenueChange {
+  final double current;
+  final double previous;
+
+  const _RevenueChange({
+    required this.current,
+    required this.previous,
+  });
+
+  double get percent => previous <= 0 ? 0 : (current - previous) / previous;
+}
+
+_RevenueChange? _changeForPeriod(
+  RevenueOverview overview,
+  _RevenuePeriod period,
+) {
+  return switch (period) {
+    _RevenuePeriod.day => _changeFromLastTwo(overview.trends.daysInMonth),
+    _RevenuePeriod.week => null,
+    _RevenuePeriod.month => overview.total.lastMonth <= 0
+        ? null
+        : _RevenueChange(
+            current: overview.total.month,
+            previous: overview.total.lastMonth,
+          ),
+    _RevenuePeriod.lastMonth => null,
+    _RevenuePeriod.year => _changeFromLastTwo(overview.trends.years),
+  };
+}
+
+_RevenueChange? _changeFromLastTwo(List<RevenuePoint> points) {
+  final nonEmpty = points.where((point) => point.value > 0).toList();
+  if (nonEmpty.length < 2) return null;
+  final current = nonEmpty.last;
+  final previous = nonEmpty[nonEmpty.length - 2];
+  if (previous.value <= 0) return null;
+  return _RevenueChange(current: current.value, previous: previous.value);
+}
+
+HotelRevenue? _topHotelForPeriod(
+  List<HotelRevenue> hotels,
+  _RevenuePeriod period,
+) {
+  final sorted = _sortHotelsByPeriod(hotels, period);
+  if (sorted.isEmpty || _valueForPeriod(sorted.first.revenue, period) <= 0) {
+    return null;
+  }
+  return sorted.first;
+}
+
+HotelRevenue? _weakHotelForPeriod(
+  List<HotelRevenue> hotels,
+  _RevenuePeriod period,
+) {
+  final withRevenue = hotels
+      .where((hotel) => _valueForPeriod(hotel.revenue, period) > 0)
+      .toList()
+    ..sort(
+      (a, b) => _valueForPeriod(a.revenue, period)
+          .compareTo(_valueForPeriod(b.revenue, period)),
+    );
+  return withRevenue.isEmpty ? null : withRevenue.first;
+}
+
+RevenuePoint? _peakPoint(List<RevenuePoint> points) {
+  final withRevenue = points.where((point) => point.value > 0).toList();
+  if (withRevenue.isEmpty) return null;
+  withRevenue.sort((a, b) => b.value.compareTo(a.value));
+  return withRevenue.first;
+}
+
+RevenuePoint? _lowestPositivePoint(List<RevenuePoint> points) {
+  final withRevenue = points.where((point) => point.value > 0).toList();
+  if (withRevenue.isEmpty) return null;
+  withRevenue.sort((a, b) => a.value.compareTo(b.value));
+  return withRevenue.first;
+}
+
+_TrendView _trendViewForPeriod(_RevenuePeriod period) {
+  return switch (period) {
+    _RevenuePeriod.day => _TrendView.days,
+    _RevenuePeriod.week => _TrendView.days,
+    _RevenuePeriod.month => _TrendView.months,
+    _RevenuePeriod.lastMonth => _TrendView.months,
+    _RevenuePeriod.year => _TrendView.years,
+  };
+}
+
+String _formatPercentChange(double value) {
+  final prefix = value >= 0 ? '+' : '';
+  return '$prefix${NumberFormat.percentPattern('vi_VN').format(value)}';
 }
 
 String _formatCurrency(double value) {

@@ -53,6 +53,11 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
       if (isLoggedIn && isAuthRoute) return _homeForRole(authState.user?.roleId);
+      if (isLoggedIn &&
+          state.matchedLocation.startsWith('/admin') &&
+          !_isAdminRole(authState.user?.roleId)) {
+        return '/home';
+      }
 
       return null;
     },
@@ -118,13 +123,9 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String _homeForRole(String? roleId) {
-  if (roleId == null) return '/home';
-  switch (roleId.toUpperCase()) {
-    case AppConfig.roleAdmin:
-      return '/admin';
-    case AppConfig.roleStaff:
-      return '/home';
-    default:
-      return '/home';
-  }
+  return _isAdminRole(roleId) ? '/admin' : '/home';
+}
+
+bool _isAdminRole(String? roleId) {
+  return roleId?.toUpperCase() == AppConfig.roleAdmin;
 }
