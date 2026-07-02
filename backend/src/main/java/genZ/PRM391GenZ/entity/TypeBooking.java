@@ -15,7 +15,7 @@ public class TypeBooking {
     @Column(name = "TypeBookingId", length = 50)
     private String typeBookingId;
 
-    @Column(name = "TypeName", nullable = false)
+    @Column(name = "TypeName", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String typeName;
 
     @Column(name = "BookingCode", nullable = false, length = 50)

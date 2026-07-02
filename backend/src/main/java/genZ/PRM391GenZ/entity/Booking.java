@@ -1,5 +1,6 @@
 package genZ.PRM391GenZ.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Booking {
 
     @Id
@@ -39,6 +41,15 @@ public class Booking {
     @Column(name = "totalPrice", precision = 18, scale = 2)
     private BigDecimal totalPrice;
 
-    @Column(name = "Status")
+    @Column(name = "Status", columnDefinition = "NVARCHAR(50)")
     private String status;
+
+    @Column(name = "voucherCode", length = 50)
+    private String voucherCode;
+
+    @Column(name = "discountAmount", precision = 18, scale = 2)
+    private BigDecimal discountAmount;
+
+    @Column(name = "note", columnDefinition = "NVARCHAR(MAX)")
+    private String note;
 }
