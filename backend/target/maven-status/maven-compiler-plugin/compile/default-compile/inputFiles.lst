@@ -1,32 +1,48 @@
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\config\CorsConfig.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\AuthController.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\BookingController.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\RoomController.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\ApiResponse.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\LoginRequest.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\LoginResponse.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\RegisterRequest.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\ResetPasswordDto.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Booking.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Hotel.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\PasswordResetToken.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\PriceConfig.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Role.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Room.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\TypeBooking.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\TypeRoom.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\User.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\exception\GlobalExceptionHandler.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\Prm391GenZApplication.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\BookingRepository.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\HotelRepository.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\PasswordResetTokenRepository.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\RoleRepository.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\RoomRepository.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\UserRepository.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\JwtAuthFilter.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\JwtService.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\SecurityConfig.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\UserDetailsServiceImpl.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\AuthService.java
-D:\FPT\Ki 8\Project_PRM\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\EmailService.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\config\CorsConfig.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\config\UnicodeDataMigration.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\AuthController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\BookingController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\DashboardController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\HotelController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\RoomController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\TypeRoomController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\controller\UserController.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\ApiResponse.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\ChangePasswordRequest.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\LoginRequest.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\LoginResponse.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\ProfileResponse.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\RegisterRequest.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\ResetPasswordDto.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\room\RoomDto.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\UpdateProfileRequest.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\user\UserCreateDto.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\user\UserResponseDto.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\dto\user\UserUpdateDto.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Booking.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Hotel.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\PasswordResetToken.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\PriceConfig.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Role.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\Room.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\TypeBooking.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\TypeRoom.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\entity\User.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\exception\GlobalExceptionHandler.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\Prm391GenZApplication.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\BookingRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\HotelRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\PasswordResetTokenRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\RoleRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\RoomRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\TypeRoomRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\repository\UserRepository.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\JwtAuthFilter.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\JwtService.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\SecurityConfig.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\security\UserDetailsServiceImpl.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\AuthService.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\DashboardService.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\EmailService.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\RoomService.java
+D:\Ky_8\PRM393_Project\Project_PRM391\backend\src\main\java\genZ\PRM391GenZ\service\UserService.java

@@ -1,5 +1,7 @@
 package genZ.PRM391GenZ.dto.room;
 
+import genZ.PRM391GenZ.entity.Hotel;
+import genZ.PRM391GenZ.entity.TypeRoom;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,4 +27,8 @@ public class RoomDto {
     private String hotelName;
     
     private String status;
+    // --- THÊM CÁC TRƯỜNG NÀY ĐỂ LIÊN KẾT VỚI FLUTTER ---
+    private String imageUrl;   // Ảnh của phòng
+    private Hotel hotel;       // Đối tượng Hotel chứa địa chỉ (address), SĐT (phone), imageUrl của khách sạn
+    private TypeRoom typeRoom; // Đối tượng TypeRoom chứa giá phòng (pricePerHour)
 }

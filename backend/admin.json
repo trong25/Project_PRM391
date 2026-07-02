@@ -1,7 +1,7 @@
-{
-  "fullName": "Admin Giam Doc",
-  "email": "admin@genzcinema.com",
-  "password": "password123",
-  "phone": "0987654321",
-  "roleId": "ADMIN"
-}
+'U001',
+N'Administrator',
+'0123456789',
+'admin@genzhotel.com',
+'123456',
+NULL,
+'R001'

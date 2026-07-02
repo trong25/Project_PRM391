@@ -22,8 +22,9 @@ class ApiClient {
       onRequest: (options, handler) async {
         final token = await _storage.read(key: AppConfig.tokenKey);
         final isAuthEndpoint = options.path.startsWith('/auth/');
-        if (!isAuthEndpoint && token != null && token.isNotEmpty) {
-          options.headers['Authorization'] = 'Bearer $token';
+        final cleanToken = token?.trim().replaceAll(RegExp(r'[\r\n]'), '');
+        if (!isAuthEndpoint && cleanToken != null && cleanToken.isNotEmpty) {
+          options.headers['Authorization'] = 'Bearer $cleanToken';
         }
         return handler.next(options);
       },
