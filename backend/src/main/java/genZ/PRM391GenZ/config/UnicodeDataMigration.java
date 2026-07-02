@@ -97,6 +97,13 @@ public class UnicodeDataMigration implements ApplicationRunner {
                 UPDATE [User] SET full_name = N'Admin Giám Đốc'
                 WHERE email = 'admin@genzcinema.com' AND full_name = 'Admin Giam Doc'
                 """);
+
+        // Fix incorrect bcrypt hash for seed users to match 'password123'
+        jdbcTemplate.update("""
+                UPDATE [User]
+                SET password = '$2a$10$iVx8Ax6.zIhh3lFvBjVnguKrPPQvx2oPNgVuObjbWLlW0pWKNT9pS'
+                WHERE password = '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'
+                """);
     }
 
     private void upsertHotel(String hotelId, String name, String address, String phone) {
