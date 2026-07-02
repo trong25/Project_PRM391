@@ -109,6 +109,12 @@ public class RoomService {
                 .typeRoomName(room.getTypeRoom() != null ? room.getTypeRoom().getTypeRoom() : null)
                 .hotelId(room.getHotel() != null ? room.getHotel().getHotelId() : null)
                 .hotelName(room.getHotel() != null ? room.getHotel().getName() : null)
+                // --- THÊM MAPPING CÁC TRƯỜNG MỚI VÀO ĐÂY ---
+                .imageUrl(room.getImageUrl())
+                .hotel(room.getHotel())
+                .typeRoom(room.getTypeRoom())
+                // ------------------------------------------
                 .build();
     }
+
 }

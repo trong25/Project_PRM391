@@ -41,6 +41,12 @@ public class SecurityConfig {
                                 "/auth/reset-password",
                                 "/auth/logout"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/rooms",
+                                "/rooms/**",
+                                "/hotels",
+                                "/type-rooms"
+                        ).permitAll()
                         // All other requests (including /auth/profile, /auth/change-password) need auth
                         .anyRequest().authenticated()
                 )

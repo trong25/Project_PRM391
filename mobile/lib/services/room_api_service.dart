@@ -15,8 +15,10 @@ class RoomApiService {
         return data.map((e) => RoomModel.fromJson(e)).toList();
       }
       return [];
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không tải được danh sách phòng'));
     } catch (e) {
-      throw Exception('Failed to load rooms: $e');
+      throw Exception('Không tải được danh sách phòng: $e');
     }
   }
 
@@ -28,8 +30,10 @@ class RoomApiService {
         return data.map((e) => RoomModel.fromJson(e)).toList();
       }
       return [];
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không tải được phòng theo chi nhánh'));
     } catch (e) {
-      throw Exception('Failed to load rooms: $e');
+      throw Exception('Không tải được phòng theo chi nhánh: $e');
     }
   }
 
@@ -40,8 +44,10 @@ class RoomApiService {
         return RoomModel.fromJson(response.data['data']);
       }
       throw Exception(response.data['message']);
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không tạo được phòng'));
     } catch (e) {
-      throw Exception('Failed to create room: $e');
+      throw Exception('Không tạo được phòng: $e');
     }
   }
 
@@ -52,16 +58,20 @@ class RoomApiService {
         return RoomModel.fromJson(response.data['data']);
       }
       throw Exception(response.data['message']);
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không cập nhật được phòng'));
     } catch (e) {
-      throw Exception('Failed to update room: $e');
+      throw Exception('Không cập nhật được phòng: $e');
     }
   }
 
   Future<void> deleteRoom(String id) async {
     try {
       await _dio.delete('/rooms/$id');
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không xóa được phòng'));
     } catch (e) {
-      throw Exception('Failed to delete room: $e');
+      throw Exception('Không xóa được phòng: $e');
     }
   }
 
@@ -90,5 +100,13 @@ class RoomApiService {
     } catch (e) {
       return [];
     }
+  }
+
+  String _messageFromDio(DioException e, String fallback) {
+    final data = e.response?.data;
+    if (data is Map && data['message'] != null) {
+      return data['message'].toString();
+    }
+    return e.message ?? fallback;
   }
 }
