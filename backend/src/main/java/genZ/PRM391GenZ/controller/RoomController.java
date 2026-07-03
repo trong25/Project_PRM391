@@ -48,6 +48,13 @@ public class RoomController {
         return ResponseEntity.ok(ApiResponse.success("Cập nhật phòng thành công", roomService.updateRoom(id, dto)));
     }
 
+    @PutMapping("/{id}/status")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<RoomDto>> updateRoomStatus(
+            @PathVariable String id, @RequestParam String status) {
+        return ResponseEntity.ok(ApiResponse.success("Cập nhật trạng thái phòng thành công", roomService.updateRoomStatus(id, status)));
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Void>> deleteRoom(@PathVariable String id) {

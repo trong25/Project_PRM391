@@ -22,6 +22,8 @@ import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/staff/staff_dashboard_screen.dart';
+import '../screens/staff/staff_booking_management_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -58,9 +60,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (isLoggedIn && isAuthRoute) {
         return _homeForRole(authState.user?.roleId ?? authState.user?.role);
       }
+      if (isLoggedIn && (state.matchedLocation == '/home' || state.matchedLocation == '/')) {
+        final role = authState.user?.roleId ?? authState.user?.role;
+        if (_isAdminRole(role)) return '/admin';
+        if (_isStaffRole(role)) return '/staff';
+      }
       if (isLoggedIn &&
           state.matchedLocation.startsWith('/admin') &&
           !_isAdminRole(authState.user?.roleId ?? authState.user?.role)) {
+        return '/home';
+      }
+      if (isLoggedIn &&
+          state.matchedLocation.startsWith('/staff') &&
+          !_isStaffRole(authState.user?.roleId ?? authState.user?.role)) {
         return '/home';
       }
 
@@ -156,6 +168,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'admin-account',
         builder: (_, __) => const UserManagementScreen(),
       ),
+      GoRoute(
+        path: '/staff',
+        name: 'staff',
+        builder: (_, __) => const StaffDashboardScreen(),
+      ),
+      GoRoute(
+        path: '/staff/bookings',
+        name: 'staff-bookings',
+        builder: (_, __) => const StaffBookingManagementScreen(),
+      ),
     ],
   );
 
@@ -164,11 +186,18 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String _homeForRole(String? roleId) {
-  return _isAdminRole(roleId) ? '/admin' : '/home';
+  final role = roleId?.toUpperCase();
+  if (role == AppConfig.roleAdmin) return '/admin';
+  if (role == AppConfig.roleStaff) return '/staff';
+  return '/home';
 }
 
 bool _isAdminRole(String? roleId) {
   return roleId?.toUpperCase() == AppConfig.roleAdmin;
+}
+
+bool _isStaffRole(String? roleId) {
+  return roleId?.toUpperCase() == AppConfig.roleStaff;
 }
 
 class _RoomBookingLoader extends ConsumerWidget {

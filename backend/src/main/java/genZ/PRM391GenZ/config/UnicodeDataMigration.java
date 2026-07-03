@@ -80,10 +80,16 @@ public class UnicodeDataMigration implements ApplicationRunner {
                 WHERE BookingId = 5 AND (Status LIKE '%?%' OR Status LIKE N'%�%')
                 """);
 
-        updateTypeBooking("TB001", "Thuê theo giờ");
-        updateTypeBooking("TB002", "Qua đêm (12h-12h)");
-        updateTypeBooking("TB003", "Thuê nguyên ngày");
-        updateTypeBooking("TB004", "Thuê theo tuần");
+        upsertTypeBooking("TB001", "Thuê theo giờ", "HOURLY", 1);
+        upsertTypeBooking("TB002", "Qua đêm (12h-12h)", "OVERNIGHT", 12);
+        upsertTypeBooking("TB003", "Thuê nguyên ngày", "DAILY", 24);
+        upsertTypeBooking("TB004", "Thuê theo tuần", "WEEKLY", 168);
+        upsertTypeBooking("TB_2H", "Combo 2h xem phim + đồ ăn", "COMBO_2H", 2);
+        upsertTypeBooking("TB_4H", "Combo 4h", "COMBO_4H", 4);
+        upsertTypeBooking("TB_5H", "Combo 5h", "COMBO_5H", 5);
+        upsertTypeBooking("TB_6H", "Combo 6h", "COMBO_6H", 6);
+        upsertTypeBooking("TB_DAY", "Combo ngày 7h-12h (1 nước pha chế)", "COMBO_DAY", 5);
+        upsertTypeBooking("TB_NIGHT", "Combo đêm 23h-7h (1 nước pha chế)", "COMBO_NIGHT", 8);
 
         updateUserName("USER-ADMIN-001", "Phạm Thị Dung");
         updateUserName("USER-CUST-001", "Hoàng Văn Em");
@@ -147,22 +153,24 @@ public class UnicodeDataMigration implements ApplicationRunner {
             jdbcTemplate.update(
                     """
                     UPDATE Room SET Status = ?
-                    WHERE RoomId = ? AND (Status LIKE '%?%' OR Status LIKE N'%�%')
+                    WHERE RoomId = ? AND (Status LIKE '%?%' OR Status LIKE N'%%')
                     """,
                     status, roomId
             );
         }
     }
 
-    private void updateTypeBooking(String typeBookingId, String typeName) {
-        jdbcTemplate.update(
-                """
-                UPDATE TypeBooking SET TypeName = ?
-                WHERE TypeBookingId = ?
-                  AND (TypeName LIKE '%?%' OR TypeName LIKE N'%�%')
-                """,
-                typeName, typeBookingId
+    private void upsertTypeBooking(String id, String name, String code, Integer hours) {
+        int updated = jdbcTemplate.update(
+                "UPDATE TypeBooking SET TypeName = ?, BookingCode = ?, DurationHours = ? WHERE TypeBookingId = ?",
+                name, code, hours, id
         );
+        if (updated == 0) {
+            jdbcTemplate.update(
+                    "INSERT INTO TypeBooking (TypeBookingId, TypeName, BookingCode, DurationHours) VALUES (?, ?, ?, ?)",
+                    id, name, code, hours
+            );
+        }
     }
 
     private void updateUserName(String userId, String fullName) {

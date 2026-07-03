@@ -100,6 +100,16 @@ public class RoomService {
         log.info("Deleted room with ID: {}", id);
     }
 
+    @Transactional
+    public RoomDto updateRoomStatus(String id, String status) {
+        Room room = roomRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng với ID: " + id));
+        room.setStatus(status);
+        Room updated = roomRepository.save(room);
+        log.info("Updated room status for room {}: {}", id, status);
+        return mapToDto(updated);
+    }
+
     private RoomDto mapToDto(Room room) {
         return RoomDto.builder()
                 .roomId(room.getRoomId())
