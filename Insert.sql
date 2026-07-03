@@ -3,6 +3,7 @@
 ('STAFF', 'Staff'),
 ('CUSTOMER', 'Customer');
 
+--LƯU Ý:Vào main backend chạy hash để lấy mk mã hóa của admin, thay dãy kí tự ở password trước khi Insert
 -- Admin account
 -- Email: admin@genzcinema.com
 -- Password: 123456

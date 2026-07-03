@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="fix bug update phone and change pasword">
+    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="update Insert">
+      <change beforePath="$PROJECT_DIR$/../Insert.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Insert.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/Prm391GenZApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/Prm391GenZApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783057909318</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="update Insert">
+      <option name="closed" value="true" />
+      <created>1783062097145</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1783062097145</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +269,8 @@
     <MESSAGE value="Finish register" />
     <MESSAGE value="." />
     <MESSAGE value="fix bug update phone and change pasword" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug update phone and change pasword" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/cao' into cao&#10;&#10;# Conflicts:&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel$HotelBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" />
+    <MESSAGE value="update Insert" />
+    <option name="LAST_COMMIT_MESSAGE" value="update Insert" />
   </component>
 </project>
