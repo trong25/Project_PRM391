@@ -21,9 +21,17 @@ class ApiClient {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
         final token = await _storage.read(key: AppConfig.tokenKey);
-        final isAuthEndpoint = options.path.startsWith('/auth/');
+        // Public endpoints that do NOT require a JWT token
+        const publicPaths = [
+          '/auth/login',
+          '/auth/register',
+          '/auth/request-reset',
+          '/auth/verify-token',
+          '/auth/reset-password',
+        ];
+        final isPublicEndpoint = publicPaths.any((p) => options.path.startsWith(p));
         final cleanToken = token?.trim().replaceAll(RegExp(r'[\r\n]'), '');
-        if (!isAuthEndpoint && cleanToken != null && cleanToken.isNotEmpty) {
+        if (!isPublicEndpoint && cleanToken != null && cleanToken.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $cleanToken';
         }
         return handler.next(options);

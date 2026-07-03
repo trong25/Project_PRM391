@@ -21,12 +21,12 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json, String token) {
     return UserModel(
-      userId:   json['userId']   ?? '',
-      fullName: json['fullName'] ?? '',
+      userId:   json['userId']   ?? json['id'] ?? '',
+      fullName: json['fullName'] ?? json['full_name'] ?? '',
       email:    json['email']    ?? '',
-      phone:    json['phone']    ?? '',
+      phone:    json['phone']    ?? json['phone'] ?? '',
       role:     json['role']     ?? '',
-      roleId:   json['roleId']   ?? '',
+      roleId:   json['roleId']   ?? json['role_id'] ?? '',
       token:    token,
     );
   }
@@ -55,4 +55,4 @@ class UserModel {
       token:    token    ?? this.token,
     );
   }
-}
+}

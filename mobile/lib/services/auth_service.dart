@@ -30,11 +30,22 @@ class AuthService {
           message: 'Server không trả về token đăng nhập.',
         );
       }
-      final user = UserModel.fromJson(data, token);
 
-      // Persist JWT + user info securely
-      await _storage.write(key: AppConfig.tokenKey, value: user.token);
-      await _storage.write(key: AppConfig.userKey,  value: jsonEncode(user.toJson()));
+      await _storage.write(key: AppConfig.tokenKey, value: token);
+
+      UserModel user;
+      try {
+        user = await getProfile(token);
+      } catch (_) {
+        // Nếu lấy profile thất bại, parse từ data login (phone có thể rỗng)
+        final userInfo = (data['user'] is Map<String, dynamic>)
+            ? (data['user'] as Map<String, dynamic>)
+            : (data as Map<String, dynamic>);
+        user = UserModel.fromJson(userInfo, token);
+      }
+
+      // Persist đầy đủ user info vào storage
+      await _storage.write(key: AppConfig.userKey, value: jsonEncode(user.toJson()));
 
       return user;
     } on DioException catch (e) {
@@ -136,6 +147,22 @@ class AuthService {
     }
   }
 
+  // ─── Get Profile (authenticated) ─────────────────────────────────────
+
+  Future<UserModel> getProfile(String token) async {
+    try {
+      final response = await _dio.get('/auth/profile');
+      final data = response.data['data'];
+      final profileInfo = (data is Map<String, dynamic>) ? data : <String, dynamic>{};
+      final user = UserModel.fromJson(profileInfo, token);
+      // Persist mới nhất vào storage
+      await _storage.write(key: AppConfig.userKey, value: jsonEncode(user.toJson()));
+      return user;
+    } on DioException catch (e) {
+      throw _parseError(e);
+    }
+  }
+
   // ─── Update Profile ───────────────────────────────────────────────────
 
   Future<UserModel> updateProfile({
@@ -186,7 +213,15 @@ class AuthService {
         return null;
       }
 
-      return UserModel.fromJson(map, token);
+      final storedUser = UserModel.fromJson(map, token);
+      if (storedUser.phone.isEmpty) {
+        try {
+          return await getProfile(token);
+        } catch (_) {
+        }
+      }
+
+      return storedUser;
     } catch (_) {
       await _clearLocalSession();
       return null;
@@ -215,8 +250,23 @@ class AuthService {
 
   String _parseError(DioException e) {
     final data = e.response?.data;
-    if (data is Map && data['message'] != null) {
-      return data['message'] as String;
+    if (data is Map) {
+      // Try common error message keys
+      final msg = data['message'] ?? data['error'] ?? data['msg'];
+      if (msg != null && msg.toString().isNotEmpty) {
+        return msg.toString();
+      }
+    }
+    if (data is String && data.isNotEmpty) return data;
+    if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.receiveTimeout) {
+      return 'Hết thời gian kết nối. Vui lòng thử lại.';
+    }
+    if (e.response?.statusCode == 401) {
+      return 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.';
+    }
+    if (e.response?.statusCode == 400) {
+      return 'Thông tin không hợp lệ. Vui lòng kiểm tra lại.';
     }
     return 'Lỗi kết nối. Vui lòng thử lại.';
   }
