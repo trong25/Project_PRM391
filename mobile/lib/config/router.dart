@@ -22,6 +22,7 @@ import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/staff/staff_home_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -155,6 +156,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/admin/account',
         name: 'admin-account',
         builder: (_, __) => const UserManagementScreen(),
+        path: '/staff',
+        name: 'staff',
+        builder: (_, __) => const StaffHomeScreen(),
+
       ),
     ],
   );
@@ -192,4 +197,39 @@ class _RoomBookingLoader extends ConsumerWidget {
     }
     return BookingScreen(room: detailState.room!);
   }
+}
+String _homeForRole(String? role) {
+
+  if(role == null){
+    return '/home';
+  }
+
+
+  switch(role.toUpperCase()){
+
+
+    case AppConfig.roleAdmin:
+
+      return '/admin';
+
+
+
+    case AppConfig.roleStaff:
+
+      return '/staff';
+
+
+
+    case AppConfig.roleCustomer:
+
+      return '/home';
+
+
+
+    default:
+
+      return '/login';
+
+  }
+
 }

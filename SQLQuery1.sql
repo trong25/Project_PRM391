@@ -28,6 +28,7 @@ CREATE TABLE TypeBooking (
     BookingCode VARCHAR(50) NOT NULL,
     DurationHours INT NULL -- Có thể Null nếu là thuê theo giờ linh hoạt
 );
+
 -- Bảng User (Phụ thuộc vào Role)
 CREATE TABLE [User] (
     UserId VARCHAR(50) PRIMARY KEY,
@@ -86,6 +87,7 @@ CREATE TABLE PasswordResetToken (
     UserId       VARCHAR(50),
     FOREIGN KEY (UserId) REFERENCES [User](UserId)
 );
+
 
 CREATE TABLE [dbo].[ChatMessage] (
     [id]          BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,
