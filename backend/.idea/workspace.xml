@@ -6,55 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Merge branch 'thanh'&#10;&#10;# Conflicts:&#10;#&#9;.idea/Project_PRM391.iml&#10;#&#9;.idea/vcs.xml&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/entity/Hotel.java&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/RoomController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst&#10;#&#9;backend/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class&#10;#&#9;mobile/lib/config/router.dart&#10;#&#9;mobile/lib/models/room_model.dart&#10;#&#9;mobile/lib/providers/room_provider.dart&#10;#&#9;mobile/lib/screens/home/home_screen.dart&#10;#&#9;mobile/test/widget_test.dart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TypeBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TypeBooking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/RoomService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/RoomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/RoomController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/RoomService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/RoomService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/spring-boot-run.err.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/spring-boot-run.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-16-06_631.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-28-20_241.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-29-51_098.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-44-10_208.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-49-02_830.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-49-52_783.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-52-24_049.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T22-53-46_293.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T23-07-04_682.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T23-07-56_863.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T23-11-01_964.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-20T23-16-11_774.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-06-29T13-59-19_728.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-41-57_969.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-42-30_209.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-42-56_442.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-43-24_797.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-43-57_782.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-44-28_193.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2026-07-02T21-47-38_544.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-genZ.PRM391GenZ.Prm391GenZApplicationTests.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/genZ.PRM391GenZ.Prm391GenZApplicationTests.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/providers/booking_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/providers/booking_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/room_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/room_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,12 +38,12 @@
     &quot;assignee&quot;: &quot;minhcao2004&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/trong25/Project_PRM391",
-    "accountId": "8405ba82-9570-40f4-b537-5c929217bc0e"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/trong25/Project_PRM391&quot;,
+    &quot;accountId&quot;: &quot;8405ba82-9570-40f4-b537-5c929217bc0e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -195,7 +150,8 @@
       <workItem from="1782898679672" duration="124000" />
       <workItem from="1782899957773" duration="543000" />
       <workItem from="1782999989567" duration="1793000" />
-      <workItem from="1783058951946" duration="3601000" />
+      <workItem from="1783058951946" duration="4930000" />
+      <workItem from="1783245342881" duration="3662000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />

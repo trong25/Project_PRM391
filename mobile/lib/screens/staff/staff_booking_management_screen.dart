@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 
 import '../../config/app_theme.dart';
 import '../../models/booking_model.dart';
+import '../../models/room_model.dart';
 import '../../providers/booking_provider.dart';
 import '../../providers/room_provider.dart';
+import '../../providers/user_provider.dart';
 import 'widgets/staff_bottom_nav_bar.dart';
 
 class StaffBookingManagementScreen extends ConsumerStatefulWidget {
@@ -130,6 +132,12 @@ class _StaffBookingManagementScreenState
                 data: (bookings) {
                   // Filter list
                   var filteredList = bookings.where((b) {
+                    final room = ref.read(roomListProvider).rooms.firstWhere(
+                          (r) => r.roomId == b.roomId,
+                          orElse: () => RoomModel(roomId: b.roomId, nameRoom: b.roomId, status: 'Chưa xác định'),
+                        );
+                    final isRoomOccupied = (room.status ?? '').toLowerCase() == 'đang thuê';
+
                     // Match Search Text
                     final roomMatch = b.roomId.toLowerCase().contains(_searchText);
                     final userMatch = b.userId.toLowerCase().contains(_searchText);
@@ -138,9 +146,9 @@ class _StaffBookingManagementScreenState
                     // Match Filter Type
                     bool isFilterMatch = true;
                     if (_selectedFilter == 'Chờ nhận phòng') {
-                      isFilterMatch = b.status == 'Chưa thanh toán' || b.status == 'Chờ nhận phòng';
+                      isFilterMatch = (b.status == 'Chưa thanh toán' || b.status == 'Chờ nhận phòng') && !isRoomOccupied;
                     } else if (_selectedFilter == 'Đang ở') {
-                      isFilterMatch = b.status == 'Đang ở';
+                      isFilterMatch = (b.status == 'Chưa thanh toán' || b.status == 'Chờ nhận phòng') && isRoomOccupied;
                     } else if (_selectedFilter == 'Đã trả phòng') {
                       isFilterMatch = b.status == 'Đã thanh toán';
                     } else if (_selectedFilter == 'Đã hủy') {
@@ -192,23 +200,39 @@ class _StaffBookingManagementScreenState
   }
 
   Widget _buildBookingCard(BuildContext context, BookingModel booking) {
-    final bool canCheckIn = booking.status == 'Chưa thanh toán' || booking.status == 'Chờ nhận phòng';
-    final bool canCheckOut = booking.status == 'Đang ở';
-    final bool canCancel = booking.status == 'Chưa thanh toán' || booking.status == 'Chờ nhận phòng';
+    final room = ref.watch(roomListProvider).rooms.firstWhere(
+          (r) => r.roomId == booking.roomId,
+          orElse: () => RoomModel(roomId: booking.roomId, nameRoom: booking.roomId, status: 'Chưa xác định'),
+        );
+    final String roomStatus = room.status ?? 'Chưa xác định';
+    final bool isRoomOccupied = roomStatus.toLowerCase() == 'đang thuê';
+    final bool isUnpaid = booking.status == 'Chưa thanh toán' || booking.status == 'Chờ nhận phòng';
 
-    // Status colors
+    final bool canCheckIn = isUnpaid && !isRoomOccupied;
+    final bool canCheckOut = isUnpaid && isRoomOccupied;
+    final bool canCancel = isUnpaid && !isRoomOccupied;
+
+    // Status colors and labels
     Color statusBgColor = Colors.grey.shade100;
     Color statusTextColor = AppTheme.textGray;
-    if (booking.status == 'Chưa thanh toán' || booking.status == 'Chờ nhận phòng') {
-      statusBgColor = const Color(0xFFEFF6FF);
-      statusTextColor = const Color(0xFF3B82F6);
-    } else if (booking.status == 'Đang ở') {
-      statusBgColor = const Color(0xFFFFF7ED);
-      statusTextColor = const Color(0xFFF97316);
+    String displayStatus = booking.status ?? 'Chưa thanh toán';
+
+    if (isUnpaid) {
+      if (isRoomOccupied) {
+        displayStatus = 'Đang ở';
+        statusBgColor = const Color(0xFFFFF7ED);
+        statusTextColor = const Color(0xFFF97316);
+      } else {
+        displayStatus = 'Chờ nhận phòng';
+        statusBgColor = const Color(0xFFEFF6FF);
+        statusTextColor = const Color(0xFF3B82F6);
+      }
     } else if (booking.status == 'Đã thanh toán') {
+      displayStatus = 'Đã trả phòng';
       statusBgColor = const Color(0xFFECFDF5);
       statusTextColor = const Color(0xFF10B981);
     } else if (booking.status == 'Đã hủy') {
+      displayStatus = 'Đã hủy';
       statusBgColor = const Color(0xFFFEF2F2);
       statusTextColor = const Color(0xFFEF4444);
     }
@@ -219,6 +243,12 @@ class _StaffBookingManagementScreenState
         : 'Chưa xác định';
     final String priceStr = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ')
         .format(booking.totalPrice ?? 0);
+
+    Color roomStatusColor = Colors.grey.shade600;
+    if (roomStatus.toLowerCase() == 'trống') roomStatusColor = Colors.green.shade600;
+    if (roomStatus.toLowerCase() == 'đang thuê') roomStatusColor = Colors.orange.shade700;
+    if (roomStatus.toLowerCase() == 'dọn dẹp') roomStatusColor = Colors.blue.shade600;
+    if (roomStatus.toLowerCase() == 'bảo trì') roomStatusColor = Colors.red.shade600;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
@@ -244,7 +274,7 @@ class _StaffBookingManagementScreenState
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        booking.status ?? 'Chưa thanh toán',
+                        displayStatus,
                         style: TextStyle(
                           color: statusTextColor,
                           fontSize: 12,
@@ -264,7 +294,65 @@ class _StaffBookingManagementScreenState
             const Divider(height: 20),
 
             // Content Rows
-            _buildDetailRow(Icons.meeting_room_outlined, 'Phòng:', booking.roomId),
+            Row(
+              children: [
+                const Icon(Icons.meeting_room_outlined, size: 18, color: AppTheme.textGray),
+                const SizedBox(width: 8),
+                const Text('Phòng:', style: TextStyle(color: AppTheme.textGray, fontSize: 13)),
+                const SizedBox(width: 6),
+                Text(booking.roomId, style: const TextStyle(color: AppTheme.textPrimary, fontSize: 13, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 10),
+                PopupMenuButton<String>(
+                  enabled: isUnpaid,
+                  tooltip: isUnpaid ? 'Đổi trạng thái phòng thủ công' : 'Đơn đã hoàn thành/hủy, không thể đổi trạng thái phòng',
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: roomStatusColor.withOpacity(0.1),
+                      border: Border.all(color: roomStatusColor, width: 1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          roomStatus,
+                          style: TextStyle(color: roomStatusColor, fontSize: 11, fontWeight: FontWeight.bold),
+                        ),
+                        if (isUnpaid) ...[
+                          const SizedBox(width: 2),
+                          Icon(Icons.arrow_drop_down, size: 14, color: roomStatusColor),
+                        ],
+                      ],
+                    ),
+                  ),
+                  onSelected: (newStatus) async {
+                    try {
+                      await ref.read(roomServiceProvider).updateRoomStatus(booking.roomId, newStatus);
+                      ref.read(roomListProvider.notifier).loadRooms();
+                      ref.invalidate(allBookingsProvider);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Đã cập nhật phòng ${booking.roomId} sang "$newStatus"')),
+                        );
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Lỗi cập nhật trạng thái phòng: $e')),
+                        );
+                      }
+                    }
+                  },
+                  itemBuilder: (ctx) => [
+                    const PopupMenuItem(value: 'Trống', child: Text('Trống')),
+                    const PopupMenuItem(value: 'Đang thuê', child: Text('Đang thuê')),
+                    const PopupMenuItem(value: 'Dọn dẹp', child: Text('Dọn dẹp')),
+                    const PopupMenuItem(value: 'Bảo trì', child: Text('Bảo trì')),
+                  ],
+                ),
+              ],
+            ),
             const SizedBox(height: 6),
             _buildDetailRow(Icons.person_outline, 'Mã Khách:', booking.userId),
             const SizedBox(height: 6),
@@ -308,7 +396,7 @@ class _StaffBookingManagementScreenState
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                       ),
-                      onPressed: () => _confirmCheckIn(context, booking.bookingId),
+                      onPressed: () => _confirmCheckIn(context, booking.roomId),
                       child: const Text('Nhận Phòng'),
                     ),
                   if (canCheckOut)
@@ -384,7 +472,7 @@ class _StaffBookingManagementScreenState
     }
   }
 
-  Future<void> _confirmCheckIn(BuildContext context, int? bookingId) async {
+  Future<void> _confirmCheckIn(BuildContext context, String roomId) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -401,7 +489,22 @@ class _StaffBookingManagementScreenState
       ),
     );
     if (confirm == true) {
-      _updateBookingStatus(bookingId, 'Đang ở');
+      try {
+        await ref.read(roomServiceProvider).updateRoomStatus(roomId, 'Đang thuê');
+        ref.read(roomListProvider.notifier).loadRooms();
+        ref.invalidate(allBookingsProvider);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Đã nhận phòng thành công')),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Lỗi nhận phòng: $e')),
+          );
+        }
+      }
     }
   }
 
@@ -596,13 +699,23 @@ class __CreateBookingDialogContentState
     extends ConsumerState<_CreateBookingDialogContent> {
   final _formKey = GlobalKey<FormState>();
   String? _selectedRoomId;
-  String _customerId = 'USER-CUST-001';
+  String _customerPhone = '';
+  String? _customerId; // user ID from search, or null if new guest
+  String _customerNameInput = '';
+  String _customerEmailInput = '';
+  bool _phoneChecked = false;
+  bool _searchingPhone = false;
+  String? _phoneCheckMessage;
+
   String _selectedComboId = 'TB_2H';
   DateTime _checkInDate = DateTime.now();
   TimeOfDay _checkInTime = TimeOfDay.now();
   DateTime _checkOutDate = DateTime.now().add(const Duration(hours: 2));
   TimeOfDay _checkOutTime = TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 2)));
+  
   double _price = 150000;
+  String _voucherCode = '';
+  double _discountAmount = 0.0;
   String _note = '';
   bool _submitting = false;
 
@@ -711,32 +824,33 @@ class __CreateBookingDialogContentState
       _checkOutTime.minute,
     );
 
+    double basePrice = 0.0;
     if (_selectedComboId == 'TB_2H') {
-      _price = (hourlyPrice * 2).toDouble();
+      basePrice = (hourlyPrice * 2).toDouble();
     } else if (_selectedComboId == 'TB_DAY') {
-      _price = 196000;
+      basePrice = 196000;
     } else if (_selectedComboId == 'TB_NIGHT') {
-      _price = 296000;
+      basePrice = 296000;
     } else {
-      // Flexible hourly (TB001) or other custom durations
       final fixedDur = _getComboDurationHours(_selectedComboId);
       if (fixedDur != null) {
-        _price = (hourlyPrice * fixedDur).toDouble();
+        basePrice = (hourlyPrice * fixedDur).toDouble();
       } else {
         // flexible hourly (TB001) - calculate diff in hours
         final diffMs = cout.difference(cin).inMilliseconds;
         final hours = diffMs / (1000 * 60 * 60);
         final finalHours = hours.clamp(0.5, double.infinity);
-        _price = hourlyPrice * finalHours;
+        basePrice = hourlyPrice * finalHours;
       }
     }
+
+    _price = (basePrice - _discountAmount).clamp(0.0, double.infinity);
     _priceController.text = _price.toStringAsFixed(0);
   }
 
   @override
   Widget build(BuildContext context) {
     final roomListState = ref.watch(roomListProvider);
-    // Suggest rooms that are empty
     final availableRooms = roomListState.rooms;
     final isFixedCombo = _getComboDurationHours(_selectedComboId) != null;
 
@@ -778,17 +892,95 @@ class __CreateBookingDialogContentState
                 ),
                 const SizedBox(height: 12),
 
-                // Customer ID Textfield
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Mã khách hàng *',
-                    hintText: 'Nhập USER-CUST-001 hoặc mã khác',
-                  ),
-                  initialValue: _customerId,
-                  validator: (val) =>
-                      val == null || val.trim().isEmpty ? 'Vui lòng nhập mã khách hàng' : null,
-                  onChanged: (val) => _customerId = val.trim(),
+                // Customer Phone Search and Auto Registration
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Số điện thoại khách hàng *',
+                          hintText: 'Nhập SĐT để kiểm tra',
+                        ),
+                        keyboardType: TextInputType.phone,
+                        validator: (val) =>
+                            val == null || val.trim().isEmpty ? 'Vui lòng nhập số điện thoại' : null,
+                        onChanged: (val) {
+                          setState(() {
+                            _customerPhone = val.trim();
+                            _phoneChecked = false;
+                            _customerId = null;
+                            _phoneCheckMessage = null;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    _searchingPhone
+                        ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))
+                        : TextButton.icon(
+                            icon: const Icon(Icons.search),
+                            label: const Text('Kiểm tra'),
+                            onPressed: (_customerPhone == null || _customerPhone.isEmpty)
+                                ? null
+                                : () async {
+                                    setState(() {
+                                      _searchingPhone = true;
+                                      _phoneCheckMessage = null;
+                                    });
+                                    try {
+                                      final user = await ref.read(userApiProvider).getUserByPhone(_customerPhone);
+                                      setState(() {
+                                        _searchingPhone = false;
+                                        _phoneChecked = true;
+                                        if (user != null) {
+                                          _customerId = user.userId;
+                                          _phoneCheckMessage = '✓ Khách hàng: ${user.fullName}';
+                                        } else {
+                                          _customerId = null;
+                                          _phoneCheckMessage = '⚠️ Chưa có tài khoản. Nhập thông tin bên dưới để đăng ký:';
+                                        }
+                                      });
+                                    } catch (e) {
+                                      setState(() {
+                                        _searchingPhone = false;
+                                        _phoneChecked = true;
+                                        _phoneCheckMessage = 'Lỗi kiểm tra SĐT: $e';
+                                      });
+                                    }
+                                  },
+                          ),
+                  ],
                 ),
+                if (_phoneCheckMessage != null) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    _phoneCheckMessage!,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: _customerId != null ? Colors.green.shade700 : Colors.orange.shade700,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+                if (_phoneChecked && _customerId == null) ...[
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Họ tên khách hàng mới *',
+                    ),
+                    validator: (val) =>
+                        _customerId == null && (val == null || val.trim().isEmpty) ? 'Vui lòng nhập họ tên khách' : null,
+                    onChanged: (val) => _customerNameInput = val.trim(),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Email khách hàng mới (tùy chọn)',
+                    ),
+                    onChanged: (val) => _customerEmailInput = val.trim(),
+                  ),
+                ],
                 const SizedBox(height: 12),
 
                 // Combo Dropdown
@@ -806,7 +998,7 @@ class __CreateBookingDialogContentState
                     setState(() {
                       _selectedComboId = val;
                       
-                      // Auto set checkout dates based on type selection
+                      // Auto set checkin time defaults based on type selection
                       if (val == 'TB_DAY') {
                         _checkInTime = const TimeOfDay(hour: 7, minute: 0);
                       } else if (val == 'TB_NIGHT') {
@@ -922,6 +1114,36 @@ class __CreateBookingDialogContentState
                 ),
                 const SizedBox(height: 12),
 
+                // Voucher Input & Discount Input Row
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Mã Voucher (Nếu có)',
+                        ),
+                        onChanged: (val) => _voucherCode = val.trim(),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Tiền giảm giá (đ)',
+                        ),
+                        keyboardType: TextInputType.number,
+                        onChanged: (val) {
+                          setState(() {
+                            _discountAmount = double.tryParse(val) ?? 0.0;
+                            _recalculatePrice();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
                 // Total Price Input
                 TextFormField(
                   controller: _priceController,
@@ -967,6 +1189,27 @@ class __CreateBookingDialogContentState
     setState(() => _submitting = true);
 
     try {
+      if (_customerId == null) {
+        if (!_phoneChecked) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Vui lòng click "Kiểm tra" để xác thực số điện thoại khách!')),
+          );
+          setState(() => _submitting = false);
+          return;
+        }
+
+        final newUserDto = {
+          'fullName': _customerNameInput,
+          'phone': _customerPhone,
+          'email': _customerEmailInput.isNotEmpty ? _customerEmailInput : '${_customerPhone}@genzcinema.com',
+          'password': 'password123',
+          'roleId': 'CUSTOMER',
+        };
+
+        final newUser = await ref.read(userApiProvider).createCustomer(newUserDto);
+        _customerId = newUser.userId;
+      }
+
       final cin = DateTime(
         _checkInDate.year,
         _checkInDate.month,
@@ -993,12 +1236,14 @@ class __CreateBookingDialogContentState
 
       final booking = BookingModel(
         roomId: _selectedRoomId!,
-        userId: _customerId,
+        userId: _customerId!,
         typeBookingId: _selectedComboId,
         checkIn: cin,
         checkOut: cout,
         totalPrice: _price,
-        status: 'Chờ nhận phòng',
+        status: 'Chưa thanh toán',
+        voucherCode: _voucherCode.isNotEmpty ? _voucherCode : null,
+        discountAmount: _discountAmount > 0 ? _discountAmount : null,
         note: _note.isNotEmpty ? _note : null,
       );
 

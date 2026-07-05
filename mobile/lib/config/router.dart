@@ -23,6 +23,7 @@ import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/staff/staff_dashboard_screen.dart';
+import '../screens/staff/staff_room_management_screen.dart';
 import '../screens/staff/staff_booking_management_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
@@ -171,7 +172,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/staff',
         name: 'staff',
-        builder: (_, __) => const StaffDashboardScreen(),
+        builder: (_, __) => const StaffRoomManagementScreen(),
       ),
       GoRoute(
         path: '/staff/bookings',

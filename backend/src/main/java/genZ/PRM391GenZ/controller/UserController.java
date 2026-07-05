@@ -69,4 +69,22 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.ok(ApiResponse.success("Xóa người dùng thành công"));
     }
+
+    @GetMapping("/phone/{phone}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<UserResponseDto>> getUserByPhone(@PathVariable String phone) {
+        return userService.getUserByPhone(phone)
+                .map(u -> ResponseEntity.ok(ApiResponse.success("Thông tin người dùng", u)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/customer")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<UserResponseDto>> createCustomerForStaff(@Valid @RequestBody UserCreateDto dto) {
+        dto.setRoleId("CUSTOMER");
+        if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
+            dto.setPassword("password123");
+        }
+        return ResponseEntity.ok(ApiResponse.success("Tạo khách hàng thành công", userService.createUser(dto)));
+    }
 }
