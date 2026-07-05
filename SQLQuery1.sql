@@ -87,6 +87,7 @@ CREATE TABLE PasswordResetToken (
     FOREIGN KEY (UserId) REFERENCES [User](UserId)
 );
 
+--Bảng lưu tin nhắn Chat
 CREATE TABLE [dbo].[ChatMessage] (
     [id]          BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [sender_id]   VARCHAR(50)          NOT NULL,
@@ -95,6 +96,22 @@ CREATE TABLE [dbo].[ChatMessage] (
     [content]     NVARCHAR(MAX)        NOT NULL,
     [sent_at]     DATETIME2(6)         NOT NULL DEFAULT GETDATE(),
     [is_read]     BIT                  NOT NULL DEFAULT 0
+);
+
+--Bảng Voucher
+CREATE TABLE DiscountCode (
+    DiscountId INT IDENTITY(1,1) PRIMARY KEY,
+    Code VARCHAR(50) UNIQUE NOT NULL,-- Mã giảm giá: VD GENZ20, SUMMER50
+    Description NVARCHAR(255),-- Nội dung giảm giá
+    DiscountType VARCHAR(20) NOT NULL,-- PERCENT: giảm theo %
+    -- AMOUNT: giảm tiền trực tiếp
+    DiscountValue DECIMAL(18,2) NOT NULL,-- Giá trị giảm
+    StartDate DATETIME NOT NULL,  -- Ngày bắt đầu áp dụng
+    EndDate DATETIME NOT NULL,-- Ngày hết hạn
+    Quantity INT DEFAULT 0,-- Số lượng mã phát hành
+    Status NVARCHAR(50) DEFAULT N'Active'    -- Active: đang sử dụng
+    -- Expired: hết hạn
+    -- Disable: khóa
 );
 
 
