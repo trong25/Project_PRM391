@@ -3,11 +3,28 @@
 ('STAFF', 'Staff'),
 ('CUSTOMER', 'Customer');
 
+--LƯU Ý:Vào main backend chạy hash để lấy mk mã hóa của admin, thay dãy kí tự ở password trước khi Insert
 -- Admin account
 -- Email: admin@genzcinema.com
--- Password: admin123
-INSERT INTO [User] (UserId, full_name, phone, email, password, Image_cccd, RoleId) VALUES
-('USER-ADMIN-001', N'Quản trị viên', '0123456789', 'admin@genzcinema.com', '$2a$10$d5tNRrxEgGtdR8bFVk0VYujupivHHS.pZamUiv8RIS5xlGqoJrNPi', NULL, 'ADMIN');
+-- Password: 123456
+INSERT INTO [User] (
+    UserId,
+    full_name,
+    phone,
+    email,
+    password,
+    Image_cccd,
+    RoleId
+)
+VALUES (
+    'ADMIN01',
+    N'Administrator',
+    '0123456789',
+    'admin@genzhotel.com',
+    '$2a$10$7EqJtq98hPqEX7fNZaFWoOHi6M9Z9zV0gF4m4u2g7G8Y9i5xXQ7iG',
+    NULL,
+    'ADMIN'
+);
 
 -- TypeRoom
 INSERT INTO TypeRoom (TypeRoomId, TypeRoom, pricePerHour) VALUES

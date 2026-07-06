@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Merge branch 'thanh'&#10;&#10;# Conflicts:&#10;#&#9;.idea/Project_PRM391.iml&#10;#&#9;.idea/vcs.xml&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/entity/Hotel.java&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/RoomController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst&#10;#&#9;backend/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class&#10;#&#9;mobile/lib/config/router.dart&#10;#&#9;mobile/lib/models/room_model.dart&#10;#&#9;mobile/lib/providers/room_provider.dart&#10;#&#9;mobile/lib/screens/home/home_screen.dart&#10;#&#9;mobile/test/widget_test.dart">
+    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="update Insert">
+      <change beforePath="$PROJECT_DIR$/../Insert.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Insert.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/config/router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/config/router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_booking_management_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_booking_management_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_room_management_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_room_management_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/Prm391GenZApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/Prm391GenZApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +39,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/trong25/Project_PRM391&quot;,
-    &quot;accountId&quot;: &quot;8405ba82-9570-40f4-b537-5c929217bc0e&quot;
+    &quot;url&quot;: &quot;https://github.com/trong25/Project_PRM391.git&quot;,
+    &quot;accountId&quot;: &quot;dc87556d-d61d-44de-b51b-b01128851a56&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -68,7 +61,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;Spring Boot.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;chang&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cao&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/KY 8/PRM393/PRJ_PRM393/Project_PRM391/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -156,9 +149,6 @@
       <workItem from="1782898679672" duration="124000" />
       <workItem from="1782899957773" duration="543000" />
       <workItem from="1782999989567" duration="1793000" />
-      <workItem from="1783058951946" duration="4930000" />
-      <workItem from="1783245342881" duration="4299000" />
-      <workItem from="1783325201730" duration="3131000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />
@@ -240,7 +230,23 @@
       <option name="project" value="LOCAL" />
       <updated>1781076053359</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix bug update phone and change pasword">
+      <option name="closed" value="true" />
+      <created>1783057909318</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1783057909318</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update Insert">
+      <option name="closed" value="true" />
+      <created>1783062097145</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1783062097145</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +268,9 @@
     <MESSAGE value="Finish login, logout" />
     <MESSAGE value="Finish register" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="fix bug update phone and change pasword" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/cao' into cao&#10;&#10;# Conflicts:&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel$HotelBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" />
+    <MESSAGE value="update Insert" />
+    <option name="LAST_COMMIT_MESSAGE" value="update Insert" />
   </component>
 </project>
