@@ -172,6 +172,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/staff',
         name: 'staff',
+        builder: (_, __) => const StaffDashboardScreen(),
+      ),
+      GoRoute(
+        path: '/staff/rooms',
+        name: 'staff-rooms',
         builder: (_, __) => const StaffRoomManagementScreen(),
       ),
       GoRoute(

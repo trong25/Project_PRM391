@@ -53,4 +53,11 @@ class BookingService {
   Future<void> deleteBooking(int id) async {
     await _dio.delete('/bookings/$id');
   }
+
+  /// Cập nhật thông tin booking
+  Future<BookingModel> updateBooking(int id, BookingModel booking) async {
+    final response = await _dio.put('/bookings/$id', data: booking.toJson());
+    return BookingModel.fromJson(
+        response.data['data'] as Map<String, dynamic>);
+  }
 }

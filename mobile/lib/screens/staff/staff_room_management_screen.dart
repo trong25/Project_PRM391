@@ -52,7 +52,7 @@ class _StaffRoomManagementScreenState
           ),
         ],
       ),
-      bottomNavigationBar: const StaffBottomNavBar(currentIndex: 0),
+      bottomNavigationBar: const StaffBottomNavBar(currentIndex: 1),
       body: Column(
         children: [
           // Search Bar

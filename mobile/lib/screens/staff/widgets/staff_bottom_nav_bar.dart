@@ -9,7 +9,8 @@ class StaffBottomNavBar extends ConsumerWidget {
   const StaffBottomNavBar({super.key, required this.currentIndex});
 
   static const _items = [
-    {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Phòng'},
+    {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Trang chủ'},
+    {'icon': Icons.meeting_room_outlined, 'activeIcon': Icons.meeting_room, 'label': 'Phòng'},
     {'icon': Icons.credit_card_outlined, 'activeIcon': Icons.credit_card, 'label': 'Voucher'},
     {'icon': Icons.business_center_outlined, 'activeIcon': Icons.business_center, 'label': 'Đặt chỗ'},
     {'icon': Icons.chat_bubble_outline, 'activeIcon': Icons.chat_bubble, 'label': 'Feedback'},
@@ -20,7 +21,9 @@ class StaffBottomNavBar extends ConsumerWidget {
 
     if (index == 0) {
       context.go('/staff');
-    } else if (index == 2) {
+    } else if (index == 1) {
+      context.go('/staff/rooms');
+    } else if (index == 3) {
       context.go('/staff/bookings');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
