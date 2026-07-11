@@ -23,6 +23,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Bỏ qua JWT filter cho WebSocket endpoint /ws/**
+     * WebSocket handshake không mang Authorization header đúng cách qua Servlet layer.
+     * Auth được thực hiện qua STOMP ChannelInterceptor ở CONNECT frame.
+     */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.startsWith("/ws");
+    }
+
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

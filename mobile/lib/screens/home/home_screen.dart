@@ -3,19 +3,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../config/app_config.dart';
 import '../../config/app_theme.dart';
+import '../../providers/auth_provider.dart';
 import '../../widgets/app_bottom_nav_bar.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   static const int _kInfiniteMultiplier = 10000;
   static const double _comboSpacing = 12;
 
@@ -171,10 +174,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildQuickActions(BuildContext context) {
+    final user = ref.read(authProvider).user;
+    final isStaff = user?.roleId.toUpperCase() == AppConfig.roleStaff ||
+        user?.role.toUpperCase() == AppConfig.roleStaff;
+
     final items = [
-      {'icon': Icons.credit_card, 'label': 'Voucher'},
-      {'icon': Icons.inventory_2_outlined, 'label': 'Lịch sử'},
-      {'icon': Icons.chat_bubble_outline, 'label': 'Feedback'},
+      {
+        'icon': Icons.credit_card,
+        'label': 'Voucher',
+        'onTap': () => _onComingSoon(context),
+      },
+      {
+        'icon': Icons.inventory_2_outlined,
+        'label': 'Lịch sử',
+        'onTap': () => _onComingSoon(context),
+      },
+      {
+        'icon': Icons.chat_bubble_outline,
+        'label': 'Feedback',
+        'onTap': () {
+          if (isStaff) {
+            context.push('/staff-feedback');
+          } else {
+            context.push('/customer-chat');
+          }
+        },
+      },
     ];
 
     return Row(
@@ -184,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: InkWell(
-                  onTap: () => _onComingSoon(context),
+                  onTap: item['onTap'] as VoidCallback,
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 16),

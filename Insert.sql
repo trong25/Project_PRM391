@@ -21,7 +21,7 @@ VALUES (
     N'Administrator',
     '0123456789',
     'admin@genzhotel.com',
-    '$2a$10$7EqJtq98hPqEX7fNZaFWoOHi6M9Z9zV0gF4m4u2g7G8Y9i5xXQ7iG',
+    '$2a$10$xJZIGPQiCx2/KFXhsKsw0evQoqyNpq7Y1s24vzhfoKsEzeKIMxO5m',
     NULL,
     'ADMIN'
 );

@@ -22,6 +22,9 @@ import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/customer/feedback_chat_screen.dart';
+import '../screens/staff/feedback_list_screen.dart';
+import '../screens/staff/staff_chat_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -134,6 +137,32 @@ final routerProvider = Provider<GoRouter>((ref) {
           final extra = state.extra;
           if (extra is RoomModel) return BookingScreen(room: extra);
           return _RoomBookingLoader(roomId: id);
+        },
+      ),
+      // ── Chat routes ────────────────────────────────────────────────────────
+      GoRoute(
+        path: '/customer-chat',
+        name: 'customer-chat',
+        builder: (_, __) => const FeedbackChatScreen(),
+      ),
+      GoRoute(
+        path: '/staff-feedback',
+        name: 'staff-feedback',
+        builder: (_, __) => const FeedbackListScreen(),
+      ),
+      GoRoute(
+        path: '/staff-chat/:conversationId',
+        name: 'staff-chat',
+        builder: (context, state) {
+          final conversationId = state.pathParameters['conversationId'] ?? '';
+          final extra = state.extra as Map<String, dynamic>?;
+          final customerName = extra?['customerName'] as String? ?? 'Khách hàng';
+          final status       = extra?['status']       as String? ?? 'Open';
+          return StaffChatScreen(
+            conversationId: conversationId,
+            customerName:   customerName,
+            initialStatus:  status,
+          );
         },
       ),
       GoRoute(
