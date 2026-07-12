@@ -21,6 +21,7 @@ import '../screens/customer/profile_screen.dart';
 import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
+import '../screens/customer/voucher/customer_voucher_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/staff/staff_home_screen.dart';
 
@@ -156,10 +157,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/admin/account',
         name: 'admin-account',
         builder: (_, __) => const UserManagementScreen(),
+      ),
+      GoRoute(
+        path: '/customer-voucher',
+        builder: (context, state) => const CustomerVoucherScreen(),
+      ),
+
+      GoRoute(
         path: '/staff',
         name: 'staff',
         builder: (_, __) => const StaffHomeScreen(),
-
       ),
     ],
   );
@@ -168,9 +175,9 @@ final routerProvider = Provider<GoRouter>((ref) {
   return router;
 });
 
-String _homeForRole(String? roleId) {
-  return _isAdminRole(roleId) ? '/admin' : '/home';
-}
+// String _homeForRole(String? roleId) {
+//   return _isAdminRole(roleId) ? '/admin' : '/home';
+// }
 
 bool _isAdminRole(String? roleId) {
   return roleId?.toUpperCase() == AppConfig.roleAdmin;

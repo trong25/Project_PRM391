@@ -172,53 +172,69 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildQuickActions(BuildContext context) {
     final items = [
-      {'icon': Icons.credit_card, 'label': 'Voucher'},
-      {'icon': Icons.inventory_2_outlined, 'label': 'Lịch sử'},
-      {'icon': Icons.chat_bubble_outline, 'label': 'Feedback'},
+      {
+        'icon': Icons.credit_card,
+        'label': 'Voucher',
+        'route': '/customer-voucher',
+      },
+      {
+        'icon': Icons.inventory_2_outlined,
+        'label': 'Lịch sử',
+        'route': null,
+      },
+      {
+        'icon': Icons.chat_bubble_outline,
+        'label': 'Feedback',
+        'route': null,
+      },
     ];
 
     return Row(
-      children: items
-          .map(
-            (item) => Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: InkWell(
-                  onTap: () => _onComingSoon(context),
+      children: items.map((item) {
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
+                if (item["route"] != null) {
+                  context.push(item["route"] as String);
+                } else {
+                  _onComingSoon(context);
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: AppTheme.surface,
                   borderRadius: BorderRadius.circular(12),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(
-                      color: AppTheme.surface,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFFE5E7EB)),
+                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                ),
+                child: Column(
+                  children: [
+                    ShaderMask(
+                      shaderCallback: (bounds) =>
+                          AppTheme.primaryGradient.createShader(bounds),
+                      child: Icon(
+                        item['icon'] as IconData,
+                        color: Colors.white,
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        ShaderMask(
-                          shaderCallback: (bounds) =>
-                              AppTheme.primaryGradient.createShader(bounds),
-                          child: Icon(
-                            item['icon'] as IconData,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          item['label'] as String,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: AppTheme.textPrimary,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: 8),
+                    Text(
+                      item['label'] as String,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppTheme.textPrimary,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
-          )
-          .toList(),
+          ),
+        );
+      }).toList(),
     );
   }
 

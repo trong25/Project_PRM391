@@ -19,7 +19,10 @@ public class SecurityConfig {
     private final CorsConfigurationSource corsConfigurationSource;
     private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConfig(CorsConfigurationSource corsConfigurationSource, JwtAuthFilter jwtAuthFilter) {
+    public SecurityConfig(
+            CorsConfigurationSource corsConfigurationSource,
+            JwtAuthFilter jwtAuthFilter
+    ) {
         this.corsConfigurationSource = corsConfigurationSource;
         this.jwtAuthFilter = jwtAuthFilter;
     }
@@ -30,9 +33,14 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        // Public auth routes (no token needed)
+
+                        //======================
+                        // AUTH
+                        //======================
                         .requestMatchers(
                                 "/auth/login",
                                 "/auth/register",
@@ -41,26 +49,71 @@ public class SecurityConfig {
                                 "/auth/reset-password",
                                 "/auth/logout"
                         ).permitAll()
+
+                        //======================
+                        // PUBLIC API
+                        //======================
                         .requestMatchers(HttpMethod.GET,
-                                "/rooms",
                                 "/rooms/**",
+                                "/rooms",
+                                "/hotels/**",
                                 "/hotels",
+                                "/type-rooms/**",
                                 "/type-rooms"
                         ).permitAll()
-                        // All other requests (including /auth/profile, /auth/change-password) need auth
+
+                        //================================================
+                        // CUSTOMER xem voucher Active
+                        //================================================
+                        .requestMatchers(HttpMethod.GET,
+                                "/discount/active")
+                        .authenticated()
+
+                        //================================================
+                        // STAFF xem toàn bộ voucher
+                        //================================================
+                        .requestMatchers(HttpMethod.GET,
+                                "/discount")
+                        .hasRole("STAFF")
+
+                        .requestMatchers(HttpMethod.GET,
+                                "/discount/{id}")
+                        .hasRole("STAFF")
+
+                        //================================================
+                        // STAFF CRUD
+                        //================================================
+                        .requestMatchers(HttpMethod.POST,
+                                "/discount")
+                        .hasRole("STAFF")
+
+                        .requestMatchers(HttpMethod.PUT,
+                                "/discount/**")
+                        .hasRole("STAFF")
+
+                        .requestMatchers(HttpMethod.DELETE,
+                                "/discount/**")
+                        .hasRole("STAFF")
+
                         .anyRequest().authenticated()
                 )
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+                .addFilterBefore(jwtAuthFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration)
+            throws Exception {
+
+        return configuration.getAuthenticationManager();
     }
 
     @Bean

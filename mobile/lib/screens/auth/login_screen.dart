@@ -39,17 +39,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!mounted) return;
 
     if (success) {
-      final roleId = ref.read(authProvider).user?.roleId ?? '';
-      switch (roleId.toUpperCase()) {
-      final role = ref.read(authProvider).user?.role.toUpperCase() ?? '';
+      final role =
+      (ref
+          .read(authProvider)
+          .user
+          ?.roleId ??
+          ref
+              .read(authProvider)
+              .user
+              ?.role ??
+          '').toUpperCase();
+
       switch (role) {
         case AppConfig.roleAdmin:
           context.go('/admin');
           break;
+
         case AppConfig.roleStaff:
-          context.go('/home');
           context.go('/staff');
           break;
+
         default:
           context.go('/home');
       }
