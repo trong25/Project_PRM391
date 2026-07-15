@@ -24,6 +24,7 @@ class Prm391GenZApplicationTests {
     void contextLoads() {
     }
 
+
     @Test
     void dashboardRevenueOverviewLoads() {
         Map<String, Object> overview = dashboardService.getRevenueOverview();

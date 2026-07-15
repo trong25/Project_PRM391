@@ -26,6 +26,8 @@ import '../screens/customer/feedback_chat_screen.dart';
 import '../screens/staff/feedback_list_screen.dart';
 import '../screens/staff/staff_chat_screen.dart';
 import '../screens/staff/staff_dashboard_screen.dart';
+import '../screens/staff/staff_room_management_screen.dart';
+import '../screens/staff/staff_booking_management_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -61,6 +63,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (!isLoggedIn && !isAuthRoute) return '/login';
       if (isLoggedIn && isAuthRoute) {
         return _homeForRole(authState.user?.roleId ?? authState.user?.role);
+      }
+      if (isLoggedIn && (state.matchedLocation == '/home' || state.matchedLocation == '/')) {
+        final role = authState.user?.roleId ?? authState.user?.role;
+        if (_isAdminRole(role)) return '/admin';
+        if (_isStaffRole(role)) return '/staff';
       }
       if (isLoggedIn &&
           state.matchedLocation.startsWith('/admin') &&
@@ -207,6 +214,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'admin-account',
         builder: (_, __) => const UserManagementScreen(),
       ),
+      GoRoute(
+        path: '/staff/rooms',
+        name: 'staff-rooms',
+        builder: (_, __) => const StaffRoomManagementScreen(),
+      ),
+      GoRoute(
+        path: '/staff/bookings',
+        name: 'staff-bookings',
+        builder: (_, __) => const StaffBookingManagementScreen(),
+      ),
     ],
   );
 
@@ -215,8 +232,9 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String _homeForRole(String? roleId) {
-  if (_isAdminRole(roleId)) return '/admin';
-  if (_isStaffRole(roleId)) return '/staff';
+  final role = roleId?.toUpperCase();
+  if (role == AppConfig.roleAdmin) return '/admin';
+  if (role == AppConfig.roleStaff) return '/staff';
   return '/home';
 }
 

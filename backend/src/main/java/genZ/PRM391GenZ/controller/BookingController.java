@@ -16,9 +16,10 @@ import java.util.List;
 public class BookingController {
 
     private final BookingRepository bookingRepository;
+    private final genZ.PRM391GenZ.repository.RoomRepository roomRepository;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<ApiResponse<List<Booking>>> getAllBookings() {
         return ResponseEntity.ok(
                 ApiResponse.success("Danh sách booking", bookingRepository.findAll())
@@ -45,13 +46,64 @@ public class BookingController {
     }
 
     @PutMapping("/{id}/status")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<ApiResponse<Booking>> updateStatus(
             @PathVariable Integer id, @RequestParam String status) {
         return bookingRepository.findById(id).map(b -> {
             b.setStatus(status);
+            
+            // Tự động đồng bộ trạng thái phòng tương ứng
+            if (b.getRoom() != null) {
+                genZ.PRM391GenZ.entity.Room room = b.getRoom();
+                if ("Đang ở".equals(status)) {
+                    room.setStatus("Đang thuê");
+                    roomRepository.save(room);
+                } else if ("Đã thanh toán".equals(status)) {
+                    room.setStatus("Dọn dẹp");
+                    roomRepository.save(room);
+                } else if ("Đã hủy".equals(status)) {
+                    room.setStatus("Trống");
+                    roomRepository.save(room);
+                }
+            }
+
             Booking updated = bookingRepository.save(b);
             return ResponseEntity.ok(ApiResponse.success("Cập nhật trạng thái", updated));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<Void>> deleteBooking(@PathVariable Integer id) {
+        return bookingRepository.findById(id).map(b -> {
+            bookingRepository.delete(b);
+            return ResponseEntity.ok(ApiResponse.<Void>success("Xóa booking thành công", null));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    public ResponseEntity<ApiResponse<Booking>> updateBooking(
+            @PathVariable Integer id, @RequestBody Booking booking) {
+        return bookingRepository.findById(id).map(existing -> {
+            if (booking.getRoom() != null) {
+                existing.setRoom(booking.getRoom());
+            }
+            if (booking.getUser() != null) {
+                existing.setUser(booking.getUser());
+            }
+            if (booking.getTypeBooking() != null) {
+                existing.setTypeBooking(booking.getTypeBooking());
+            }
+            existing.setCheckIn(booking.getCheckIn());
+            existing.setCheckOut(booking.getCheckOut());
+            existing.setTotalPrice(booking.getTotalPrice());
+            existing.setVoucherCode(booking.getVoucherCode());
+            existing.setDiscountAmount(booking.getDiscountAmount());
+            existing.setNote(booking.getNote());
+            
+            Booking saved = bookingRepository.save(existing);
+            return ResponseEntity.ok(ApiResponse.success("Cập nhật booking thành công", saved));
         }).orElse(ResponseEntity.notFound().build());
     }
 }
