@@ -22,7 +22,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-
     /**
      * Bỏ qua JWT filter cho WebSocket endpoint /ws/**
      * WebSocket handshake không mang Authorization header đúng cách qua Servlet layer.

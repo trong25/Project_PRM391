@@ -36,7 +36,6 @@ class _StaffChatScreenState extends ConsumerState<StaffChatScreen> {
   bool _isLoading = true;
   String _status = '';
   bool _isAssigning = false;
-  bool _isClosing = false;
 
   @override
   void initState() {
@@ -129,16 +128,6 @@ class _StaffChatScreenState extends ConsumerState<StaffChatScreen> {
     final user = ref.read(authProvider).user;
     if (user == null) return;
 
-    if (_status == 'Closed') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Cuộc trò chuyện đã đóng.'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-      return;
-    }
-
     final msg = ChatMessageModel(
       conversationId: widget.conversationId,
       senderId:       user.userId,
@@ -168,90 +157,49 @@ class _StaffChatScreenState extends ConsumerState<StaffChatScreen> {
   }
 
   Future<void> _assignSelf() async {
+    if (_isAssigning) return;
     setState(() => _isAssigning = true);
     try {
-      await _chatService.assignConversation(widget.conversationId);
+      final updated = await _chatService.assignConversation(widget.conversationId);
       if (!mounted) return;
-      setState(() => _status = 'Pending');
+      // Dùng status trả về từ server để đảm bảo UI cập nhật đúng
+      setState(() {
+        _status = updated.status.isNotEmpty ? updated.status : 'Pending';
+        _isAssigning = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Bạn đã nhận cuộc trò chuyện này.'),
           backgroundColor: Colors.green,
         ),
       );
+      // Làm mới danh sách conversations của staff
+      ref.read(staffRoomsProvider.notifier).refresh();
     } catch (e) {
       if (!mounted) return;
+      setState(() => _isAssigning = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Lỗi: $e'), backgroundColor: Colors.red),
       );
-    } finally {
-      if (mounted) setState(() => _isAssigning = false);
-    }
-  }
-
-  Future<void> _closeConversation() async {
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Đóng cuộc trò chuyện?'),
-        content: const Text(
-          'Sau khi đóng, khách hàng sẽ không thể gửi thêm tin nhắn trong cuộc hội thoại này.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Hủy'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppTheme.error),
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Đóng', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-    );
-
-    if (confirm != true) return;
-
-    setState(() => _isClosing = true);
-    try {
-      await _chatService.closeConversation(widget.conversationId);
-      if (!mounted) return;
-      setState(() => _status = 'Closed');
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Lỗi: $e'), backgroundColor: Colors.red),
-      );
-    } finally {
-      if (mounted) setState(() => _isClosing = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isClosed = _status == 'Closed';
-    final isOpen   = _status == 'Open';
+    final isOpen = _status == 'Open';
 
     return Scaffold(
       body: Column(
         children: [
           _buildHeader(context),
-          // Action bar (Nhận / Đóng)
-          if (!isClosed) _buildActionBar(isOpen),
-          // Status banner nếu đóng
-          if (isClosed)
-            _buildStatusBanner(
-              'Cuộc trò chuyện đã đóng',
-              Colors.grey.shade600,
-              Icons.lock_outline,
-            ),
+          // Action bar (Nhận)
+          if (isOpen) _buildActionBar(),
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _buildMessageList(),
           ),
-          if (!isClosed) _buildInputBar(),
+          _buildInputBar(),
         ],
       ),
     );
@@ -325,18 +273,7 @@ class _StaffChatScreenState extends ConsumerState<StaffChatScreen> {
                   ],
                 ),
               ),
-              // Nút đóng conversation (Pending)
-              if (_status == 'Pending')
-                IconButton(
-                  icon: _isClosing
-                      ? const SizedBox(
-                          width: 20, height: 20,
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                        )
-                      : const Icon(Icons.close, color: Colors.white),
-                  tooltip: 'Đóng cuộc trò chuyện',
-                  onPressed: _isClosing ? null : _closeConversation,
-                ),
+
             ],
           ),
         ),
@@ -344,8 +281,7 @@ class _StaffChatScreenState extends ConsumerState<StaffChatScreen> {
     );
   }
 
-  Widget _buildActionBar(bool isOpen) {
-    if (!isOpen) return const SizedBox.shrink();
+  Widget _buildActionBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: Colors.orange.shade50,
@@ -380,23 +316,6 @@ class _StaffChatScreenState extends ConsumerState<StaffChatScreen> {
     );
   }
 
-  Widget _buildStatusBanner(String text, Color color, IconData icon) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      color: color.withOpacity(0.1),
-      child: Row(
-        children: [
-          Icon(icon, size: 16, color: color),
-          const SizedBox(width: 6),
-          Text(
-            text,
-            style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w500),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildMessageList() {
     final user = ref.read(authProvider).user;

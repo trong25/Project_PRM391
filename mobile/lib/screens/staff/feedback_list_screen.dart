@@ -10,7 +10,7 @@ import '../../config/app_theme.dart';
 import '../../models/chat_room_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/chat_provider.dart';
-import '../../widgets/app_bottom_nav_bar.dart';
+import 'widgets/staff_bottom_nav_bar.dart';
 
 class FeedbackListScreen extends ConsumerStatefulWidget {
   const FeedbackListScreen({super.key});
@@ -71,7 +71,7 @@ class _FeedbackListScreenState extends ConsumerState<FeedbackListScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const AppBottomNavBar(currentIndex: 3),
+      bottomNavigationBar: const StaffBottomNavBar(currentIndex: 4),
     );
   }
 
@@ -94,7 +94,6 @@ class _FeedbackListScreenState extends ConsumerState<FeedbackListScreen> {
       (null,       'Tất cả'),
       ('Open',     'Chờ xử lý'),
       ('Pending',  'Đang xử lý'),
-      ('Closed',   'Đã đóng'),
     ];
 
     return SingleChildScrollView(
@@ -140,7 +139,6 @@ class _FeedbackListScreenState extends ConsumerState<FeedbackListScreen> {
     switch (conv.status) {
       case 'Open':    statusColor = Colors.orange;        statusLabel = 'Chờ xử lý'; break;
       case 'Pending': statusColor = Colors.green;         statusLabel = 'Đang xử lý'; break;
-      case 'Closed':  statusColor = Colors.grey;          statusLabel = 'Đã đóng'; break;
       default:        statusColor = Colors.grey;          statusLabel = conv.status;
     }
 

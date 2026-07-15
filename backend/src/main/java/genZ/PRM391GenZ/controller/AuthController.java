@@ -18,7 +18,6 @@ public class AuthController {
 
     /**
      * POST /api/auth/login
-     * Replaces: LoginServlet.doPost
      */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> login(
@@ -27,8 +26,7 @@ public class AuthController {
             LoginResponse response = authService.login(request);
             return ResponseEntity.ok(ApiResponse.success("Đăng nhập thành công", response));
         } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                    .body(ApiResponse.error(e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
     }
 
@@ -49,7 +47,6 @@ public class AuthController {
 
     /**
      * POST /api/auth/request-reset
-     * Replaces: RequestPasswordServlet.doPost
      */
     @PostMapping("/request-reset")
     public ResponseEntity<ApiResponse<Void>> requestPasswordReset(
@@ -67,8 +64,6 @@ public class AuthController {
 
     /**
      * GET /api/auth/verify-token?token=xxx
-     * Replaces: ResetPasswordServlet.doGet
-     * Flutter calls this to validate the token before showing reset form
      */
     @GetMapping("/verify-token")
     public ResponseEntity<ApiResponse<String>> verifyToken(@RequestParam String token) {
@@ -83,7 +78,6 @@ public class AuthController {
 
     /**
      * POST /api/auth/reset-password
-     * Replaces: ResetPasswordServlet.doPost
      */
     @PostMapping("/reset-password")
     public ResponseEntity<ApiResponse<Void>> resetPassword(
@@ -101,9 +95,6 @@ public class AuthController {
 
     /**
      * POST /api/auth/logout
-     * Replaces: LogoutServlet
-     * With JWT, logout is client-side (delete token).
-     * This endpoint exists for audit/blacklist purposes.
      */
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> logout() {
@@ -114,9 +105,6 @@ public class AuthController {
 
     /**
      * GET /api/auth/profile
-     * Yêu cầu request có header: Authorization: Bearer <token>
-     * (route này phải được Security Config yêu cầu xác thực, KHÔNG để public
-     * như /login, /register).
      */
     @GetMapping("/profile")
     public ResponseEntity<ApiResponse<ProfileResponse>> getProfile(
@@ -132,8 +120,6 @@ public class AuthController {
 
     /**
      * PUT /api/auth/profile
-     * Body: { "email": "...", "phone": "..." }
-     * Cập nhật email / số điện thoại của user đang đăng nhập (lấy từ token).
      */
     @PutMapping("/profile")
     public ResponseEntity<ApiResponse<ProfileResponse>> updateProfile(
@@ -150,8 +136,6 @@ public class AuthController {
 
     /**
      * PUT /api/auth/change-password
-     * Yêu cầu xác thực JWT (Authorization: Bearer <token>)
-     * Body: { "currentPassword": "...", "newPassword": "...", "confirmPassword": "..." }
      */
     @PutMapping("/change-password")
     public ResponseEntity<ApiResponse<Void>> changePassword(
@@ -165,4 +149,4 @@ public class AuthController {
                     .body(ApiResponse.error(e.getMessage()));
         }
     }
-}
+}
