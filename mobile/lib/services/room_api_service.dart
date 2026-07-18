@@ -75,15 +75,15 @@ class RoomApiService {
       final formData = FormData.fromMap({
         'file': kIsWeb
             ? MultipartFile.fromBytes(
-                await image.readAsBytes(),
-                filename: fileName,
-                contentType: contentType,
-              )
+          await image.readAsBytes(),
+          filename: fileName,
+          contentType: contentType,
+        )
             : await MultipartFile.fromFile(
-                image.path,
-                filename: fileName,
-                contentType: contentType,
-              ),
+          image.path,
+          filename: fileName,
+          contentType: contentType,
+        ),
       });
       final response = await _dio.post(
         '/rooms/upload-image',
@@ -112,15 +112,15 @@ class RoomApiService {
         files.add(
           kIsWeb
               ? MultipartFile.fromBytes(
-                  await image.readAsBytes(),
-                  filename: fileName,
-                  contentType: contentType,
-                )
+            await image.readAsBytes(),
+            filename: fileName,
+            contentType: contentType,
+          )
               : await MultipartFile.fromFile(
-                  image.path,
-                  filename: fileName,
-                  contentType: contentType,
-                ),
+            image.path,
+            filename: fileName,
+            contentType: contentType,
+          ),
         );
       }
 

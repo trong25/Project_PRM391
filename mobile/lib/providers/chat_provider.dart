@@ -270,7 +270,7 @@ class StaffRoomsNotifier extends StateNotifier<StaffRoomsState> {
 }
 
 final staffRoomsProvider =
-    StateNotifierProvider.autoDispose<StaffRoomsNotifier, StaffRoomsState>((ref) {
+StateNotifierProvider.autoDispose<StaffRoomsNotifier, StaffRoomsState>((ref) {
   return StaffRoomsNotifier(ref.read(chatServiceProvider));
 });
 
