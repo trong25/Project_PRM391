@@ -106,6 +106,10 @@ public class UserService {
         log.info("Deleted user with ID: {}", id);
     }
 
+    public java.util.Optional<UserResponseDto> getUserByPhone(String phone) {
+        return userRepository.findByPhone(phone).map(this::mapToDto);
+    }
+
     private UserResponseDto mapToDto(User user) {
         return UserResponseDto.builder()
                 .userId(user.getUserId())

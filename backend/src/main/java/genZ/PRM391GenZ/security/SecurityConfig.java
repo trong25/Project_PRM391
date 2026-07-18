@@ -47,6 +47,9 @@ public class SecurityConfig {
                                 "/hotels",
                                 "/type-rooms"
                         ).permitAll()
+                        // WebSocket STOMP endpoint - allow handshake without token
+                        // (token được truyền qua STOMP header sau khi kết nối)
+                        .requestMatchers("/ws/**").permitAll()
                         // All other requests (including /auth/profile, /auth/change-password) need auth
                         .anyRequest().authenticated()
                 )

@@ -28,17 +28,48 @@ class _RequestResetScreenState extends ConsumerState<RequestResetScreen> {
     await ref.read(resetProvider.notifier).requestReset(_emailCtrl.text.trim());
   }
 
+  InputDecoration _customInputDecoration({required String labelText, required IconData prefixIcon}) {
+    return InputDecoration(
+      labelText: labelText,
+      prefixIcon: Icon(prefixIcon, color: AppTheme.primary),
+      labelStyle: const TextStyle(color: AppTheme.textGray),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.primaryDark),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.primary, width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.error),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.error, width: 2),
+      ),
+      fillColor: Colors.white,
+      filled: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final resetState = ref.watch(resetProvider);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Quên mật khẩu'),
+        title: const Text('Quên mật khẩu', style: TextStyle(color: AppTheme.textPrimary, fontWeight: FontWeight.w600)),
+        centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: AppTheme.textPrimary,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -46,20 +77,27 @@ class _RequestResetScreenState extends ConsumerState<RequestResetScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 24),
-            const Icon(Icons.lock_reset, size: 64, color: AppTheme.primary),
+            Image.asset('assets/images/logo.png', height: 60),
             const SizedBox(height: 16),
-            const Text(
-              'Đặt lại mật khẩu',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: AppTheme.textPrimary,
+            ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(
+                Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+              ),
+              child: const Text(
+                'Đặt lại mật khẩu',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 8),
             const Text(
-              'Nhập email của bạn và chúng tôi sẽ gửi link đặt lại mật khẩu.',
+              'Nhập email của bạn và chúng tôi sẽ gửi link đặt lại mật khẩu',
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppTheme.textGray, fontSize: 14),
+              style: TextStyle(color: AppTheme.textGray, fontSize: 13),
             ),
             const SizedBox(height: 32),
 
@@ -111,9 +149,9 @@ class _RequestResetScreenState extends ConsumerState<RequestResetScreen> {
                   TextFormField(
                     controller: _emailCtrl,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
+                    decoration: _customInputDecoration(
                       labelText: 'Email',
-                      prefixIcon: Icon(Icons.email_outlined),
+                      prefixIcon: Icons.email_outlined,
                     ),
                     validator: (v) {
                       if (v == null || v.isEmpty) return 'Vui lòng nhập email';
@@ -124,21 +162,30 @@ class _RequestResetScreenState extends ConsumerState<RequestResetScreen> {
                     },
                   ),
                   const SizedBox(height: 24),
-                  SizedBox(
+                  Container(
                     height: 50,
-                    child: resetState.isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : ElevatedButton(
-                      onPressed: _onSubmit,
-                      child: const Text('Gửi link đặt lại'),
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.primaryGradient,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: resetState.isLoading ? null : _onSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      child: resetState.isLoading
+                          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                          : const Text('Gửi link đặt lại', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   TextButton(
                     onPressed: () => context.go('/login'),
                     child: const Text(
                       'Quay lại đăng nhập',
-                      style: TextStyle(color: AppTheme.primary),
+                      style: TextStyle(color: AppTheme.textPrimary),
                     ),
                   ),
                 ],

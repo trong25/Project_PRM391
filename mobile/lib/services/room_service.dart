@@ -27,4 +27,12 @@ class RoomService {
         .map((e) => RoomModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
+
+  Future<RoomModel> updateRoomStatus(String roomId, String status) async {
+    final response = await _dio.put(
+      '/rooms/$roomId/status',
+      queryParameters: {'status': status},
+    );
+    return RoomModel.fromJson(response.data['data'] as Map<String, dynamic>);
+  }
 }
