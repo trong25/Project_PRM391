@@ -249,7 +249,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             ],
           ),
           child: Image.asset(
-            'assets/images/logo.png',
+            'assets/images/logo_transparent.png',
             height: 32,
             errorBuilder: (_, __, ___) => const Text(
               'LOGO',
