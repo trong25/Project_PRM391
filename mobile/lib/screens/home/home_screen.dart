@@ -450,26 +450,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   Widget _buildQuickActions(BuildContext context) {
     final user = ref.read(authProvider).user;
-    final isStaff = user?.roleId.toUpperCase() == AppConfig.roleStaff ||
-        user?.role.toUpperCase() == AppConfig.roleStaff;
+
+    final isStaff =
+        (user?.roleId?.toUpperCase() == AppConfig.roleStaff) ||
+            (user?.role?.toUpperCase() == AppConfig.roleStaff);
 
     final items = [
       {
-
-        'icon': Icons.credit_card,
-        'label': 'Voucher',
-        'route': '/customer-voucher',
-      },
-      {
-        'icon': Icons.inventory_2_outlined,
-        'label': 'Lịch sử',
-        'route': null,
-      },
-      {
-        'icon': Icons.chat_bubble_outline,
-        'label': 'Feedback',
-        'route': null,
-
         'icon': Icons.confirmation_number_outlined,
         'label': 'Voucher',
         'gradient': const LinearGradient(
@@ -477,7 +464,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        'onTap': () => _onComingSoon(context),
+        'onTap': () {
+          context.push('/customer-voucher');
+        },
       },
       {
         'icon': Icons.history_rounded,
@@ -487,7 +476,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        'onTap': () => _onComingSoon(context),
+        'onTap': () {
+          _onComingSoon(context);
+        },
       },
       {
         'icon': Icons.chat_bubble_rounded,
@@ -504,114 +495,72 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             context.push('/customer-chat');
           }
         },
-
       },
     ];
 
     return Row(
-
-      children: items.map((item) {
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(12),
-              onTap: () {
-                if (item["route"] != null) {
-                  context.push(item["route"] as String);
-                } else {
-                  _onComingSoon(context);
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: AppTheme.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
-                ),
-                child: Column(
-                  children: [
-                    ShaderMask(
-                      shaderCallback: (bounds) =>
-                          AppTheme.primaryGradient.createShader(bounds),
-                      child: Icon(
-                        item['icon'] as IconData,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      item['label'] as String,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppTheme.textPrimary,
-                      ),
-
       children: items
           .map(
             (item) => Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: _AnimatedIconButton(
-                  onTap: item['onTap'] as VoidCallback,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.primary.withOpacity(0.1),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: _AnimatedIconButton(
+              onTap: item['onTap'] as VoidCallback,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.primary.withOpacity(0.1),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
                     ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 46,
-                          height: 46,
-                          decoration: BoxDecoration(
-                            gradient: item['gradient'] as LinearGradient,
-                            borderRadius: BorderRadius.circular(14),
-                            boxShadow: [
-                              BoxShadow(
-                                color: (item['gradient'] as LinearGradient)
-                                    .colors
-                                    .first
-                                    .withOpacity(0.35),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 46,
+                      height: 46,
+                      decoration: BoxDecoration(
+                        gradient: item['gradient'] as LinearGradient,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: (item['gradient'] as LinearGradient)
+                                .colors
+                                .first
+                                .withOpacity(0.35),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
-                          child: Icon(
-                            item['icon'] as IconData,
-                            color: Colors.white,
-                            size: 22,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          item['label'] as String,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.textPrimary,
-                          ),
-                        ),
-                      ],
-
+                        ],
+                      ),
+                      child: Icon(
+                        item['icon'] as IconData,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      item['label'] as String,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textPrimary,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ),
-        );
-      }).toList(),
+        ),
+      )
+          .toList(),
     );
   }
 

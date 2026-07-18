@@ -27,6 +27,7 @@ import '../screens/customer/feedback_chat_screen.dart';
 import '../screens/staff/feedback_list_screen.dart';
 import '../screens/staff/staff_chat_screen.dart';
 import '../screens/staff/staff_dashboard_screen.dart';
+import '../screens/staff/staff_home_screen.dart';
 import '../screens/staff/staff_room_management_screen.dart';
 import '../screens/staff/staff_booking_management_screen.dart';
 
@@ -225,16 +226,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/staff',
         name: 'staff',
         builder: (_, __) => const StaffHomeScreen(),
+      ),
 
+      GoRoute(
         path: '/staff/rooms',
         name: 'staff-rooms',
         builder: (_, __) => const StaffRoomManagementScreen(),
       ),
+
       GoRoute(
         path: '/staff/bookings',
         name: 'staff-bookings',
         builder: (_, __) => const StaffBookingManagementScreen(),
-
       ),
     ],
   );
