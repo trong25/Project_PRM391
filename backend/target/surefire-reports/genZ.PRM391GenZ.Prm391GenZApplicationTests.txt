@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: genZ.PRM391GenZ.Prm391GenZApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 25.44 s <<< FAILURE! -- in genZ.PRM391GenZ.Prm391GenZApplicationTests
-genZ.PRM391GenZ.Prm391GenZApplicationTests.unicodeDataIsRepaired -- Time elapsed: 0.064 s <<< ERROR!
+Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 14.99 s <<< FAILURE! -- in genZ.PRM391GenZ.Prm391GenZApplicationTests
+genZ.PRM391GenZ.Prm391GenZApplicationTests.unicodeDataIsRepaired -- Time elapsed: 0.034 s <<< ERROR!
 org.springframework.dao.EmptyResultDataAccessException: Incorrect result size: expected 1, actual 0
 	at org.springframework.dao.support.DataAccessUtils.nullableSingleResult(DataAccessUtils.java:194)
 	at org.springframework.jdbc.core.JdbcTemplate.queryForObject(JdbcTemplate.java:520)
@@ -12,7 +12,7 @@ org.springframework.dao.EmptyResultDataAccessException: Incorrect result size: e
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
 
-genZ.PRM391GenZ.Prm391GenZApplicationTests.dashboardRevenueOverviewLoads -- Time elapsed: 1.078 s <<< FAILURE!
+genZ.PRM391GenZ.Prm391GenZApplicationTests.dashboardRevenueOverviewLoads -- Time elapsed: 0.795 s <<< FAILURE!
 java.lang.AssertionError: 
 
 Expecting actual:

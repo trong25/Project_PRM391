@@ -2,10 +2,13 @@ genZ\PRM391GenZ\repository\UserRepository.class
 genZ\PRM391GenZ\dto\ResetPasswordDto$RequestReset.class
 genZ\PRM391GenZ\security\JwtService.class
 genZ\PRM391GenZ\dto\UpdateProfileRequest.class
+genZ\PRM391GenZ\controller\DiscountCodeController.class
+genZ\PRM391GenZ\entity\DiscountCode.class
 genZ\PRM391GenZ\entity\ChatMessage$ChatMessageBuilder.class
 genZ\PRM391GenZ\repository\ConversationRepository.class
 genZ\PRM391GenZ\entity\TypeRoom.class
 genZ\PRM391GenZ\dto\ChangePasswordRequest.class
+genZ\PRM391GenZ\entity\DiscountCode$DiscountCodeBuilder.class
 genZ\PRM391GenZ\dto\user\UserCreateDto$UserCreateDtoBuilder.class
 genZ\PRM391GenZ\service\DashboardService.class
 genZ\PRM391GenZ\entity\PriceConfig.class
@@ -18,6 +21,8 @@ genZ\PRM391GenZ\repository\TypeRoomRepository.class
 genZ\PRM391GenZ\service\ChatService.class
 genZ\PRM391GenZ\dto\room\RoomDto$RoomDtoBuilder.class
 genZ\PRM391GenZ\entity\Hotel.class
+genZ\PRM391GenZ\service\CloudinaryService.class
+genZ\PRM391GenZ\config\CloudinaryConfig.class
 genZ\PRM391GenZ\controller\ChatController.class
 genZ\PRM391GenZ\entity\TypeBooking$TypeBookingBuilder.class
 genZ\PRM391GenZ\exception\GlobalExceptionHandler.class
@@ -25,6 +30,7 @@ genZ\PRM391GenZ\repository\RoleRepository.class
 genZ\PRM391GenZ\service\RoomService.class
 genZ\PRM391GenZ\service\AuthService.class
 genZ\PRM391GenZ\dto\ProfileResponse.class
+genZ\PRM391GenZ\repository\DiscountCodeRepository.class
 genZ\PRM391GenZ\controller\HotelController.class
 genZ\PRM391GenZ\dto\LoginResponse$LoginResponseBuilder.class
 genZ\PRM391GenZ\dto\RegisterRequest.class
@@ -51,6 +57,7 @@ genZ\PRM391GenZ\controller\RoomController.class
 genZ\PRM391GenZ\dto\ChatMessageDTO.class
 genZ\PRM391GenZ\entity\Booking.class
 genZ\PRM391GenZ\config\CorsConfig.class
+genZ\PRM391GenZ\service\RoomService$1.class
 genZ\PRM391GenZ\entity\User$UserBuilder.class
 genZ\PRM391GenZ\dto\ApiResponse$ApiResponseBuilder.class
 genZ\PRM391GenZ\dto\ConversationDTO$ConversationDTOBuilder.class

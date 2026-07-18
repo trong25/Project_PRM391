@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../models/room_model.dart';
 import '../../../providers/room_provider.dart';
 import '../widgets/admin_bottom_navigation.dart';
+import 'branch_form_screen.dart';
 import 'room_form_screen.dart';
 
 enum _RoomStatusFilter {
@@ -70,14 +71,14 @@ class _RoomManagementScreenState extends ConsumerState<RoomManagementScreen> {
                     query: _query,
                     filter: _filter,
                     onQueryChanged: (value) => setState(() => _query = value),
-                    onFilterChanged: (value) =>
-                        setState(() => _filter = value),
+                    onFilterChanged: (value) => setState(() => _filter = value),
                   ),
                   const SizedBox(height: 16),
                   if (branches.isEmpty)
                     const _EmptyState(message: 'Không có dữ liệu chi nhánh')
                   else if (visibleBranches.isEmpty)
-                    const _EmptyState(message: 'Không tìm thấy chi nhánh phù hợp')
+                    const _EmptyState(
+                        message: 'Không tìm thấy chi nhánh phù hợp')
                   else
                     ...visibleBranches.map(
                       (branch) => Padding(
@@ -111,12 +112,13 @@ class _RoomManagementScreenState extends ConsumerState<RoomManagementScreen> {
         onPressed: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const RoomFormScreen()),
+            MaterialPageRoute(builder: (_) => const BranchFormScreen()),
           );
+          ref.invalidate(hotelsProvider);
           ref.invalidate(roomsProvider);
         },
-        icon: const Icon(Icons.add),
-        label: const Text('Thêm phòng'),
+        icon: const Icon(Icons.apartment),
+        label: const Text('Thêm chi nhánh'),
       ),
     );
   }
@@ -241,7 +243,8 @@ class _RoomHeader extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           'Theo dõi tình trạng phòng theo từng chi nhánh',
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+          style:
+              TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 16),
         LayoutBuilder(
@@ -904,10 +907,11 @@ bool _matchesBranch(
   final normalizedQuery = query.trim().toLowerCase();
   final matchesQuery = normalizedQuery.isEmpty ||
       branch.name.toLowerCase().contains(normalizedQuery) ||
-      branch.rooms.any((room) => _roomSearchText(room).contains(normalizedQuery));
+      branch.rooms
+          .any((room) => _roomSearchText(room).contains(normalizedQuery));
 
-  final matchesFilter =
-      filter == _RoomStatusFilter.all || branch.rooms.any((room) {
+  final matchesFilter = filter == _RoomStatusFilter.all ||
+      branch.rooms.any((room) {
         return _matchesStatusFilter(room, filter);
       });
 
@@ -920,8 +924,8 @@ bool _matchesRoom(
   _RoomStatusFilter filter,
 ) {
   final normalizedQuery = query.trim().toLowerCase();
-  final matchesQuery =
-      normalizedQuery.isEmpty || _roomSearchText(room).contains(normalizedQuery);
+  final matchesQuery = normalizedQuery.isEmpty ||
+      _roomSearchText(room).contains(normalizedQuery);
 
   return matchesQuery && _matchesStatusFilter(room, filter);
 }

@@ -45,6 +45,16 @@ class HotelModel {
         phone: json['phone']?.toString(),
         imageUrl: json['imageUrl']?.toString(),
       );
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (hotelId.isNotEmpty) 'hotelId': hotelId,
+      'name': name,
+      'address': address,
+      if (phone != null && phone!.isNotEmpty) 'phone': phone,
+      if (imageUrl != null && imageUrl!.isNotEmpty) 'imageUrl': imageUrl,
+    };
+  }
 }
 
 class RoomModel {

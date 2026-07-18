@@ -34,7 +34,8 @@ class RoomApiService {
       }
       return [];
     } on DioException catch (e) {
-      throw Exception(_messageFromDio(e, 'Không tải được phòng theo chi nhánh'));
+      throw Exception(
+          _messageFromDio(e, 'Không tải được phòng theo chi nhánh'));
     } catch (e) {
       throw Exception('Không tải được phòng theo chi nhánh: $e');
     }
@@ -160,6 +161,20 @@ class RoomApiService {
       return [];
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<HotelModel> createHotel(HotelModel hotel) async {
+    try {
+      final response = await _dio.post('/hotels', data: hotel.toJson());
+      if (response.data['success'] == true) {
+        return HotelModel.fromJson(response.data['data']);
+      }
+      throw Exception(response.data['message']);
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không tạo được chi nhánh'));
+    } catch (e) {
+      throw Exception('Không tạo được chi nhánh: $e');
     }
   }
 
