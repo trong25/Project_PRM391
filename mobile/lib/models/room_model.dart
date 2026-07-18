@@ -54,6 +54,7 @@ class RoomModel {
   final HotelModel? hotel;
   final String? status;
   final String? imageUrl;
+  final List<String> imageUrls;
   final String? _typeRoomId;
   final String? _typeRoomName;
   final String? _hotelId;
@@ -66,6 +67,7 @@ class RoomModel {
     this.hotel,
     this.status,
     this.imageUrl,
+    this.imageUrls = const [],
     String? typeRoomId,
     String? typeRoomName,
     String? hotelId,
@@ -86,6 +88,8 @@ class RoomModel {
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     final typeRoomJson = _asMap(json['typeRoom']);
     final hotelJson = _asMap(json['hotel']);
+    final imageUrls = _asStringList(json['imageUrls']);
+    final imageUrl = json['imageUrl']?.toString();
 
     return RoomModel(
       roomId: json['roomId']?.toString() ?? '',
@@ -101,7 +105,12 @@ class RoomModel {
       hotelId: json['hotelId']?.toString(),
       hotelName: json['hotelName']?.toString(),
       status: json['status']?.toString(),
-      imageUrl: json['imageUrl']?.toString(),
+      imageUrl: imageUrl,
+      imageUrls: imageUrls.isNotEmpty
+          ? imageUrls
+          : [
+              if (imageUrl != null && imageUrl.isNotEmpty) imageUrl,
+            ],
     );
   }
 
@@ -112,6 +121,7 @@ class RoomModel {
       'typeRoomId': typeRoomId,
       'hotelId': hotelId,
       'status': status,
+      'imageUrls': imageUrls,
       if (imageUrl != null) 'imageUrl': imageUrl,
     };
   }
@@ -121,4 +131,14 @@ Map<String, dynamic>? _asMap(Object? value) {
   if (value is Map<String, dynamic>) return value;
   if (value is Map) return Map<String, dynamic>.from(value);
   return null;
+}
+
+List<String> _asStringList(Object? value) {
+  if (value is List) {
+    return value
+        .map((item) => item?.toString() ?? '')
+        .where((item) => item.isNotEmpty)
+        .toList();
+  }
+  return const [];
 }

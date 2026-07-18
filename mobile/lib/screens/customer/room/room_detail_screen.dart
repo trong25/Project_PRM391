@@ -134,11 +134,18 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
 
   // ── Image carousel ────────────────────────────────────────────────────────────
   Widget _buildImageCarousel(RoomModel room) {
-    final List<String> images =
-        (room.imageUrl != null && room.imageUrl!.isNotEmpty)
-            ? [room.imageUrl!]
-            : [];
+    final List<String> images = room.imageUrls.isNotEmpty
+        ? room.imageUrls
+            .map((url) => url.trim())
+            .where((url) => url.isNotEmpty)
+            .toList()
+        : [
+            if (room.imageUrl != null && room.imageUrl!.trim().isNotEmpty)
+              room.imageUrl!.trim(),
+          ];
     final int count = images.isEmpty ? 1 : images.length;
+    final currentIndex =
+        _currentImageIndex >= count ? count - 1 : _currentImageIndex;
 
     final savedIds = ref.watch(savedRoomsProvider);
     final isSaved = savedIds.contains(room.roomId ?? '');
@@ -225,29 +232,51 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
             ),
           ),
           // Dots indicator
-          Positioned(
-            bottom: 12,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                count,
-                (i) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  margin: const EdgeInsets.symmetric(horizontal: 3),
-                  width: i == _currentImageIndex ? 20 : 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: i == _currentImageIndex
-                        ? AppTheme.primary
-                        : Colors.grey.shade400,
-                    borderRadius: BorderRadius.circular(3),
+          if (images.length > 1) ...[
+            Positioned(
+              right: 12,
+              bottom: 12,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.55),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  '${currentIndex + 1}/${images.length}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
             ),
-          ),
+            Positioned(
+              bottom: 14,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  images.length,
+                  (i) => AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
+                    width: i == currentIndex ? 20 : 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: i == currentIndex
+                          ? AppTheme.primary
+                          : Colors.white.withOpacity(0.75),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
