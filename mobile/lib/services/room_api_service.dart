@@ -72,15 +72,18 @@ class RoomApiService {
   Future<String> uploadRoomImage(XFile image) async {
     try {
       final fileName = image.name.isNotEmpty ? image.name : 'room-image.jpg';
+      final contentType = _contentTypeForFileName(fileName);
       final formData = FormData.fromMap({
         'file': kIsWeb
             ? MultipartFile.fromBytes(
                 await image.readAsBytes(),
                 filename: fileName,
+                contentType: contentType,
               )
             : await MultipartFile.fromFile(
                 image.path,
                 filename: fileName,
+                contentType: contentType,
               ),
       });
       final response = await _dio.post(
@@ -106,15 +109,18 @@ class RoomApiService {
       final files = <MultipartFile>[];
       for (final image in images) {
         final fileName = image.name.isNotEmpty ? image.name : 'room-image.jpg';
+        final contentType = _contentTypeForFileName(fileName);
         files.add(
           kIsWeb
               ? MultipartFile.fromBytes(
                   await image.readAsBytes(),
                   filename: fileName,
+                  contentType: contentType,
                 )
               : await MultipartFile.fromFile(
                   image.path,
                   filename: fileName,
+                  contentType: contentType,
                 ),
         );
       }
@@ -197,5 +203,18 @@ class RoomApiService {
       return data['message'].toString();
     }
     return e.message ?? fallback;
+  }
+
+  DioMediaType? _contentTypeForFileName(String fileName) {
+    final extension = fileName.split('.').last.toLowerCase();
+    return switch (extension) {
+      'heic' => DioMediaType('image', 'heic'),
+      'heif' => DioMediaType('image', 'heif'),
+      'jpg' || 'jpeg' => DioMediaType('image', 'jpeg'),
+      'png' => DioMediaType('image', 'png'),
+      'webp' => DioMediaType('image', 'webp'),
+      'gif' => DioMediaType('image', 'gif'),
+      _ => null,
+    };
   }
 }

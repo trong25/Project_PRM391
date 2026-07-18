@@ -369,6 +369,10 @@ class _SelectedImagePreview extends StatelessWidget {
       return Image.file(File(image.path), fit: BoxFit.cover);
     }
 
+    if (_isHeicImage(image.name)) {
+      return _UnsupportedPreview(fileName: image.name);
+    }
+
     return FutureBuilder(
       future: image.readAsBytes(),
       builder: (context, snapshot) {
@@ -380,6 +384,50 @@ class _SelectedImagePreview extends StatelessWidget {
         }
         return const Center(child: CircularProgressIndicator());
       },
+    );
+  }
+}
+
+class _UnsupportedPreview extends StatelessWidget {
+  final String fileName;
+
+  const _UnsupportedPreview({required this.fileName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.image_not_supported_outlined,
+              size: 34,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'HEIC',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              fileName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontSize: 11,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -397,4 +445,9 @@ class _ImagePlaceholder extends StatelessWidget {
       ),
     );
   }
+}
+
+bool _isHeicImage(String fileName) {
+  final lowerName = fileName.toLowerCase();
+  return lowerName.endsWith('.heic') || lowerName.endsWith('.heif');
 }
