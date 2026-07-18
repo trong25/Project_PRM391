@@ -23,7 +23,7 @@ public class DashboardController {
     private final DashboardService dashboardService;
 
     @GetMapping("/revenue/overview")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getRevenueOverview() {
         return ResponseEntity.ok(ApiResponse.success(
                 "Tổng hợp doanh thu theo từng khoảng thời gian của từng chi nhánh",

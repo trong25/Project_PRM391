@@ -494,8 +494,8 @@ class _EditProfileDialogState extends ConsumerState<_EditProfileDialog> {
                       ),
                       validator: (v) {
                         if (v == null || v.trim().isEmpty) return 'Vui lòng nhập số điện thoại';
-                        final phoneRegex = RegExp(r'^[0-9]{9,11}$');
-                        if (!phoneRegex.hasMatch(v.trim())) return 'Số điện thoại không hợp lệ (9–11 chữ số)';
+                        final phoneRegex = RegExp(r'^[0-9]{10}$');
+                        if (!phoneRegex.hasMatch(v.trim())) return 'Số điện thoại không hợp lệ (10 chữ số)';
                         return null;
                       },
                     ),

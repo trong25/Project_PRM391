@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+
     <list default="true" id="b5da82a5-6652-4155-8ecc-39dec7911038" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/BCryptHashGenerator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/customer/voucher/customer_voucher_screen.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/add_voucher_screen.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/edit_voucher_screen.dart" afterDir="false" />
+
+
+    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Merge branch 'thanh'&#10;&#10;# Conflicts:&#10;#&#9;.idea/Project_PRM391.iml&#10;#&#9;.idea/vcs.xml&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/entity/Hotel.java&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/RoomController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst&#10;#&#9;backend/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class&#10;#&#9;mobile/lib/config/router.dart&#10;#&#9;mobile/lib/models/room_model.dart&#10;#&#9;mobile/lib/providers/room_provider.dart&#10;#&#9;mobile/lib/screens/home/home_screen.dart&#10;#&#9;mobile/test/widget_test.dart">
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DiscountController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/DiscountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/DiscountRepository.java" afterDir="false" />
@@ -37,6 +42,9 @@
       <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/voucher_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/voucher_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/services/discount_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/discount_service.dart" afterDir="false" />
     </list>
+
+    <list default="true" id="453054a7-db8f-4f76-88fe-ca3919cdd8fd" name="Changes" comment="." />
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +53,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "cao"
+  }
+
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/trong25/Project_PRM391.git&quot;,
+    &quot;accountId&quot;: &quot;dc87556d-d61d-44de-b51b-b01128851a56&quot;
+  }
+}</component>
+>>>>>>> main
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -120,9 +147,30 @@
       <workItem from="1783749674461" duration="8310000" />
       <workItem from="1783839722266" duration="965000" />
     </task>
+
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+
+    <task id="LOCAL-00001" summary="Login, Forget password">
+}]]></component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary=".">
+
+      <option name="closed" value="true" />
+      <created>1784385229618</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1784385229618</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
+
   </component>
 </project>

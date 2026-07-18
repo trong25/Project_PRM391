@@ -56,4 +56,31 @@ class UserManagementApi {
       throw Exception('Failed to delete user: $e');
     }
   }
+
+  Future<UserManagementModel?> getUserByPhone(String phone) async {
+    try {
+      final response = await _dio.get('/users/phone/$phone');
+      if (response.data['success'] == true && response.data['data'] != null) {
+        return UserManagementModel.fromJson(response.data['data']);
+      }
+      return null;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) return null;
+      throw Exception('Failed to find user by phone: $e');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<UserManagementModel> createCustomer(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('/users/customer', data: data);
+      if (response.data['success'] == true) {
+        return UserManagementModel.fromJson(response.data['data']);
+      }
+      throw Exception(response.data['message']);
+    } catch (e) {
+      throw Exception('Failed to create customer: $e');
+    }
+  }
 }

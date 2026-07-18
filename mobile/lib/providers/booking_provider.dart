@@ -300,3 +300,7 @@ final bookingProvider =
     StateNotifierProvider<BookingNotifier, BookingState>((ref) {
   return BookingNotifier(ref.read(bookingServiceProvider));
 });
+
+final allBookingsProvider = FutureProvider.autoDispose<List<BookingModel>>((ref) async {
+  return ref.watch(bookingServiceProvider).getAllBookings();
+});

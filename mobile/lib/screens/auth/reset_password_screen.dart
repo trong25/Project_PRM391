@@ -68,18 +68,47 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     super.dispose();
   }
 
+  InputDecoration _customInputDecoration({required String labelText, required IconData prefixIcon, Widget? suffixIcon}) {
+    return InputDecoration(
+      labelText: labelText,
+      prefixIcon: Icon(prefixIcon, color: AppTheme.primary),
+      suffixIcon: suffixIcon,
+      labelStyle: const TextStyle(color: AppTheme.textGray),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.primaryDark),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.primary, width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.error),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: AppTheme.error, width: 2),
+      ),
+      fillColor: Colors.white,
+      filled: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final resetState = ref.watch(resetProvider);
 
     if (_isVerifying) {
       return const Scaffold(
+        backgroundColor: Colors.white,
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_tokenError != null) {
       return Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -103,15 +132,41 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Đặt lại mật khẩu')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Đặt lại mật khẩu', style: TextStyle(color: AppTheme.textPrimary, fontWeight: FontWeight.w600)),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: AppTheme.textPrimary,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 16),
-            const Icon(Icons.lock_open, size: 56, color: AppTheme.primary),
+            Image.asset('assets/images/logo.png', height: 60),
             const SizedBox(height: 12),
+            ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(
+                Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+              ),
+              child: const Text(
+                'Đặt lại mật khẩu',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
             if (_email != null)
               Text(
                 'Đặt lại mật khẩu cho: $_email',
@@ -141,13 +196,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   TextFormField(
                     controller: _passwordCtrl,
                     obscureText: _obscurePass,
-                    decoration: InputDecoration(
+                    decoration: _customInputDecoration(
                       labelText: 'Mật khẩu mới',
-                      prefixIcon: const Icon(Icons.lock_outline),
+                      prefixIcon: Icons.lock_outline,
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePass
                             ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined),
+                            : Icons.visibility_outlined, color: AppTheme.textGray),
                         onPressed: () => setState(() => _obscurePass = !_obscurePass),
                       ),
                     ),
@@ -163,13 +218,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   TextFormField(
                     controller: _confirmCtrl,
                     obscureText: _obscureConfirm,
-                    decoration: InputDecoration(
+                    decoration: _customInputDecoration(
                       labelText: 'Xác nhận mật khẩu',
-                      prefixIcon: const Icon(Icons.lock_outline),
+                      prefixIcon: Icons.lock_outline,
                       suffixIcon: IconButton(
                         icon: Icon(_obscureConfirm
                             ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined),
+                            : Icons.visibility_outlined, color: AppTheme.textGray),
                         onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
                       ),
                     ),
@@ -181,13 +236,31 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  SizedBox(
+                  Container(
                     height: 50,
-                    child: resetState.isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : ElevatedButton(
-                      onPressed: _onSubmit,
-                      child: const Text('Xác nhận đặt lại'),
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.primaryGradient,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: resetState.isLoading ? null : _onSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      child: resetState.isLoading
+                          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                          : const Text('Xác nhận đặt lại', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+                  TextButton(
+                    onPressed: () => context.go('/login'),
+                    child: const Text(
+                      'Quay lại đăng nhập',
+                      style: TextStyle(color: AppTheme.textPrimary),
                     ),
                   ),
                 ],
