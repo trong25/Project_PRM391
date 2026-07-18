@@ -1,6 +1,9 @@
 // lib/services/room_api_service.dart
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../models/room_model.dart';
 import 'api_client.dart';
 
@@ -62,6 +65,77 @@ class RoomApiService {
       throw Exception(_messageFromDio(e, 'Không cập nhật được phòng'));
     } catch (e) {
       throw Exception('Không cập nhật được phòng: $e');
+    }
+  }
+
+  Future<String> uploadRoomImage(XFile image) async {
+    try {
+      final fileName = image.name.isNotEmpty ? image.name : 'room-image.jpg';
+      final formData = FormData.fromMap({
+        'file': kIsWeb
+            ? MultipartFile.fromBytes(
+                await image.readAsBytes(),
+                filename: fileName,
+              )
+            : await MultipartFile.fromFile(
+                image.path,
+                filename: fileName,
+              ),
+      });
+      final response = await _dio.post(
+        '/rooms/upload-image',
+        data: formData,
+        options: Options(contentType: 'multipart/form-data'),
+      );
+      if (response.data['success'] == true) {
+        return response.data['data']?.toString() ?? '';
+      }
+      throw Exception(response.data['message']);
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'Không upload được ảnh phòng'));
+    } catch (e) {
+      throw Exception('Không upload được ảnh phòng: $e');
+    }
+  }
+
+  Future<List<String>> uploadRoomImages(List<XFile> images) async {
+    if (images.isEmpty) return [];
+
+    try {
+      final files = <MultipartFile>[];
+      for (final image in images) {
+        final fileName = image.name.isNotEmpty ? image.name : 'room-image.jpg';
+        files.add(
+          kIsWeb
+              ? MultipartFile.fromBytes(
+                  await image.readAsBytes(),
+                  filename: fileName,
+                )
+              : await MultipartFile.fromFile(
+                  image.path,
+                  filename: fileName,
+                ),
+        );
+      }
+
+      final formData = FormData.fromMap({'files': files});
+      final response = await _dio.post(
+        '/rooms/upload-images',
+        data: formData,
+        options: Options(contentType: 'multipart/form-data'),
+      );
+      if (response.data['success'] == true) {
+        final data = response.data['data'];
+        if (data is List) {
+          return data.map((e) => e.toString()).toList();
+        }
+        return [];
+      }
+      throw Exception(response.data['message']);
+    } on DioException catch (e) {
+      throw Exception(_messageFromDio(e, 'KhÃ´ng upload Ä‘Æ°á»£c áº£nh phÃ²ng'));
+    } catch (e) {
+      throw Exception('KhÃ´ng upload Ä‘Æ°á»£c áº£nh phÃ²ng: $e');
     }
   }
 

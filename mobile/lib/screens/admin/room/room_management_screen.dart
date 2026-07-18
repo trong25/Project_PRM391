@@ -574,15 +574,7 @@ class _RoomTile extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12, 12, 8, 12),
         child: Row(
           children: [
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                color: statusStyle.color.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(Icons.bed, color: statusStyle.color),
-            ),
+            _RoomThumbnail(room: room, statusStyle: statusStyle),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -681,6 +673,52 @@ class _MetricCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _RoomThumbnail extends StatelessWidget {
+  final RoomModel room;
+  final _StatusStyle statusStyle;
+
+  const _RoomThumbnail({
+    required this.room,
+    required this.statusStyle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final imageUrl = room.imageUrl?.trim();
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: SizedBox(
+        width: 44,
+        height: 44,
+        child: imageUrl != null && imageUrl.isNotEmpty
+            ? Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => _FallbackRoomIcon(
+                  statusStyle: statusStyle,
+                ),
+              )
+            : _FallbackRoomIcon(statusStyle: statusStyle),
+      ),
+    );
+  }
+}
+
+class _FallbackRoomIcon extends StatelessWidget {
+  final _StatusStyle statusStyle;
+
+  const _FallbackRoomIcon({required this.statusStyle});
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: statusStyle.color.withValues(alpha: 0.12),
+      child: Icon(Icons.bed, color: statusStyle.color),
     );
   }
 }

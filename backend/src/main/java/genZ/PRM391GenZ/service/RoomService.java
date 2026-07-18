@@ -1,5 +1,8 @@
 package genZ.PRM391GenZ.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import genZ.PRM391GenZ.dto.room.RoomDto;
 import genZ.PRM391GenZ.entity.Hotel;
 import genZ.PRM391GenZ.entity.Room;
@@ -12,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +29,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
     private final TypeRoomRepository typeRoomRepository;
+    private final ObjectMapper objectMapper;
 
     public List<RoomDto> getAllRooms() {
         return roomRepository.findAll().stream()
@@ -55,6 +61,7 @@ public class RoomService {
                 .roomId(UUID.randomUUID().toString())
                 .nameRoom(dto.getNameRoom())
                 .status(dto.getStatus() != null ? dto.getStatus() : "Trống")
+                .imageUrl(serializeImageUrls(dto))
                 .hotel(hotel)
                 .typeRoom(typeRoom)
                 .build();
@@ -72,6 +79,9 @@ public class RoomService {
         room.setNameRoom(dto.getNameRoom());
         if (dto.getStatus() != null) {
             room.setStatus(dto.getStatus());
+        }
+        if (dto.getImageUrls() != null || dto.getImageUrl() != null) {
+            room.setImageUrl(serializeImageUrls(dto));
         }
 
         if (dto.getHotelId() != null) {
@@ -111,6 +121,8 @@ public class RoomService {
     }
 
     private RoomDto mapToDto(Room room) {
+        List<String> imageUrls = parseImageUrls(room.getImageUrl());
+
         return RoomDto.builder()
                 .roomId(room.getRoomId())
                 .nameRoom(room.getNameRoom())
@@ -119,12 +131,51 @@ public class RoomService {
                 .typeRoomName(room.getTypeRoom() != null ? room.getTypeRoom().getTypeRoom() : null)
                 .hotelId(room.getHotel() != null ? room.getHotel().getHotelId() : null)
                 .hotelName(room.getHotel() != null ? room.getHotel().getName() : null)
-                // --- THÊM MAPPING CÁC TRƯỜNG MỚI VÀO ĐÂY ---
-                .imageUrl(room.getImageUrl())
+                .imageUrl(imageUrls.isEmpty() ? null : imageUrls.get(0))
+                .imageUrls(imageUrls)
                 .hotel(room.getHotel())
                 .typeRoom(room.getTypeRoom())
-                // ------------------------------------------
                 .build();
     }
 
+    private String serializeImageUrls(RoomDto dto) {
+        List<String> imageUrls = new ArrayList<>();
+        if (dto.getImageUrls() != null) {
+            imageUrls.addAll(dto.getImageUrls().stream()
+                    .filter(url -> url != null && !url.isBlank())
+                    .toList());
+        } else if (dto.getImageUrl() != null && !dto.getImageUrl().isBlank()) {
+            imageUrls.add(dto.getImageUrl());
+        }
+
+        if (imageUrls.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return objectMapper.writeValueAsString(imageUrls);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Không lưu được danh sách ảnh phòng", e);
+        }
+    }
+
+    private List<String> parseImageUrls(String storedValue) {
+        if (storedValue == null || storedValue.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        String trimmed = storedValue.trim();
+        if (!trimmed.startsWith("[")) {
+            return List.of(trimmed);
+        }
+
+        try {
+            return objectMapper.readValue(trimmed, new TypeReference<List<String>>() {})
+                    .stream()
+                    .filter(url -> url != null && !url.isBlank())
+                    .toList();
+        } catch (JsonProcessingException e) {
+            return List.of(trimmed);
+        }
+    }
 }

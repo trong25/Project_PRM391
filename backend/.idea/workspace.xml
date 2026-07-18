@@ -4,53 +4,98 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Merge remote-tracking branch 'origin/chang' into cao&#10;&#10;# Conflicts:&#10;#&#9;SQLQuery1.sql&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/BookingController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/DashboardController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/RoomController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/UserController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/service/RoomService.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/service/UserService.class&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst&#10;#&#9;backend/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class&#10;#&#9;mobile/lib/config/router.dart&#10;#&#9;mobile/lib/screens/staff/staff_dashboard_screen.dart&#10;#&#9;mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart">
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DiscountCodeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/DiscountCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/DiscountCodeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DiscountCodeController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/DiscountCode$DiscountCodeBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/DiscountCode.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/DiscountCodeRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/models/discount_code_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/providers/discount_code_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_booking_management_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_room_management_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/services/discount_code_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/Project_PRM391.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/Project_PRM391.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Upload images">
+      <change beforePath="$PROJECT_DIR$/../CLAUDE.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/UnicodeDataMigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TypeBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/TypeBooking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/room/RoomDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/room/RoomDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/RoomService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/genZ/PRM391GenZ/Prm391GenZApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/Prm391GenZApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/CorsConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/CorsConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/WebSocketConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/WebSocketConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/AuthController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/ChatController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/ChatWebSocketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/ChatWebSocketController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DashboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/HotelController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/HotelController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/RoomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/RoomController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/TypeRoomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/TypeRoomController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ApiResponse$ApiResponseBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ApiResponse$ApiResponseBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ApiResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ApiResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChangePasswordRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChangePasswordRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatMessageDTO$ChatMessageDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatMessageDTO$ChatMessageDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatMessageDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatMessageDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatRoomDTO$ChatRoomDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatRoomDTO$ChatRoomDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatRoomDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ChatRoomDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ConversationDTO$ConversationDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ConversationDTO$ConversationDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ConversationDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ConversationDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginResponse$LoginResponseBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginResponse$LoginResponseBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/LoginResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ProfileResponse$ProfileResponseBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ProfileResponse$ProfileResponseBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ProfileResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ProfileResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/RegisterRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto$ConfirmReset.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto$ConfirmReset.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto$RequestReset.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto$RequestReset.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/ResetPasswordDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/UpdateProfileRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/UpdateProfileRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto$RoomDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto$RoomDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserCreateDto$UserCreateDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserCreateDto$UserCreateDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserCreateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserCreateDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserResponseDto$UserResponseDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserResponseDto$UserResponseDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserResponseDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserUpdateDto$UserUpdateDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserUpdateDto$UserUpdateDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserUpdateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/user/UserUpdateDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/ChatMessage$ChatMessageBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/ChatMessage$ChatMessageBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/ChatMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/ChatMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Conversation$ConversationBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Conversation$ConversationBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Conversation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Conversation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Hotel$HotelBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Hotel$HotelBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Hotel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Hotel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PasswordResetToken$PasswordResetTokenBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PasswordResetToken$PasswordResetTokenBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PasswordResetToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PasswordResetToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PriceConfig$PriceConfigBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PriceConfig$PriceConfigBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PriceConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/PriceConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Role$RoleBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Role$RoleBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Role.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/ChatMessageRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/ChatMessageRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/ConversationRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/ConversationRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/HotelRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/HotelRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/PasswordResetTokenRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/PasswordResetTokenRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/RoleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/RoleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/RoomRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/RoomRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/TypeRoomRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/TypeRoomRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/JwtAuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/JwtAuthFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/JwtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/JwtService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/ChatService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/ChatService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DashboardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DashboardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/EmailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/EmailService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/RoomService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/RoomService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/config/router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/config/router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/providers/booking_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/providers/booking_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/room_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/room_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/user_management_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/user_management_api.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/room/room_form_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/room/room_form_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/room/room_management_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/room/room_management_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/room_api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/room_api_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,31 +137,31 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.Prm391GenZApplication.executor": "Run",
-    "git-widget-placeholder": "Merging cao",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/KY 8/PRM393/PRJ_PRM393/Project_PRM391/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cao&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/KY 8/PRM393/PRJ_PRM393/Project_PRM391/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Prm391GenZApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="PRM391GenZ" />
@@ -198,6 +243,7 @@
       <workItem from="1783757738529" duration="8623000" />
       <workItem from="1783909622181" duration="882000" />
       <workItem from="1784124744084" duration="3080000" />
+      <workItem from="1784364233911" duration="2005000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />
@@ -319,7 +365,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784130160012</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Merge remote-tracking branch 'origin/chang' into cao&#10;&#10;# Conflicts:&#10;#&#9;SQLQuery1.sql&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/config/UnicodeDataMigration.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/BookingController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/DashboardController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/RoomController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/UserController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking$TypeBookingBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/service/RoomService.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/service/UserService.class&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst&#10;#&#9;backend/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class&#10;#&#9;mobile/lib/config/router.dart&#10;#&#9;mobile/lib/screens/staff/staff_dashboard_screen.dart&#10;#&#9;mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart">
+      <option name="closed" value="true" />
+      <created>1784131598816</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1784131598816</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,6 +401,7 @@
     <MESSAGE value="merge" />
     <MESSAGE value="chat" />
     <MESSAGE value="fix bug chat" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug chat" />
+    <MESSAGE value="Upload images" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upload images" />
   </component>
 </project>
