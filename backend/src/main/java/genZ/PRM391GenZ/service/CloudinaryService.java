@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -22,9 +23,8 @@ public class CloudinaryService {
             throw new RuntimeException("Vui lòng chọn ảnh phòng");
         }
 
-        String contentType = file.getContentType();
-        if (contentType == null || !contentType.startsWith("image/")) {
-            throw new RuntimeException("File tải lên phải là ảnh");
+        if (!isSupportedImage(file)) {
+            throw new RuntimeException("File tải lên phải là ảnh JPG, PNG, WEBP, GIF, HEIC hoặc HEIF");
         }
 
         try {
@@ -39,7 +39,7 @@ public class CloudinaryService {
             if (secureUrl == null) {
                 throw new RuntimeException("Cloudinary không trả về URL ảnh");
             }
-            return secureUrl.toString();
+            return toBrowserFriendlyImageUrl(secureUrl.toString());
         } catch (IOException e) {
             throw new RuntimeException("Không đọc được file ảnh", e);
         }
@@ -53,5 +53,33 @@ public class CloudinaryService {
         return Arrays.stream(files)
                 .map(this::uploadRoomImage)
                 .toList();
+    }
+
+    private boolean isSupportedImage(MultipartFile file) {
+        String contentType = file.getContentType();
+        if (contentType != null && contentType.startsWith("image/")) {
+            return true;
+        }
+
+        String filename = file.getOriginalFilename();
+        if (filename == null) {
+            return false;
+        }
+
+        String lowerFilename = filename.toLowerCase(Locale.ROOT);
+        return lowerFilename.endsWith(".heic")
+                || lowerFilename.endsWith(".heif")
+                || lowerFilename.endsWith(".jpg")
+                || lowerFilename.endsWith(".jpeg")
+                || lowerFilename.endsWith(".png")
+                || lowerFilename.endsWith(".webp")
+                || lowerFilename.endsWith(".gif");
+    }
+
+    private String toBrowserFriendlyImageUrl(String secureUrl) {
+        if (!secureUrl.contains("/upload/")) {
+            return secureUrl;
+        }
+        return secureUrl.replace("/upload/", "/upload/f_jpg,q_auto/");
     }
 }
