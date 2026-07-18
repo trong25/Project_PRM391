@@ -133,9 +133,9 @@ class RoomApiService {
       }
       throw Exception(response.data['message']);
     } on DioException catch (e) {
-      throw Exception(_messageFromDio(e, 'KhÃ´ng upload Ä‘Æ°á»£c áº£nh phÃ²ng'));
+      throw Exception(_messageFromDio(e, 'Không upload được ảnh phòng'));
     } catch (e) {
-      throw Exception('KhÃ´ng upload Ä‘Æ°á»£c áº£nh phÃ²ng: $e');
+      throw Exception('Không upload được ảnh phòng: $e');
     }
   }
 
