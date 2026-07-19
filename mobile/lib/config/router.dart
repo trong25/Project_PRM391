@@ -17,6 +17,7 @@ import '../screens/auth/register_screen.dart';
 import '../screens/auth/request_reset_screen.dart';
 import '../screens/auth/reset_password_screen.dart';
 import '../screens/customer/booking/booking_screen.dart';
+import '../screens/customer/history_screen.dart';
 import '../screens/customer/profile_screen.dart';
 import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
@@ -84,7 +85,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (isLoggedIn &&
           _isStaffRole(authState.user?.roleId ?? authState.user?.role)) {
         final loc = state.matchedLocation;
-        final customerOnlyRoutes = ['/home', '/rooms', '/saved', '/account', '/profile', '/customer-chat'];
+        final customerOnlyRoutes = ['/home', '/rooms', '/saved', '/history', '/account', '/profile', '/customer-chat'];
         if (customerOnlyRoutes.any((r) => loc.startsWith(r))) {
           return '/staff';
         }
@@ -135,6 +136,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/saved',
         name: 'saved',
         builder: (_, __) => const SavedScreen(),
+      ),
+      GoRoute(
+        path: '/history',
+        name: 'history',
+        builder: (_, __) => const HistoryScreen(),
       ),
       GoRoute(
         path: '/rooms',

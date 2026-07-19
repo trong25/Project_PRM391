@@ -1,5 +1,7 @@
 // lib/models/booking_model.dart
 
+import 'room_model.dart';
+
 class TypeBookingModel {
   final String typeBookingId;
   final String typeName;
@@ -47,6 +49,8 @@ class VoucherModel {
 
 class BookingModel {
   final int? bookingId;
+  final RoomModel? room;
+  final TypeBookingModel? typeBooking;
   final String roomId;
   final String userId;
   final String typeBookingId;
@@ -60,6 +64,8 @@ class BookingModel {
 
   const BookingModel({
     this.bookingId,
+    this.room,
+    this.typeBooking,
     required this.roomId,
     required this.userId,
     required this.typeBookingId,
@@ -72,26 +78,34 @@ class BookingModel {
     this.note,
   });
 
-  factory BookingModel.fromJson(Map<String, dynamic> json) => BookingModel(
-        bookingId: json['bookingId'] as int?,
-        roomId: (json['room'] as Map<String, dynamic>?)?['roomId'] as String? ??
-            json['roomId'] as String? ?? '',
-        userId: (json['user'] as Map<String, dynamic>?)?['userId'] as String? ??
-            json['userId'] as String? ?? '',
-        typeBookingId:
-            (json['typeBooking'] as Map<String, dynamic>?)?['typeBookingId']
-                    as String? ??
-                json['typeBookingId'] as String? ?? '',
-        checkIn: DateTime.parse(json['checkIn'] as String),
-        checkOut: json['checkOut'] != null
-            ? DateTime.parse(json['checkOut'] as String)
-            : null,
-        totalPrice: (json['totalPrice'] as num?)?.toDouble(),
-        status: json['status'] as String?,
-        voucherCode: json['voucherCode'] as String?,
-        discountAmount: (json['discountAmount'] as num?)?.toDouble(),
-        note: json['note'] as String?,
-      );
+  factory BookingModel.fromJson(Map<String, dynamic> json) {
+    final roomJson = _asMap(json['room']);
+    final typeBookingJson = _asMap(json['typeBooking']);
+
+    return BookingModel(
+      bookingId: json['bookingId'] as int?,
+      room: roomJson == null ? null : RoomModel.fromJson(roomJson),
+      typeBooking: typeBookingJson == null
+          ? null
+          : TypeBookingModel.fromJson(typeBookingJson),
+      roomId: roomJson?['roomId']?.toString() ?? json['roomId']?.toString() ?? '',
+      userId: _asMap(json['user'])?['userId']?.toString() ??
+          json['userId']?.toString() ??
+          '',
+      typeBookingId: typeBookingJson?['typeBookingId']?.toString() ??
+          json['typeBookingId']?.toString() ??
+          '',
+      checkIn: DateTime.parse(json['checkIn'] as String),
+      checkOut: json['checkOut'] != null
+          ? DateTime.parse(json['checkOut'] as String)
+          : null,
+      totalPrice: (json['totalPrice'] as num?)?.toDouble(),
+      status: json['status'] as String?,
+      voucherCode: json['voucherCode'] as String?,
+      discountAmount: (json['discountAmount'] as num?)?.toDouble(),
+      note: json['note'] as String?,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'room': {'roomId': roomId},
@@ -105,4 +119,10 @@ class BookingModel {
         'discountAmount': discountAmount,
         'note': note,
       };
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  if (value is Map<String, dynamic>) return value;
+  if (value is Map) return Map<String, dynamic>.from(value);
+  return null;
 }

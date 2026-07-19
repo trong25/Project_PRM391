@@ -3,11 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../config/app_theme.dart';
 import '../providers/auth_provider.dart';
 
 class AppBottomNavBar extends ConsumerWidget {
-  // currentIndex: 0=Trang chủ, 1=Đã lưu, 2=Đặt chỗ
+  // currentIndex: 0=Trang chủ, 1=Đã lưu, 2=Lịch sử, 3=Đặt chỗ, 4=Tài khoản
   final int currentIndex;
 
   const AppBottomNavBar({super.key, required this.currentIndex});
@@ -15,17 +16,18 @@ class AppBottomNavBar extends ConsumerWidget {
   static const _items = [
     {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Trang chủ'},
     {'icon': Icons.bookmark_border, 'activeIcon': Icons.bookmark, 'label': 'Đã lưu'},
+    {'icon': Icons.history_outlined, 'activeIcon': Icons.history, 'label': 'Lịch sử'},
     {'icon': Icons.work_outline, 'activeIcon': Icons.work, 'label': 'Đặt chỗ'},
     {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Tài khoản'},
   ];
 
   void _onTap(BuildContext context, WidgetRef ref, int index) {
-    if (index == 3) {
+    if (index == 4) {
       _showAccountSheet(context, ref);
       return;
     }
     if (index == currentIndex) return;
-    final routes = ['/home', '/saved', '/rooms'];
+    final routes = ['/home', '/saved', '/history', '/rooms'];
     context.push(routes[index]);
   }
 
@@ -150,6 +152,8 @@ class AppBottomNavBar extends ConsumerWidget {
         const SizedBox(height: 4),
         Text(
           label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: color,
             fontSize: 12,

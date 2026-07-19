@@ -54,6 +54,11 @@ class BookingService {
     await _dio.delete('/bookings/$id');
   }
 
+  /// Khách hàng hủy booking chưa thanh toán của chính mình
+  Future<void> cancelCustomerBooking(int id) async {
+    await _dio.delete('/bookings/customer/$id');
+  }
+
   /// Cập nhật thông tin booking
   Future<BookingModel> updateBooking(int id, BookingModel booking) async {
     final response = await _dio.put('/bookings/$id', data: booking.toJson());
