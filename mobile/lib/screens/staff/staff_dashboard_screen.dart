@@ -8,20 +8,48 @@ import '../../providers/auth_provider.dart';
 import '../../providers/room_provider.dart';
 import '../../models/room_model.dart';
 import '../../providers/dashboard_provider.dart';
+import '../../providers/chat_provider.dart';
 import 'widgets/staff_bottom_nav_bar.dart';
 
-class StaffDashboardScreen extends ConsumerWidget {
+class StaffDashboardScreen extends ConsumerStatefulWidget {
   const StaffDashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<StaffDashboardScreen> createState() => _StaffDashboardScreenState();
+}
+
+class _StaffDashboardScreenState extends ConsumerState<StaffDashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final user = ref.read(authProvider).user;
+      if (user != null) {
+        ref.read(staffRoomsProvider.notifier).loadAndSubscribe(token: user.token);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final revenueAsync = ref.watch(revenueOverviewProvider);
     final roomListState = ref.watch(roomListProvider);
+    final staffRoomsState = ref.watch(staffRoomsProvider);
 
     // Calculate free rooms
     final int emptyRoomsCount = roomListState.rooms
         .where((r) => r.status?.toLowerCase() == 'trống')
         .length;
+
+    // Calculate pending messages (unread + open conversations)
+    int pendingMessagesCount = 0;
+    for (final r in staffRoomsState.rooms) {
+      if (r.unreadCount > 0) {
+        pendingMessagesCount += r.unreadCount;
+      } else if (r.status == 'Open') {
+        pendingMessagesCount += 1;
+      }
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -31,6 +59,7 @@ class StaffDashboardScreen extends ConsumerWidget {
           onRefresh: () async {
             ref.invalidate(revenueOverviewProvider);
             ref.read(roomListProvider.notifier).loadRooms();
+            ref.read(staffRoomsProvider.notifier).refresh();
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -47,7 +76,7 @@ class StaffDashboardScreen extends ConsumerWidget {
                       'assets/images/logo.png',
                       height: 48,
                       errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.movie, size: 48, color: AppTheme.primary),
+                      const Icon(Icons.movie, size: 48, color: AppTheme.primary),
                     ),
                     IconButton(
                       tooltip: 'Đăng xuất',
@@ -60,7 +89,7 @@ class StaffDashboardScreen extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                
+
                 // Brand Title (Gradient)
                 ShaderMask(
                   shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
@@ -200,10 +229,10 @@ class StaffDashboardScreen extends ConsumerWidget {
                           ),
                           GradientBorderContainer(
                             padding: const EdgeInsets.symmetric(vertical: 24),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                '03',
-                                style: TextStyle(
+                                pendingMessagesCount.toString().padLeft(2, '0'),
+                                style: const TextStyle(
                                   fontSize: 64,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,

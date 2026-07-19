@@ -25,6 +25,8 @@ class StaffBottomNavBar extends ConsumerWidget {
       context.go('/staff/rooms');
     } else if (index == 3) {
       context.go('/staff/bookings');
+    } else if (index == 4) {
+      context.go('/staff-feedback');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -62,19 +64,19 @@ class StaffBottomNavBar extends ConsumerWidget {
                   onTap: () => _onTap(context, index),
                   child: isSelected
                       ? ShaderMask(
-                          shaderCallback: (bounds) =>
-                              AppTheme.primaryGradient.createShader(bounds),
-                          child: _navItemContent(
-                            icon: item['activeIcon'] as IconData,
-                            label: item['label'] as String,
-                            color: Colors.white,
-                          ),
-                        )
+                    shaderCallback: (bounds) =>
+                        AppTheme.primaryGradient.createShader(bounds),
+                    child: _navItemContent(
+                      icon: item['activeIcon'] as IconData,
+                      label: item['label'] as String,
+                      color: Colors.white,
+                    ),
+                  )
                       : _navItemContent(
-                          icon: item['icon'] as IconData,
-                          label: item['label'] as String,
-                          color: AppTheme.textGray,
-                        ),
+                    icon: item['icon'] as IconData,
+                    label: item['label'] as String,
+                    color: AppTheme.textGray,
+                  ),
                 ),
               );
             }),

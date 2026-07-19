@@ -22,6 +22,9 @@ import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/customer/feedback_chat_screen.dart';
+import '../screens/staff/feedback_list_screen.dart';
+import '../screens/staff/staff_chat_screen.dart';
 import '../screens/staff/staff_dashboard_screen.dart';
 import '../screens/staff/staff_room_management_screen.dart';
 import '../screens/staff/staff_booking_management_screen.dart';
@@ -69,12 +72,22 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (isLoggedIn &&
           state.matchedLocation.startsWith('/admin') &&
           !_isAdminRole(authState.user?.roleId ?? authState.user?.role)) {
-        return '/home';
+        return _homeForRole(authState.user?.roleId ?? authState.user?.role);
       }
       if (isLoggedIn &&
           state.matchedLocation.startsWith('/staff') &&
-          !_isStaffRole(authState.user?.roleId ?? authState.user?.role)) {
+          !_isStaffRole(authState.user?.roleId ?? authState.user?.role) &&
+          !_isAdminRole(authState.user?.roleId ?? authState.user?.role)) {
         return '/home';
+      }
+      // Redirect STAFF away from customer-only routes
+      if (isLoggedIn &&
+          _isStaffRole(authState.user?.roleId ?? authState.user?.role)) {
+        final loc = state.matchedLocation;
+        final customerOnlyRoutes = ['/home', '/rooms', '/saved', '/account', '/profile', '/customer-chat'];
+        if (customerOnlyRoutes.any((r) => loc.startsWith(r))) {
+          return '/staff';
+        }
       }
 
       return null;
@@ -149,6 +162,38 @@ final routerProvider = Provider<GoRouter>((ref) {
           return _RoomBookingLoader(roomId: id);
         },
       ),
+      // ── Chat routes ────────────────────────────────────────────────────────
+      GoRoute(
+        path: '/customer-chat',
+        name: 'customer-chat',
+        builder: (_, __) => const FeedbackChatScreen(),
+      ),
+      GoRoute(
+        path: '/staff-feedback',
+        name: 'staff-feedback',
+        builder: (_, __) => const FeedbackListScreen(),
+      ),
+      GoRoute(
+        path: '/staff-chat/:conversationId',
+        name: 'staff-chat',
+        builder: (context, state) {
+          final conversationId = state.pathParameters['conversationId'] ?? '';
+          final extra = state.extra as Map<String, dynamic>?;
+          final customerName = extra?['customerName'] as String? ?? 'Khách hàng';
+          final status       = extra?['status']       as String? ?? 'Open';
+          return StaffChatScreen(
+            conversationId: conversationId,
+            customerName:   customerName,
+            initialStatus:  status,
+          );
+        },
+      ),
+      // ── Staff routes ────────────────────────────────────────────────────────
+      GoRoute(
+        path: '/staff',
+        name: 'staff',
+        builder: (_, __) => const StaffDashboardScreen(),
+      ),
       GoRoute(
         path: '/admin',
         name: 'admin',
@@ -168,11 +213,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/admin/account',
         name: 'admin-account',
         builder: (_, __) => const UserManagementScreen(),
-      ),
-      GoRoute(
-        path: '/staff',
-        name: 'staff',
-        builder: (_, __) => const StaffDashboardScreen(),
       ),
       GoRoute(
         path: '/staff/rooms',

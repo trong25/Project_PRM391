@@ -2,12 +2,22 @@ package genZ.PRM391GenZ.controller;
 
 import genZ.PRM391GenZ.dto.ApiResponse;
 import genZ.PRM391GenZ.dto.room.RoomDto;
+import genZ.PRM391GenZ.service.CloudinaryService;
 import genZ.PRM391GenZ.service.RoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +27,7 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
+    private final CloudinaryService cloudinaryService;
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<RoomDto>>> getAllRooms() {
@@ -39,6 +50,20 @@ public class RoomController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<RoomDto>> createRoom(@Valid @RequestBody RoomDto dto) {
         return ResponseEntity.ok(ApiResponse.success("Tạo phòng thành công", roomService.createRoom(dto)));
+    }
+
+    @PostMapping("/upload-image")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<String>> uploadRoomImage(@RequestParam("file") MultipartFile file) {
+        String imageUrl = cloudinaryService.uploadRoomImage(file);
+        return ResponseEntity.ok(ApiResponse.success("Upload ảnh phòng thành công", imageUrl));
+    }
+
+    @PostMapping("/upload-images")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<List<String>>> uploadRoomImages(@RequestParam("files") MultipartFile[] files) {
+        List<String> imageUrls = cloudinaryService.uploadRoomImages(files);
+        return ResponseEntity.ok(ApiResponse.success("Upload ảnh phòng thành công", imageUrls));
     }
 
     @PutMapping("/{id}")
