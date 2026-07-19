@@ -100,7 +100,7 @@ class BookingModel {
         'checkIn': checkIn.toIso8601String(),
         'checkOut': checkOut?.toIso8601String(),
         'totalPrice': totalPrice,
-        'status': status ?? 'Chưa thanh toán',
+        'status': status ?? 'Chờ xác nhận',
         'voucherCode': voucherCode,
         'discountAmount': discountAmount,
         'note': note,

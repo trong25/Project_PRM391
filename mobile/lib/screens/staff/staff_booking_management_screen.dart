@@ -27,8 +27,10 @@ class _StaffBookingManagementScreenState
 
   final List<String> _filters = [
     'Tất cả',
+    'Chờ xác nhận',
     'Chờ nhận phòng',
     'Đang ở',
+    'Chờ thanh toán',
     'Đã trả phòng',
     'Đã hủy'
   ];
@@ -134,12 +136,6 @@ class _StaffBookingManagementScreenState
                 data: (bookings) {
                   // Filter list
                   var filteredList = bookings.where((b) {
-                    final room = ref.read(roomListProvider).rooms.firstWhere(
-                          (r) => r.roomId == b.roomId,
-                          orElse: () => RoomModel(roomId: b.roomId, nameRoom: b.roomId, status: 'Chưa xác định'),
-                        );
-                    final isRoomOccupied = (room.status ?? '').toLowerCase() == 'đang thuê';
-
                     // Match Search Text
                     final roomMatch = b.roomId.toLowerCase().contains(_searchText);
                     final userMatch = b.userId.toLowerCase().contains(_searchText);
@@ -147,10 +143,14 @@ class _StaffBookingManagementScreenState
 
                     // Match Filter Type
                     bool isFilterMatch = true;
-                    if (_selectedFilter == 'Chờ nhận phòng') {
-                      isFilterMatch = (b.status == 'Chưa thanh toán' || b.status == 'Chờ nhận phòng') && !isRoomOccupied;
+                    if (_selectedFilter == 'Chờ xác nhận') {
+                      isFilterMatch = b.status == 'Chờ xác nhận';
+                    } else if (_selectedFilter == 'Chờ nhận phòng') {
+                      isFilterMatch = b.status == 'Chờ nhận phòng' || b.status == 'Chưa thanh toán';
                     } else if (_selectedFilter == 'Đang ở') {
-                      isFilterMatch = (b.status == 'Chưa thanh toán' || b.status == 'Chờ nhận phòng') && isRoomOccupied;
+                      isFilterMatch = b.status == 'Đang ở';
+                    } else if (_selectedFilter == 'Chờ thanh toán') {
+                      isFilterMatch = b.status == 'Chờ thanh toán';
                     } else if (_selectedFilter == 'Đã trả phòng') {
                       isFilterMatch = b.status == 'Đã thanh toán';
                     } else if (_selectedFilter == 'Đã hủy') {
@@ -207,28 +207,36 @@ class _StaffBookingManagementScreenState
           orElse: () => RoomModel(roomId: booking.roomId, nameRoom: booking.roomId, status: 'Chưa xác định'),
         );
     final String roomStatus = room.status ?? 'Chưa xác định';
-    final bool isRoomOccupied = roomStatus.toLowerCase() == 'đang thuê';
-    final bool isUnpaid = booking.status == 'Chưa thanh toán' || booking.status == 'Chờ nhận phòng';
+    final bool isPendingApproval = booking.status == 'Chờ xác nhận';
+    final bool isWaitingCheckIn = booking.status == 'Chờ nhận phòng' || booking.status == 'Chưa thanh toán';
+    final bool isStaying = booking.status == 'Đang ở';
+    final bool isWaitingPayment = booking.status == 'Chờ thanh toán';
+    final bool isEditable = isPendingApproval || isWaitingCheckIn;
 
-    final bool canCheckIn = isUnpaid && !isRoomOccupied;
-    final bool canCheckOut = isUnpaid && isRoomOccupied;
-    final bool canCancel = isUnpaid && !isRoomOccupied;
+    final bool canAccept = isPendingApproval;
+    final bool canCheckIn = isWaitingCheckIn;
+    final bool canCheckOut = isStaying;
+    final bool canConfirmPayment = isWaitingPayment;
+    final bool canCancel = isPendingApproval || isWaitingCheckIn;
 
     // Status colors and labels
     Color statusBgColor = Colors.grey.shade100;
     Color statusTextColor = AppTheme.textGray;
-    String displayStatus = booking.status ?? 'Chưa thanh toán';
+    String displayStatus = booking.status ?? 'Chờ xác nhận';
 
-    if (isUnpaid) {
-      if (isRoomOccupied) {
-        displayStatus = 'Đang ở';
-        statusBgColor = const Color(0xFFFFF7ED);
-        statusTextColor = const Color(0xFFF97316);
-      } else {
-        displayStatus = 'Chờ nhận phòng';
-        statusBgColor = const Color(0xFFEFF6FF);
-        statusTextColor = const Color(0xFF3B82F6);
-      }
+    if (isPendingApproval) {
+      statusBgColor = const Color(0xFFFFF7ED);
+      statusTextColor = const Color(0xFFF97316);
+    } else if (isWaitingCheckIn) {
+      displayStatus = 'Chờ nhận phòng';
+      statusBgColor = const Color(0xFFEFF6FF);
+      statusTextColor = const Color(0xFF3B82F6);
+    } else if (isStaying) {
+      statusBgColor = const Color(0xFFFFF7ED);
+      statusTextColor = const Color(0xFFF97316);
+    } else if (isWaitingPayment) {
+      statusBgColor = const Color(0xFFFEF3C7);
+      statusTextColor = const Color(0xFFD97706);
     } else if (booking.status == 'Đã thanh toán') {
       displayStatus = 'Đã trả phòng';
       statusBgColor = const Color(0xFFECFDF5);
@@ -285,7 +293,7 @@ class _StaffBookingManagementScreenState
                       ),
                     ),
                     const SizedBox(width: 8),
-                    if (isUnpaid) ...[
+                    if (isEditable) ...[
                       IconButton(
                         icon: const Icon(Icons.edit_outlined, color: AppTheme.primary, size: 20),
                         onPressed: () => _showEditBookingDialog(context, booking),
@@ -312,8 +320,8 @@ class _StaffBookingManagementScreenState
                 Text(booking.roomId, style: const TextStyle(color: AppTheme.textPrimary, fontSize: 13, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 10),
                 PopupMenuButton<String>(
-                  enabled: isUnpaid,
-                  tooltip: isUnpaid ? 'Đổi trạng thái phòng thủ công' : 'Đơn đã hoàn thành/hủy, không thể đổi trạng thái phòng',
+                  enabled: isEditable,
+                  tooltip: isEditable ? 'Đổi trạng thái phòng thủ công' : 'Không thể đổi trạng thái phòng ở giai đoạn này',
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
@@ -328,7 +336,7 @@ class _StaffBookingManagementScreenState
                           roomStatus,
                           style: TextStyle(color: roomStatusColor, fontSize: 11, fontWeight: FontWeight.bold),
                         ),
-                        if (isUnpaid) ...[
+                        if (isEditable) ...[
                           const SizedBox(width: 2),
                           Icon(Icons.arrow_drop_down, size: 14, color: roomStatusColor),
                         ],
@@ -382,7 +390,7 @@ class _StaffBookingManagementScreenState
             ],
 
             // Action Buttons
-            if (canCheckIn || canCheckOut || canCancel) ...[
+            if (canAccept || canCheckIn || canCheckOut || canConfirmPayment || canCancel) ...[
               const Divider(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -398,6 +406,11 @@ class _StaffBookingManagementScreenState
                       child: const Text('Hủy'),
                     ),
                   const SizedBox(width: 8),
+                  if (canAccept)
+                    ElevatedButton(
+                      onPressed: () => _updateBookingStatus(booking.bookingId, 'Chờ nhận phòng'),
+                      child: const Text('Chấp nhận'),
+                    ),
                   if (canCheckIn)
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -405,7 +418,7 @@ class _StaffBookingManagementScreenState
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                       ),
-                      onPressed: () => _confirmCheckIn(context, booking.roomId),
+                      onPressed: () => _confirmCheckIn(context, booking),
                       child: const Text('Nhận Phòng'),
                     ),
                   if (canCheckOut)
@@ -415,8 +428,17 @@ class _StaffBookingManagementScreenState
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                       ),
-                      onPressed: () => _showCheckoutInvoiceModal(context, booking),
+                      onPressed: () => _confirmCheckOut(context, booking),
                       child: const Text('Trả Phòng'),
+                    ),
+                  if (canConfirmPayment)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF10B981),
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () => _showPaymentInvoiceModal(context, booking),
+                      child: const Text('Xác nhận thanh toán'),
                     ),
                 ],
               ),
@@ -481,7 +503,7 @@ class _StaffBookingManagementScreenState
     }
   }
 
-  Future<void> _confirmCheckIn(BuildContext context, String roomId) async {
+  Future<void> _confirmCheckIn(BuildContext context, BookingModel booking) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -498,22 +520,24 @@ class _StaffBookingManagementScreenState
       ),
     );
     if (confirm == true) {
-      try {
-        await ref.read(roomServiceProvider).updateRoomStatus(roomId, 'Đang thuê');
-        ref.read(roomListProvider.notifier).loadRooms();
-        ref.invalidate(allBookingsProvider);
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Đã nhận phòng thành công')),
-          );
-        }
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Lỗi nhận phòng: $e')),
-          );
-        }
-      }
+      await _updateBookingStatus(booking.bookingId, 'Đang ở');
+    }
+  }
+
+  Future<void> _confirmCheckOut(BuildContext context, BookingModel booking) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Xác nhận trả phòng'),
+        content: const Text('Khách đã trả phòng? Booking sẽ chuyển sang chờ thanh toán.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Hủy')),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Xác nhận')),
+        ],
+      ),
+    );
+    if (confirm == true) {
+      await _updateBookingStatus(booking.bookingId, 'Chờ thanh toán');
     }
   }
 
@@ -538,7 +562,7 @@ class _StaffBookingManagementScreenState
     }
   }
 
-  Future<void> _showCheckoutInvoiceModal(BuildContext context, BookingModel booking) async {
+  Future<void> _showPaymentInvoiceModal(BuildContext context, BookingModel booking) async {
     final String checkInStr = DateFormat('dd/MM/yyyy HH:mm').format(booking.checkIn);
     final String checkOutStr = booking.checkOut != null
         ? DateFormat('dd/MM/yyyy HH:mm').format(booking.checkOut!)

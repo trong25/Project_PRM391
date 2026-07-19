@@ -276,7 +276,7 @@ class BookingNotifier extends StateNotifier<BookingState> {
         checkIn: state.checkIn!,
         checkOut: state.checkOut,
         totalPrice: state.totalPayment,
-        status: 'Chưa thanh toán',
+        status: 'Chờ xác nhận',
         voucherCode: state.appliedVoucher?.code,
         discountAmount: state.voucherDiscount > 0
             ? state.voucherDiscount

@@ -22,7 +22,8 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query("""
             select coalesce(sum(b.totalPrice), 0)
             from Booking b
-            where b.checkOut between :start and :end
+            where b.status = 'Đã thanh toán'
+              and b.checkOut between :start and :end
               and b.totalPrice is not null
             """)
     BigDecimal sumRevenueBetween(
@@ -34,6 +35,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             select coalesce(sum(b.totalPrice), 0)
             from Booking b
             where b.room.hotel.hotelId = :hotelId
+              and b.status = 'Đã thanh toán'
               and b.checkOut between :start and :end
               and b.totalPrice is not null
             """)
