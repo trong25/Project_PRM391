@@ -10,6 +10,7 @@ import '../../models/dashboard_revenue_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/dashboard_provider.dart';
 import 'widgets/admin_bottom_navigation.dart';
+import 'admin_palette.dart';
 
 class AdminDashboard extends ConsumerWidget {
   const AdminDashboard({super.key});
@@ -20,10 +21,13 @@ class AdminDashboard extends ConsumerWidget {
     final revenueAsync = ref.watch(revenueOverviewProvider);
 
     return Scaffold(
+      backgroundColor: AdminPalette.background,
       appBar: AppBar(
         title: const Text('Admin Dashboard'),
-        backgroundColor: AppTheme.primaryDark,
         foregroundColor: Colors.white,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(gradient: AdminPalette.gradient4),
+        ),
         actions: [
           IconButton(
             tooltip: 'Đăng xuất',
@@ -70,7 +74,8 @@ class AdminDashboard extends ConsumerWidget {
                     label: 'Phòng',
                     value: '--',
                     icon: Icons.hotel,
-                    color: AppTheme.primary,
+                    gradient: AdminPalette.gradient5,
+                    foregroundColor: AdminPalette.navy,
                   ),
                 ),
                 SizedBox(width: 12),
@@ -79,7 +84,8 @@ class AdminDashboard extends ConsumerWidget {
                     label: 'Booking',
                     value: '--',
                     icon: Icons.book_online,
-                    color: Color(0xFF10B981),
+                    gradient: AdminPalette.gradient2,
+                    foregroundColor: Colors.white,
                   ),
                 ),
                 SizedBox(width: 12),
@@ -88,7 +94,8 @@ class AdminDashboard extends ConsumerWidget {
                     label: 'Người dùng',
                     value: '--',
                     icon: Icons.people_outline,
-                    color: Color(0xFFF59E0B),
+                    gradient: AdminPalette.gradient3,
+                    foregroundColor: AdminPalette.navy,
                   ),
                 ),
               ],
@@ -179,8 +186,12 @@ class _RevenueSnapshotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final topHotels = _topHotelsByMonth(overview.hotels).take(3).toList();
 
-    return Card(
-      margin: EdgeInsets.zero,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: AdminPalette.gradient1,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: const [BoxShadow(color: Color(0x2200D9DD), blurRadius: 18, offset: Offset(0, 8))],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -512,39 +523,46 @@ class _StatCard extends StatelessWidget {
   final String label;
   final String value;
   final IconData icon;
-  final Color color;
+  final LinearGradient gradient;
+  final Color foregroundColor;
 
   const _StatCard({
     required this.label,
     required this.value,
     required this.icon,
-    required this.color,
+    required this.gradient,
+    required this.foregroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [BoxShadow(color: Color(0x189462FF), blurRadius: 12, offset: Offset(0, 5))],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            Icon(icon, color: color, size: 24),
+            Icon(icon, color: foregroundColor, size: 24),
             const SizedBox(height: 4),
             Text(
               value,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: color,
+                color: foregroundColor,
               ),
             ),
             Text(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
-                color: AppTheme.textGray,
+                color: foregroundColor.withValues(alpha: 0.82),
               ),
             ),
           ],

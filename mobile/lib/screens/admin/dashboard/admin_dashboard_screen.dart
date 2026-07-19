@@ -6,6 +6,7 @@ import '../../../config/app_theme.dart';
 import '../../../models/dashboard_revenue_model.dart';
 import '../../../providers/dashboard_provider.dart';
 import '../widgets/admin_bottom_navigation.dart';
+import '../admin_palette.dart';
 
 enum _RevenuePeriod {
   day('Hôm nay', 'Doanh thu hôm nay'),
@@ -48,8 +49,13 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
     final revenueAsync = ref.watch(revenueOverviewProvider);
 
     return Scaffold(
+      backgroundColor: AdminPalette.background,
       appBar: AppBar(
         title: const Text('Doanh thu'),
+        foregroundColor: Colors.white,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(gradient: AdminPalette.gradient4),
+        ),
         actions: [
           IconButton(
             tooltip: 'Tải lại',
@@ -235,9 +241,9 @@ class _RevenueTrendColumn extends StatelessWidget {
             width: 28,
             height: barHeight,
             decoration: BoxDecoration(
-              color: point.value == maxRevenue && maxRevenue > 0
-                  ? const Color(0xFF0F766E)
-                  : AppTheme.primary,
+              gradient: point.value == maxRevenue && maxRevenue > 0
+                  ? AdminPalette.gradient1
+                  : AdminPalette.gradient2,
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -332,7 +338,7 @@ class _PeriodSegment extends StatelessWidget {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
           decoration: BoxDecoration(
-            color: selected ? AppTheme.textPrimary : Colors.transparent,
+            gradient: selected ? AdminPalette.gradient2 : null,
             borderRadius: BorderRadius.circular(7),
           ),
           child: Row(
@@ -376,8 +382,12 @@ class _TotalRevenueHero extends StatelessWidget {
     final change = _changeForPeriod(overview, period);
     final topHotel = _topHotelForPeriod(overview.hotels, period);
 
-    return Card(
-      margin: EdgeInsets.zero,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: AdminPalette.gradient1,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: const [BoxShadow(color: Color(0x2200D9DD), blurRadius: 18, offset: Offset(0, 8))],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
