@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,8 +63,15 @@ public class SepayWebhookController {
 
         final Integer finalBookingId = bookingId;
         return bookingRepository.findById(finalBookingId).map(booking -> {
-            // Sau khi thanh toán online: chuyển sang "Chờ nhận phòng" (đã trả tiền, chờ check-in)
-            booking.setStatus("Chờ nhận phòng");
+            // Sau khi thanh toán online: chuyển sang chờ nhận phòng nhưng không
+            // làm lùi trạng thái nếu webhook được gửi lại sau khi khách đã check-in.
+            if ("Chờ xác nhận".equals(booking.getStatus())
+                    || "Chưa thanh toán".equals(booking.getStatus())) {
+                booking.setStatus("Chờ nhận phòng");
+            }
+            if (booking.getPaidAt() == null) {
+                booking.setPaidAt(LocalDateTime.now());
+            }
 
             // Đánh dấu booking đã thanh toán online để nhân viên không thu tiền lần nữa khi trả phòng
             String existingNote = booking.getNote() != null ? booking.getNote() : "";

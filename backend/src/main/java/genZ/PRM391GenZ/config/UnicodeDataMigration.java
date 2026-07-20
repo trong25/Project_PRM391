@@ -79,6 +79,20 @@ public class UnicodeDataMigration implements ApplicationRunner {
                 UPDATE Booking SET Status = N'Đang ở'
                 WHERE BookingId = 5 AND (Status LIKE '%?%' OR Status LIKE N'%�%')
                 """);
+        jdbcTemplate.update("""
+                UPDATE Booking
+                SET paidAt = CASE
+                    WHEN checkOut IS NULL OR checkOut > GETDATE() THEN GETDATE()
+                    ELSE checkOut
+                END
+                WHERE Status = N'Đã thanh toán' AND paidAt IS NULL
+                """);
+        jdbcTemplate.update("""
+                UPDATE Booking
+                SET paidAt = GETDATE()
+                WHERE paidAt > GETDATE()
+                   OR (paidAt IS NULL AND CHARINDEX('[PREPAID_ONLINE]', note) > 0)
+                """);
 
         upsertTypeBooking("TB001", "Thuê theo giờ", "HOURLY", 1);
         upsertTypeBooking("TB002", "Qua đêm (12h-12h)", "OVERNIGHT", 12);

@@ -13,6 +13,9 @@ class HistoryScreen extends ConsumerWidget {
 
   static const _paidStatus = 'Đã thanh toán';
   static const _unpaidStatus = 'Chưa thanh toán';
+  static const _pendingApprovalStatus = 'Chờ xác nhận';
+  static const _waitingCheckInStatus = 'Chờ nhận phòng';
+  static const _cancelledStatus = 'Đã hủy';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -104,7 +107,7 @@ class HistoryScreen extends ConsumerWidget {
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
         ),
         content: const Text(
-          'Booking chưa thanh toán sẽ được xóa khỏi lịch sử của bạn.',
+          'Booking sẽ được chuyển sang trạng thái đã hủy và vẫn được giữ trong lịch sử.',
           style: TextStyle(fontSize: 14),
         ),
         actions: [
@@ -164,7 +167,9 @@ class _BookingHistoryCard extends StatelessWidget {
     final room = booking.room;
     final status = booking.status ?? 'Chưa xác định';
     final isPaid = status == HistoryScreen._paidStatus;
-    final isUnpaid = status == HistoryScreen._unpaidStatus;
+    final canCancel = status == HistoryScreen._unpaidStatus ||
+        status == HistoryScreen._pendingApprovalStatus ||
+        status == HistoryScreen._waitingCheckInStatus;
     final typeName = booking.typeBooking?.typeName ?? room?.typeRoomName ?? '';
     final roomName = room?.nameRoom.isNotEmpty == true ? room!.nameRoom : booking.roomId;
 
@@ -268,11 +273,11 @@ class _BookingHistoryCard extends StatelessWidget {
             child: isPaid
                 ? _GradientButton(label: 'Đặt lại', onPressed: onRebook)
                 : OutlinedButton(
-                    onPressed: isUnpaid ? onCancel : null,
+                    onPressed: canCancel ? onCancel : null,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppTheme.error,
                       side: BorderSide(
-                        color: isUnpaid ? AppTheme.error : Colors.grey.shade300,
+                        color: canCancel ? AppTheme.error : Colors.grey.shade300,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -354,7 +359,12 @@ class _StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPaid = status == HistoryScreen._paidStatus;
-    final color = isPaid ? const Color(0xFF16A34A) : AppTheme.primary;
+    final isCancelled = status == HistoryScreen._cancelledStatus;
+    final color = isCancelled
+        ? AppTheme.error
+        : isPaid
+            ? const Color(0xFF16A34A)
+            : AppTheme.primary;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

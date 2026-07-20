@@ -44,6 +44,15 @@ public class Booking {
     @Column(name = "Status", columnDefinition = "NVARCHAR(50)")
     private String status;
 
+    @Column(name = "guestName", length = 255, columnDefinition = "NVARCHAR(255)")
+    private String guestName;
+
+    @Column(name = "guestPhone", length = 20)
+    private String guestPhone;
+
+    @Column(name = "paidAt")
+    private LocalDateTime paidAt;
+
     @Column(name = "voucherCode", length = 50)
     private String voucherCode;
 
@@ -52,4 +61,30 @@ public class Booking {
 
     @Column(name = "note", columnDefinition = "NVARCHAR(MAX)")
     private String note;
+
+    // Khai báo tường minh cho các field mới để cả Maven và IntelliJ incremental
+    // build nhận diện ngay cả khi annotation-processing cache của Lombok bị cũ.
+    public String getGuestName() {
+        return guestName;
+    }
+
+    public void setGuestName(String guestName) {
+        this.guestName = guestName;
+    }
+
+    public String getGuestPhone() {
+        return guestPhone;
+    }
+
+    public void setGuestPhone(String guestPhone) {
+        this.guestPhone = guestPhone;
+    }
+
+    public LocalDateTime getPaidAt() {
+        return paidAt;
+    }
+
+    public void setPaidAt(LocalDateTime paidAt) {
+        this.paidAt = paidAt;
+    }
 }

@@ -11,6 +11,7 @@ import '../../providers/booking_provider.dart';
 import '../../providers/room_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/discount_code_provider.dart';
+import '../../providers/dashboard_provider.dart';
 import 'widgets/staff_bottom_nav_bar.dart';
 
 class StaffBookingManagementScreen extends ConsumerStatefulWidget {
@@ -372,7 +373,15 @@ class _StaffBookingManagementScreenState
               ],
             ),
             const SizedBox(height: 6),
-            _buildDetailRow(Icons.person_outline, 'Mã Khách:', booking.userId),
+            _buildDetailRow(
+              Icons.person_outline,
+              'Khách thuê:',
+              booking.guestName?.isNotEmpty == true ? booking.guestName! : booking.userId,
+            ),
+            if (booking.guestPhone?.isNotEmpty == true) ...[
+              const SizedBox(height: 6),
+              _buildDetailRow(Icons.phone_outlined, 'Số điện thoại:', booking.guestPhone!),
+            ],
             const SizedBox(height: 6),
             _buildDetailRow(Icons.login, 'Nhận Phòng:', checkInStr),
             const SizedBox(height: 6),
@@ -429,8 +438,8 @@ class _StaffBookingManagementScreenState
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                       ),
-                      onPressed: () => _confirmCheckOut(context, booking),
-                      child: const Text('Trả Phòng'),
+                      onPressed: () => _showPaymentInvoiceModal(context, booking),
+                      child: const Text('Trả phòng & Thanh toán'),
                     ),
                   if (canConfirmPayment)
                     ElevatedButton(
@@ -489,6 +498,7 @@ class _StaffBookingManagementScreenState
     try {
       await ref.read(bookingServiceProvider).updateBookingStatus(bookingId, status);
       ref.invalidate(allBookingsProvider);
+      ref.invalidate(revenueOverviewProvider);
       ref.read(roomListProvider.notifier).loadRooms(); // refresh free rooms count
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -525,23 +535,6 @@ class _StaffBookingManagementScreenState
     }
   }
 
-  Future<void> _confirmCheckOut(BuildContext context, BookingModel booking) async {
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Xác nhận trả phòng'),
-        content: const Text('Khách đã trả phòng? Booking sẽ chuyển sang chờ thanh toán.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Hủy')),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Xác nhận')),
-        ],
-      ),
-    );
-    if (confirm == true) {
-      await _updateBookingStatus(booking.bookingId, 'Chờ thanh toán');
-    }
-  }
-
   Future<void> _confirmCancel(BuildContext context, int? bookingId) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -569,9 +562,9 @@ class _StaffBookingManagementScreenState
         ? DateFormat('dd/MM/yyyy HH:mm').format(booking.checkOut!)
         : DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now());
 
-    final double basePrice = booking.totalPrice ?? 0;
+    final double finalAmount = booking.totalPrice ?? 0;
     final double discount = booking.discountAmount ?? 0;
-    final double finalAmount = (basePrice - discount).clamp(0.0, double.infinity);
+    final double basePrice = finalAmount + discount;
 
     // Khách đã thanh toán trước qua app → kiểm tra marker trong note
     // Dùng note thay vì status vì status có thể đã đổi sang "Đang ở" sau check-in
@@ -595,7 +588,7 @@ class _StaffBookingManagementScreenState
     );
 
     if (confirm == true) {
-      _updateBookingStatus(booking.bookingId, 'Đã thanh toán');
+      await _updateBookingStatus(booking.bookingId, 'Đã thanh toán');
     }
   }
 
@@ -1756,7 +1749,6 @@ class __CreateBookingDialogContentState
         return;
       }
 
-      final combinedNote = 'Khách: ${_customerName.trim()} - SĐT: ${_customerPhone.trim()}\nGhi chú: ${_noteInput.trim()}';
       final loggedInUserId = ref.read(authProvider).user?.userId ?? '';
 
       if (loggedInUserId.isEmpty) {
@@ -1771,9 +1763,11 @@ class __CreateBookingDialogContentState
         checkOut: cout,
         totalPrice: _price,
         status: 'Chưa thanh toán',
+        guestName: _customerName.trim(),
+        guestPhone: _customerPhone.trim(),
         voucherCode: _voucherCode.isNotEmpty ? _voucherCode : null,
         discountAmount: _discountAmount > 0 ? _discountAmount : null,
-        note: combinedNote,
+        note: _noteInput.trim().isNotEmpty ? _noteInput.trim() : null,
       );
 
       await ref.read(bookingServiceProvider).createBooking(booking);
@@ -1857,14 +1851,17 @@ class __EditBookingDialogContentState
 
     _priceController = TextEditingController(text: _price.toStringAsFixed(0));
 
+    _customerName = b.guestName ?? '';
+    _customerPhone = b.guestPhone ?? '';
+
     String noteText = b.note ?? '';
     if (noteText.startsWith('Khách: ')) {
       final lines = noteText.split('\n');
       final firstLine = lines[0];
       final match = RegExp(r'^Khách:\s*(.*?)\s*-\s*SĐT:\s*(.*?)$').firstMatch(firstLine);
       if (match != null) {
-        _customerName = match.group(1) ?? '';
-        _customerPhone = match.group(2) ?? '';
+        if (_customerName.isEmpty) _customerName = match.group(1) ?? '';
+        if (_customerPhone.isEmpty) _customerPhone = match.group(2) ?? '';
         _noteInput = lines.sublist(1).join('\n').replaceFirst('Ghi chú: ', '');
       } else {
         _noteInput = noteText;
@@ -2906,8 +2903,6 @@ class __EditBookingDialogContentState
         return;
       }
 
-      final combinedNote = 'Khách: ${_customerName.trim()} - SĐT: ${_customerPhone.trim()}\nGhi chú: ${_noteInput.trim()}';
-
       final updatedBooking = BookingModel(
         bookingId: widget.booking.bookingId,
         roomId: _selectedRoomId!,
@@ -2917,9 +2912,11 @@ class __EditBookingDialogContentState
         checkOut: cout,
         totalPrice: _price,
         status: widget.booking.status,
+        guestName: _customerName.trim(),
+        guestPhone: _customerPhone.trim(),
         voucherCode: _voucherCode.isNotEmpty ? _voucherCode : null,
         discountAmount: _discountAmount > 0 ? _discountAmount : null,
-        note: combinedNote,
+        note: _noteInput.trim().isNotEmpty ? _noteInput.trim() : null,
       );
 
       await ref.read(bookingServiceProvider).updateBooking(widget.booking.bookingId!, updatedBooking);
@@ -3477,7 +3474,14 @@ class _CheckoutInvoiceDialogState extends ConsumerState<_CheckoutInvoiceDialog> 
               const SizedBox(height: 8),
               _buildInvoiceRow('Mã Đặt Phòng:', '#${widget.booking.bookingId}'),
               _buildInvoiceRow('Phòng:', widget.booking.roomId),
-              _buildInvoiceRow('Mã Khách:', widget.booking.userId),
+              _buildInvoiceRow(
+                'Khách thuê:',
+                widget.booking.guestName?.isNotEmpty == true
+                    ? widget.booking.guestName!
+                    : widget.booking.userId,
+              ),
+              if (widget.booking.guestPhone?.isNotEmpty == true)
+                _buildInvoiceRow('Số điện thoại:', widget.booking.guestPhone!),
               _buildInvoiceRow('Loại hình:', widget.booking.typeBookingId),
               const SizedBox(height: 8),
               const Divider(),
@@ -3581,7 +3585,11 @@ class _CheckoutInvoiceDialogState extends ConsumerState<_CheckoutInvoiceDialog> 
             foregroundColor: Colors.white,
           ),
           onPressed: () => Navigator.pop(context, true),
-          child: Text(widget.isPrepaid ? 'Xác nhận trả phòng' : 'Xác nhận nhận tiền mặt'),
+          child: Text(
+            widget.isPrepaid
+                ? 'Xác nhận trả phòng'
+                : 'Xác nhận trả phòng & thanh toán',
+          ),
         ),
       ],
     );

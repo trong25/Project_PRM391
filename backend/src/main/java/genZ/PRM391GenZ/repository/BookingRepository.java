@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    List<Booking> findByUser_UserId(String userId);
+    List<Booking> findByUser_UserIdOrderByBookingIdDesc(String userId);
     List<Booking> findByRoom_RoomId(String roomId);
     List<Booking> findByStatus(String status);
     
@@ -22,8 +22,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query("""
             select coalesce(sum(b.totalPrice), 0)
             from Booking b
-            where b.status = 'Đã thanh toán'
-              and b.checkOut between :start and :end
+            where b.paidAt between :start and :end
               and b.totalPrice is not null
             """)
     BigDecimal sumRevenueBetween(
@@ -35,8 +34,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             select coalesce(sum(b.totalPrice), 0)
             from Booking b
             where b.room.hotel.hotelId = :hotelId
-              and b.status = 'Đã thanh toán'
-              and b.checkOut between :start and :end
+              and b.paidAt between :start and :end
               and b.totalPrice is not null
             """)
     BigDecimal sumRevenueByHotelBetween(

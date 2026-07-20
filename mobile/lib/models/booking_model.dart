@@ -58,6 +58,9 @@ class BookingModel {
   final DateTime? checkOut;
   final double? totalPrice;
   final String? status;
+  final String? guestName;
+  final String? guestPhone;
+  final DateTime? paidAt;
   final String? voucherCode;
   final double? discountAmount;
   final String? note;
@@ -73,6 +76,9 @@ class BookingModel {
     this.checkOut,
     this.totalPrice,
     this.status,
+    this.guestName,
+    this.guestPhone,
+    this.paidAt,
     this.voucherCode,
     this.discountAmount,
     this.note,
@@ -101,6 +107,11 @@ class BookingModel {
           : null,
       totalPrice: (json['totalPrice'] as num?)?.toDouble(),
       status: json['status'] as String?,
+      guestName: json['guestName'] as String?,
+      guestPhone: json['guestPhone'] as String?,
+      paidAt: json['paidAt'] != null
+          ? DateTime.parse(json['paidAt'] as String)
+          : null,
       voucherCode: json['voucherCode'] as String?,
       discountAmount: (json['discountAmount'] as num?)?.toDouble(),
       note: json['note'] as String?,
@@ -115,6 +126,9 @@ class BookingModel {
         'checkOut': checkOut?.toIso8601String(),
         'totalPrice': totalPrice,
         'status': status ?? 'Chờ xác nhận',
+        'guestName': guestName,
+        'guestPhone': guestPhone,
+        'paidAt': paidAt?.toIso8601String(),
         'voucherCode': voucherCode,
         'discountAmount': discountAmount,
         'note': note,

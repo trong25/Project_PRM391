@@ -324,6 +324,8 @@ final allBookingsProvider = FutureProvider.autoDispose<List<BookingModel>>((ref)
 final customerBookingsProvider =
     FutureProvider.autoDispose.family<List<BookingModel>, String>((ref, userId) async {
   final bookings = await ref.watch(bookingServiceProvider).getBookingsByUser(userId);
-  bookings.sort((a, b) => b.checkIn.compareTo(a.checkIn));
+  // BookingId is generated in creation order, so descending order shows the
+  // customer's most recently placed booking first.
+  bookings.sort((a, b) => (b.bookingId ?? 0).compareTo(a.bookingId ?? 0));
   return bookings;
 });
