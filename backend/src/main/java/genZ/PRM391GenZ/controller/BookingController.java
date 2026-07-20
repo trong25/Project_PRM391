@@ -5,10 +5,8 @@ import genZ.PRM391GenZ.entity.Booking;
 import genZ.PRM391GenZ.repository.BookingRepository;
 import genZ.PRM391GenZ.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,10 +76,10 @@ public class BookingController {
         if (booking.getRoom() == null || booking.getRoom().getRoomId() == null) {
             return ResponseEntity.badRequest().body(ApiResponse.error("Phòng không hợp lệ"));
         }
-        
+
         genZ.PRM391GenZ.entity.Room room = roomRepository.findById(booking.getRoom().getRoomId())
                 .orElseThrow(() -> new RuntimeException("Room not found"));
-                
+
         String status = room.getStatus();
         if (status == null || (!"Trống".equalsIgnoreCase(status) && !"available".equalsIgnoreCase(status))) {
             return ResponseEntity.badRequest().body(ApiResponse.error("Lỗi: Phòng hiện tại không còn trống để đặt!"));
@@ -220,7 +218,7 @@ public class BookingController {
         if (booking.getRoom() == null || booking.getRoom().getRoomId() == null) {
             return null;
         }
-        
+
         List<Booking> existingBookings = bookingRepository.findByRoom_RoomId(booking.getRoom().getRoomId());
         java.time.LocalDateTime newStart = booking.getCheckIn();
         java.time.LocalDateTime newEnd = booking.getCheckOut();
@@ -228,9 +226,9 @@ public class BookingController {
         if (newEnd == null) {
             newEnd = newStart.plusHours(2);
         }
-        
+
         java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        
+
         for (Booking existing : existingBookings) {
             // Skip the same booking when updating
             if (booking.getBookingId() != null && booking.getBookingId().equals(existing.getBookingId())) {
@@ -240,13 +238,13 @@ public class BookingController {
             if ("Đã hủy".equalsIgnoreCase(existing.getStatus())) {
                 continue;
             }
-            
+
             java.time.LocalDateTime existStart = existing.getCheckIn();
             java.time.LocalDateTime existEnd = existing.getCheckOut();
             if (existEnd == null) {
                 existEnd = existStart.plusHours(2);
             }
-            
+
             if (newStart.isBefore(existEnd) && existStart.isBefore(newEnd)) {
                 return "Phòng này đã có người đặt trong khoảng thời gian từ " + existStart.format(formatter) + " đến " + existEnd.format(formatter) + "!";
             }
