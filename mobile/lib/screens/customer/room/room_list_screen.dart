@@ -159,7 +159,7 @@ class _RoomListScreenState extends ConsumerState<RoomListScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: const AppBottomNavBar(currentIndex: 2),
+      bottomNavigationBar: const AppBottomNavBar(currentIndex: 3),
       body: SafeArea(
         child: Column(
           children: [

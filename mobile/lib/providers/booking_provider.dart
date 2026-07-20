@@ -320,3 +320,10 @@ final bookingProvider =
 final allBookingsProvider = FutureProvider.autoDispose<List<BookingModel>>((ref) async {
   return ref.watch(bookingServiceProvider).getAllBookings();
 });
+
+final customerBookingsProvider =
+    FutureProvider.autoDispose.family<List<BookingModel>, String>((ref, userId) async {
+  final bookings = await ref.watch(bookingServiceProvider).getBookingsByUser(userId);
+  bookings.sort((a, b) => b.checkIn.compareTo(a.checkIn));
+  return bookings;
+});

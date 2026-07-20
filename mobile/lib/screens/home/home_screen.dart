@@ -472,7 +472,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        'onTap': () => _onComingSoon(context),
+        'onTap': () => context.push('/history'),
       },
       {
         'icon': Icons.chat_bubble_rounded,

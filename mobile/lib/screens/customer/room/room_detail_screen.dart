@@ -98,7 +98,7 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
         children: [
           if (detailState.room != null && !detailState.isLoading)
             _buildBookButton(context),
-          const AppBottomNavBar(currentIndex: 2),
+          const AppBottomNavBar(currentIndex: 3),
         ],
       ),
     );

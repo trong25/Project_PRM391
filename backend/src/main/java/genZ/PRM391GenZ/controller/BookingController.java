@@ -4,10 +4,13 @@ import genZ.PRM391GenZ.dto.ApiResponse;
 import genZ.PRM391GenZ.entity.Booking;
 import genZ.PRM391GenZ.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -132,6 +135,28 @@ public class BookingController {
         return bookingRepository.findById(id).map(b -> {
             bookingRepository.delete(b);
             return ResponseEntity.ok(ApiResponse.<Void>success("Xóa booking thành công", null));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/customer/{id}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<ApiResponse<Void>> cancelCustomerBooking(
+            @PathVariable Integer id,
+            Authentication authentication) {
+        return bookingRepository.findById(id).map(b -> {
+            String currentEmail = authentication != null ? authentication.getName() : null;
+            String bookingEmail = b.getUser() != null ? b.getUser().getEmail() : null;
+
+            if (currentEmail == null || bookingEmail == null || !currentEmail.equalsIgnoreCase(bookingEmail)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Không có quyền hủy booking này");
+            }
+
+            if (!"Chưa thanh toán".equals(b.getStatus())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Chỉ có thể hủy booking chưa thanh toán");
+            }
+
+            bookingRepository.delete(b);
+            return ResponseEntity.ok(ApiResponse.<Void>success("Hủy booking thành công", null));
         }).orElse(ResponseEntity.notFound().build());
     }
 
