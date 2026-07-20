@@ -3,6 +3,7 @@ import '../../config/app_theme.dart';
 import '../../services/discount_service.dart';
 import 'add_voucher_screen.dart';
 import 'edit_voucher_screen.dart';
+import 'widgets/staff_bottom_nav_bar.dart';
 
 class VoucherScreen extends StatefulWidget {
   const VoucherScreen({super.key});
@@ -81,12 +82,16 @@ class _VoucherScreenState extends State<VoucherScreen> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return const Scaffold(
+        bottomNavigationBar: StaffBottomNavBar(currentIndex: 2),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     }
 
     return Scaffold(
+      bottomNavigationBar: const StaffBottomNavBar(currentIndex: 2),
       body: vouchers.isEmpty
           ? const Center(
         child: Text(

@@ -22,16 +22,15 @@ import '../screens/customer/profile_screen.dart';
 import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
 import '../screens/customer/saved/saved_screen.dart';
-import '../screens/customer/voucher/customer_voucher_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/customer/feedback_chat_screen.dart';
 import '../screens/staff/feedback_list_screen.dart';
 import '../screens/staff/staff_chat_screen.dart';
 import '../screens/staff/staff_dashboard_screen.dart';
-import '../screens/staff/staff_home_screen.dart';
 import '../screens/staff/staff_room_management_screen.dart';
 import '../screens/staff/staff_booking_management_screen.dart';
 import '../screens/customer/booking/payment_screen.dart';
+import '../screens/staff/voucher_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -213,7 +212,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       // ── Staff routes ────────────────────────────────────────────────────────
-
+      GoRoute(
+        path: '/staff',
+        name: 'staff',
+        builder: (_, __) => const StaffDashboardScreen(),
+      ),
       GoRoute(
         path: '/admin',
         name: 'admin',
@@ -235,28 +238,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, __) => const UserManagementScreen(),
       ),
       GoRoute(
-
-        path: '/customer-voucher',
-        builder: (context, state) => const CustomerVoucherScreen(),
-      ),
-
-      GoRoute(
-        path: '/staff',
-        name: 'staff',
-        builder: (_, __) => const StaffHomeScreen(),
-      ),
-
-      GoRoute(
         path: '/staff/rooms',
         name: 'staff-rooms',
         builder: (_, __) => const StaffRoomManagementScreen(),
       ),
-
       GoRoute(
         path: '/staff/bookings',
         name: 'staff-bookings',
         builder: (_, __) => const StaffBookingManagementScreen(),
       ),
+      GoRoute(
+        path: '/staff/discount',
+        name: 'staff-discount',
+        builder: (_, __) => const VoucherScreen(),
+      ),
+
     ],
   );
 
@@ -264,18 +260,12 @@ final routerProvider = Provider<GoRouter>((ref) {
   return router;
 });
 
-
-// String _homeForRole(String? roleId) {
-//   return _isAdminRole(roleId) ? '/admin' : '/home';
-// }
-
 String _homeForRole(String? roleId) {
   final role = roleId?.toUpperCase();
   if (role == AppConfig.roleAdmin) return '/admin';
   if (role == AppConfig.roleStaff) return '/staff';
   return '/home';
 }
-
 
 bool _isAdminRole(String? roleId) {
   return roleId?.toUpperCase() == AppConfig.roleAdmin;

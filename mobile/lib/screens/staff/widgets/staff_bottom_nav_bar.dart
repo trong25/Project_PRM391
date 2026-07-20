@@ -23,7 +23,10 @@ class StaffBottomNavBar extends ConsumerWidget {
       context.go('/staff');
     } else if (index == 1) {
       context.go('/staff/rooms');
-    } else if (index == 3) {
+    }else if(index == 2){
+      context.go('/staff/discount');
+    }
+    else if (index == 3) {
       context.go('/staff/bookings');
     } else if (index == 4) {
       context.go('/staff-feedback');
