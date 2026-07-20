@@ -23,6 +23,15 @@ class BookingService {
         .toList();
   }
 
+  /// Lấy danh sách booking đang hoạt động của 1 phòng
+  Future<List<BookingModel>> getBusySlots(String roomId) async {
+    final response = await _dio.get('/bookings/room/$roomId/busy-slots');
+    final data = response.data['data'] as List<dynamic>;
+    return data
+        .map((e) => BookingModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
   /// Lấy chi tiết 1 booking
   Future<BookingModel> getBookingById(int id) async {
     final response = await _dio.get('/bookings/$id');
@@ -52,6 +61,11 @@ class BookingService {
   /// Xóa booking
   Future<void> deleteBooking(int id) async {
     await _dio.delete('/bookings/$id');
+  }
+
+  /// Khách hàng hủy booking chưa thanh toán của chính mình
+  Future<void> cancelCustomerBooking(int id) async {
+    await _dio.delete('/bookings/customer/$id');
   }
 
   /// Cập nhật thông tin booking

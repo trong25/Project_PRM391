@@ -42,7 +42,11 @@ class _RoomListScreenState extends ConsumerState<RoomListScreen> {
 
   // ── Filtering ──────────────────────────────────────────────────────────────
   List<RoomModel> _filterRooms(List<RoomModel> rooms) {
-    var result = rooms;
+    // Filter to only show empty/available rooms for customers
+    var result = rooms.where((r) {
+      final status = r.status?.toLowerCase() ?? '';
+      return status == 'trống' || status == 'available';
+    }).toList();
 
     if (_searchQuery.isNotEmpty) {
       final q = _searchQuery.toLowerCase();
@@ -155,7 +159,7 @@ class _RoomListScreenState extends ConsumerState<RoomListScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: const AppBottomNavBar(currentIndex: 2),
+      bottomNavigationBar: const AppBottomNavBar(currentIndex: 3),
       body: SafeArea(
         child: Column(
           children: [

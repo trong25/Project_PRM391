@@ -98,7 +98,7 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
         children: [
           if (detailState.room != null && !detailState.isLoading)
             _buildBookButton(context),
-          const AppBottomNavBar(currentIndex: 2),
+          const AppBottomNavBar(currentIndex: 3),
         ],
       ),
     );
@@ -541,6 +541,11 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
 
   // ── Book button ────────────────────────────────────────────────────────────
   Widget _buildBookButton(BuildContext context) {
+    final roomDetail = ref.watch(roomDetailProvider(widget.roomId));
+    final room = roomDetail.room;
+    final isAvailable = room?.status?.toLowerCase() == 'trống' ||
+        room?.status?.toLowerCase() == 'available';
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       decoration: BoxDecoration(
@@ -558,35 +563,39 @@ class _RoomDetailScreenState extends ConsumerState<RoomDetailScreen> {
         height: 50,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            gradient: AppTheme.primaryGradient,
+            gradient: isAvailable ? AppTheme.primaryGradient : null,
+            color: isAvailable ? null : Colors.grey.shade300,
             borderRadius: BorderRadius.circular(14),
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.primary.withOpacity(0.35),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            boxShadow: isAvailable
+                ? [
+                    BoxShadow(
+                      color: AppTheme.primary.withOpacity(0.35),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : null,
           ),
           child: ElevatedButton(
-            onPressed: () {
-              final room = ref.read(roomDetailProvider(widget.roomId)).room;
-              if (room != null) {
-                context.push('/rooms/${room.roomId}/booking', extra: room);
-              }
-            },
+            onPressed: isAvailable
+                ? () {
+                    if (room != null) {
+                      context.push('/rooms/${room.roomId}/booking', extra: room);
+                    }
+                  }
+                : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14)),
             ),
-            child: const Text(
-              'Đặt phòng',
+            child: Text(
+              isAvailable ? 'Đặt phòng' : 'Phòng không khả dụng',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: isAvailable ? Colors.white : Colors.grey.shade600,
               ),
             ),
           ),

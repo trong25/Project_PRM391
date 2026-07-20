@@ -17,6 +17,7 @@ import '../screens/auth/register_screen.dart';
 import '../screens/auth/request_reset_screen.dart';
 import '../screens/auth/reset_password_screen.dart';
 import '../screens/customer/booking/booking_screen.dart';
+import '../screens/customer/history_screen.dart';
 import '../screens/customer/profile_screen.dart';
 import '../screens/customer/room/room_detail_screen.dart';
 import '../screens/customer/room/room_list_screen.dart';
@@ -30,6 +31,7 @@ import '../screens/staff/staff_dashboard_screen.dart';
 import '../screens/staff/staff_home_screen.dart';
 import '../screens/staff/staff_room_management_screen.dart';
 import '../screens/staff/staff_booking_management_screen.dart';
+import '../screens/customer/booking/payment_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -86,7 +88,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (isLoggedIn &&
           _isStaffRole(authState.user?.roleId ?? authState.user?.role)) {
         final loc = state.matchedLocation;
-        final customerOnlyRoutes = ['/home', '/rooms', '/saved', '/account', '/profile', '/customer-chat'];
+        final customerOnlyRoutes = ['/home', '/rooms', '/saved', '/history', '/account', '/profile', '/customer-chat'];
         if (customerOnlyRoutes.any((r) => loc.startsWith(r))) {
           return '/staff';
         }
@@ -139,6 +141,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, __) => const SavedScreen(),
       ),
       GoRoute(
+        path: '/history',
+        name: 'history',
+        builder: (_, __) => const HistoryScreen(),
+      ),
+      GoRoute(
         path: '/rooms',
         name: 'rooms',
         builder: (_, state) {
@@ -162,6 +169,21 @@ final routerProvider = Provider<GoRouter>((ref) {
           final extra = state.extra;
           if (extra is RoomModel) return BookingScreen(room: extra);
           return _RoomBookingLoader(roomId: id);
+        },
+      ),
+      GoRoute(
+        path: '/payment/:bookingId',
+        name: 'payment',
+        builder: (context, state) {
+          final bookingId = int.tryParse(state.pathParameters['bookingId'] ?? '0') ?? 0;
+          final extra = state.extra as Map<String, dynamic>?;
+          final totalAmount = (extra?['totalAmount'] as num?)?.toDouble() ?? 0.0;
+          final roomId = extra?['roomId'] as String? ?? '';
+          return PaymentScreen(
+            bookingId: bookingId,
+            totalAmount: totalAmount,
+            roomId: roomId,
+          );
         },
       ),
       // ── Chat routes ────────────────────────────────────────────────────────
