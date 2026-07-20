@@ -35,6 +35,7 @@ genZ\PRM391GenZ\controller\HotelController.class
 genZ\PRM391GenZ\dto\LoginResponse$LoginResponseBuilder.class
 genZ\PRM391GenZ\dto\RegisterRequest.class
 genZ\PRM391GenZ\entity\Role$RoleBuilder.class
+genZ\PRM391GenZ\repository\DiscountRepository.class
 genZ\PRM391GenZ\security\SecurityConfig.class
 genZ\PRM391GenZ\entity\User.class
 genZ\PRM391GenZ\entity\Booking$BookingBuilder.class
@@ -55,10 +56,12 @@ genZ\PRM391GenZ\controller\AuthController.class
 genZ\PRM391GenZ\dto\user\UserUpdateDto$UserUpdateDtoBuilder.class
 genZ\PRM391GenZ\entity\Room$RoomBuilder.class
 genZ\PRM391GenZ\controller\SepayWebhookController$SepayWebhookPayload.class
+genZ\PRM391GenZ\service\DiscountService.class
 genZ\PRM391GenZ\controller\RoomController.class
 genZ\PRM391GenZ\dto\ChatMessageDTO.class
 genZ\PRM391GenZ\entity\Booking.class
 genZ\PRM391GenZ\config\CorsConfig.class
+genZ\PRM391GenZ\controller\DiscountController.class
 genZ\PRM391GenZ\service\RoomService$1.class
 genZ\PRM391GenZ\entity\User$UserBuilder.class
 genZ\PRM391GenZ\dto\ApiResponse$ApiResponseBuilder.class

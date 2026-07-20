@@ -6,23 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="56a18028-8784-4758-9881-7e8302d11af4" name="Changes" comment="history">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/BCryptHashGenerator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/room/RoomDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/dto/room/RoomDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/entity/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/RoomService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/BCryptHashGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto$RoomDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto$RoomDtoBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/config/router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/config/router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_home_screen.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/voucher_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/voucher_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/widgets/staff_bottom_nav_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/pubspec.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +28,7 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "Spring Boot.Prm391GenZApplication.executor": "Run",
-    "git-widget-placeholder": "cao",
+    "git-widget-placeholder": "thanh",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
