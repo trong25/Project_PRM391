@@ -213,11 +213,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       // ── Staff routes ────────────────────────────────────────────────────────
-      GoRoute(
-        path: '/staff',
-        name: 'staff',
-        builder: (_, __) => const StaffDashboardScreen(),
-      ),
+
       GoRoute(
         path: '/admin',
         name: 'admin',

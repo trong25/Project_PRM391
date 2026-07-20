@@ -62,7 +62,7 @@ public class SecurityConfig {
                                 "/type-rooms/**",
                                 "/type-rooms"
                         ).permitAll()
-<<<<<<< HEAD
+
 
                         //================================================
                         // CUSTOMER xem voucher Active
@@ -97,12 +97,12 @@ public class SecurityConfig {
                                 "/discount/**")
                         .hasRole("STAFF")
 
-=======
+
                         // WebSocket STOMP endpoint - allow handshake without token
                         // (token được truyền qua STOMP header sau khi kết nối)
                         .requestMatchers("/ws/**").permitAll()
                         // All other requests (including /auth/profile, /auth/change-password) need auth
->>>>>>> main
+
                         .anyRequest().authenticated()
                 )
 

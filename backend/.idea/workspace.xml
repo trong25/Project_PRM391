@@ -4,147 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
-
-    <list default="true" id="b5da82a5-6652-4155-8ecc-39dec7911038" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/BCryptHashGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/customer/voucher/customer_voucher_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/add_voucher_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/edit_voucher_screen.dart" afterDir="false" />
-
-
-    <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Merge branch 'thanh'&#10;&#10;# Conflicts:&#10;#&#9;.idea/Project_PRM391.iml&#10;#&#9;.idea/vcs.xml&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/entity/Hotel.java&#10;#&#9;backend/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/RoomController.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Booking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Hotel.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/Room.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeBooking.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/entity/User.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/exception/GlobalExceptionHandler.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/security/UserDetailsServiceImpl.class&#10;#&#9;backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst&#10;#&#9;backend/target/test-classes/genZ/PRM391GenZ/Prm391GenZApplicationTests.class&#10;#&#9;mobile/lib/config/router.dart&#10;#&#9;mobile/lib/models/room_model.dart&#10;#&#9;mobile/lib/providers/room_provider.dart&#10;#&#9;mobile/lib/screens/home/home_screen.dart&#10;#&#9;mobile/test/widget_test.dart">
-
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/DiscountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/DiscountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/repository/DiscountRepository.java" afterDir="false" />
+    <list default="true" id="56a18028-8784-4758-9881-7e8302d11af4" name="Changes" comment="Merge remote-tracking branch 'origin/main' into cao&#10;&#10;# Conflicts:&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/BookingController.class">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/DiscountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/DiscountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DiscountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DiscountController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto$RoomDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto$RoomDtoBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/dto/room/RoomDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking$BookingBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Booking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room$RoomBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/Room.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom$TypeRoomBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/TypeRoom.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User$UserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/DiscountRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/DiscountRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DiscountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DiscountService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/config/router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/config/router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/auth/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/auth/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/voucher_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/voucher_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/discount_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/discount_service.dart" afterDir="false" />
-
-    <list default="true" id="453054a7-db8f-4f76-88fe-ca3919cdd8fd" name="Changes" comment="Merge remote-tracking branch 'origin/main' into cao&#10;&#10;# Conflicts:&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/BookingController.class">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" afterDir="false" />
-
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/DiscountController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/DiscountRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/DiscountService.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-
-
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "cao"
-
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;minhcao2004&quot;
-
+    "Spring Boot.Prm391GenZApplication.executor": "Run",
+    "git-widget-placeholder": "trong",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/trong25/Project_PRM391.git&quot;,
-    &quot;accountId&quot;: &quot;dc87556d-d61d-44de-b51b-b01128851a56&quot;
-  }
-}</component>
-
-  <component name="ProjectColorInfo">{
-
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 7
-}</component>
-  <component name="ProjectId" id="3GLT6Dks8YNoj75A7TDNDIvY1nJ" />
-
-  &quot;associatedIndex&quot;: 8
-}</component>
-  <component name="ProjectId" id="3Gi2RQ3IueXCphHlcmwlQ0CO1XH" />
-
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-
-    &quot;Application.BCryptHashGenerator.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Trong&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;cao&quot;,
-
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
-
-  <component name="RunManager" selected="Application.Prm391GenZApplication">
-    <configuration name="BCryptHashGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="genZ.PRM391GenZ.BCryptHashGenerator" />
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Prm391GenZApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="PRM391GenZ" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="genZ.PRM391GenZ.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Prm391GenZApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="genZ.PRM391GenZ.Prm391GenZApplication" />
-      <module name="PRM391GenZ" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="genZ.PRM391GenZ.Prm391GenZApplication" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="genZ.PRM391GenZ.*" />
@@ -157,88 +45,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Prm391GenZApplication" />
-        <item itemvalue="Application.BCryptHashGenerator" />
+        <item itemvalue="Spring Boot.Prm391GenZApplication" />
       </list>
     </recent_temporary>
   </component>
-
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
-
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="b5da82a5-6652-4155-8ecc-39dec7911038" name="Changes" comment="" />
-      <created>1783749672984</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1783749672984</updated>
-      <workItem from="1783749674461" duration="8310000" />
-      <workItem from="1783839722266" duration="965000" />
-    </task>
-
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-
-    <task id="LOCAL-00001" summary="Login, Forget password">
-}]]></component>
-  <component name="TaskManager">
-
-    <task id="LOCAL-00001" summary=".">
-      <option name="closed" value="true" />
-      <created>1784385229618</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1784385229618</updated>
-    </task>
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="453054a7-db8f-4f76-88fe-ca3919cdd8fd" name="Changes" comment="Upload images" />
-      <created>1784440061747</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1784440061747</updated>
-      <workItem from="1784440063609" duration="2111000" />
-      <workItem from="1784527185361" duration="75000" />
-    </task>
-    <task id="LOCAL-00002" summary="history">
-      <option name="closed" value="true" />
-      <created>1784443487978</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1784443487978</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Merge remote-tracking branch 'origin/main' into cao&#10;&#10;# Conflicts:&#10;#&#9;backend/.idea/workspace.xml&#10;#&#9;backend/target/classes/genZ/PRM391GenZ/controller/BookingController.class">
-      <option name="closed" value="true" />
-      <created>1784526584295</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1784526584295</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
-    <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="." />
-
-    <option name="LAST_COMMIT_MESSAGE" value="." />
-
-
-    <MESSAGE value="history" />
-    <option name="LAST_COMMIT_MESSAGE" value="history" />
-
   </component>
 </project>
