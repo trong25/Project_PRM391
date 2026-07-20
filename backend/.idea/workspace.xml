@@ -6,31 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a8d1d992-0b7e-456b-aed0-b70461ff4f1c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/CorsConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/config/CorsConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/BookingController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/DiscountCode$DiscountCodeBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/DiscountCode$DiscountCodeBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/DiscountCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/entity/DiscountCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/config/app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/config/app_theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/providers/booking_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/providers/booking_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/customer/booking/booking_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/customer/booking/booking_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/customer/room/room_detail_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/customer/room/room_detail_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/customer/room/room_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/customer/room/room_list_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/customer/saved/saved_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/customer/saved/saved_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_booking_management_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/staff/staff_booking_management_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/booking_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/repository/BookingRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genZ/PRM391GenZ/service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,23 +40,23 @@
     <option name="showLibraryContents" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Prm391GenZApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.Prm391GenZApplication.executor": "Run",
+    "git-widget-placeholder": "thanh",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Prm391GenZApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="PRM391GenZ" />
