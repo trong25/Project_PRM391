@@ -38,6 +38,7 @@ genZ\PRM391GenZ\entity\Role.class
 genZ\PRM391GenZ\security\UserDetailsServiceImpl.class
 genZ\PRM391GenZ\dto\LoginResponse.class
 genZ\PRM391GenZ\repository\RoomRepository.class
+genZ\PRM391GenZ\controller\SepayWebhookController.class
 genZ\PRM391GenZ\entity\ChatMessage.class
 genZ\PRM391GenZ\entity\Conversation$ConversationBuilder.class
 genZ\PRM391GenZ\dto\ApiResponse.class
@@ -47,6 +48,7 @@ genZ\PRM391GenZ\controller\DashboardController.class
 genZ\PRM391GenZ\controller\AuthController.class
 genZ\PRM391GenZ\dto\user\UserUpdateDto$UserUpdateDtoBuilder.class
 genZ\PRM391GenZ\entity\Room$RoomBuilder.class
+genZ\PRM391GenZ\controller\SepayWebhookController$SepayWebhookPayload.class
 genZ\PRM391GenZ\controller\RoomController.class
 genZ\PRM391GenZ\dto\ChatMessageDTO.class
 genZ\PRM391GenZ\entity\Booking.class

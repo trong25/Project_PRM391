@@ -24,6 +24,10 @@ class SavedScreen extends ConsumerWidget {
 
     final savedRooms = roomState.rooms
         .where((r) => savedIds.contains(r.roomId ?? ''))
+        .where((r) {
+          final status = r.status?.toLowerCase() ?? '';
+          return status == 'trống' || status == 'available';
+        })
         .toList();
 
     return Scaffold(

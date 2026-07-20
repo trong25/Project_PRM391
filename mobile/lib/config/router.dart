@@ -29,6 +29,7 @@ import '../screens/staff/staff_chat_screen.dart';
 import '../screens/staff/staff_dashboard_screen.dart';
 import '../screens/staff/staff_room_management_screen.dart';
 import '../screens/staff/staff_booking_management_screen.dart';
+import '../screens/customer/booking/payment_screen.dart';
 
 class _AuthNotifierListenable extends ChangeNotifier {
   _AuthNotifierListenable(this._ref) {
@@ -166,6 +167,21 @@ final routerProvider = Provider<GoRouter>((ref) {
           final extra = state.extra;
           if (extra is RoomModel) return BookingScreen(room: extra);
           return _RoomBookingLoader(roomId: id);
+        },
+      ),
+      GoRoute(
+        path: '/payment/:bookingId',
+        name: 'payment',
+        builder: (context, state) {
+          final bookingId = int.tryParse(state.pathParameters['bookingId'] ?? '0') ?? 0;
+          final extra = state.extra as Map<String, dynamic>?;
+          final totalAmount = (extra?['totalAmount'] as num?)?.toDouble() ?? 0.0;
+          final roomId = extra?['roomId'] as String? ?? '';
+          return PaymentScreen(
+            bookingId: bookingId,
+            totalAmount: totalAmount,
+            roomId: roomId,
+          );
         },
       ),
       // ── Chat routes ────────────────────────────────────────────────────────

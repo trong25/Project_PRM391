@@ -44,10 +44,10 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
       _imageUrls = widget.room!.imageUrls.isNotEmpty
           ? List<String>.from(widget.room!.imageUrls)
           : [
-              if (widget.room!.imageUrl != null &&
-                  widget.room!.imageUrl!.isNotEmpty)
-                widget.room!.imageUrl!,
-            ];
+        if (widget.room!.imageUrl != null &&
+            widget.room!.imageUrl!.isNotEmpty)
+          widget.room!.imageUrl!,
+      ];
     }
   }
 
@@ -154,10 +154,10 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
                     items: hotels
                         .map(
                           (h) => DropdownMenuItem(
-                            value: h.hotelId,
-                            child: Text(h.name),
-                          ),
-                        )
+                        value: h.hotelId,
+                        child: Text(h.name),
+                      ),
+                    )
                         .toList(),
                     onChanged: (val) => setState(() => _hotelId = val),
                     validator: (val) => val == null ? 'Bắt buộc chọn' : null,
@@ -179,10 +179,10 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
                     items: typeRooms
                         .map(
                           (t) => DropdownMenuItem(
-                            value: t.typeRoomId,
-                            child: Text(t.typeRoom),
-                          ),
-                        )
+                        value: t.typeRoomId,
+                        child: Text(t.typeRoom),
+                      ),
+                    )
                         .toList(),
                     onChanged: (val) => setState(() => _typeRoomId = val),
                     validator: (val) => val == null ? 'Bắt buộc chọn' : null,
@@ -220,10 +220,10 @@ class _RoomFormScreenState extends ConsumerState<RoomFormScreen> {
                 onPressed: _isSubmitting ? null : _submit,
                 icon: _isSubmitting
                     ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
                     : const Icon(Icons.save_outlined),
                 label: Text(_isSubmitting ? 'Đang lưu...' : 'Lưu thông tin'),
               ),

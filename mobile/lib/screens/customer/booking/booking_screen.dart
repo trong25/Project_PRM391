@@ -20,6 +20,9 @@ class BookingScreen extends ConsumerStatefulWidget {
 
 class _BookingScreenState extends ConsumerState<BookingScreen> {
   final _voucherController = TextEditingController();
+  List<BookingModel> _busySlots = [];
+  bool _isLoadingBusySlots = true;
+  String? _busySlotsError;
 
   @override
   void initState() {
@@ -27,7 +30,46 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
     // Khởi tạo room vào provider
     Future.microtask(() {
       ref.read(bookingProvider.notifier).setRoom(widget.room);
+      _loadBusySlots();
     });
+  }
+
+  Future<void> _loadBusySlots() async {
+    try {
+      final slots = await ref.read(bookingServiceProvider).getBusySlots(widget.room.roomId);
+      if (mounted) {
+        setState(() {
+          _busySlots = slots;
+          _isLoadingBusySlots = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _busySlotsError = e.toString();
+          _isLoadingBusySlots = false;
+        });
+      }
+    }
+  }
+
+  String? _validateTimeOverlap(BookingState state) {
+    if (state.checkIn == null || state.checkOut == null) return null;
+    final newStart = state.checkIn!;
+    final newEnd = state.checkOut!;
+
+    for (final slot in _busySlots) {
+      final existStart = slot.checkIn;
+      final existEnd = slot.checkOut;
+      if (existEnd == null) continue;
+
+      if (newStart.isBefore(existEnd) && existStart.isBefore(newEnd)) {
+        final startStr = "${existStart.day.toString().padLeft(2, '0')}/${existStart.month.toString().padLeft(2, '0')}/${existStart.year} ${existStart.hour.toString().padLeft(2, '0')}:${existStart.minute.toString().padLeft(2, '0')}";
+        final endStr = "${existEnd.day.toString().padLeft(2, '0')}/${existEnd.month.toString().padLeft(2, '0')}/${existEnd.year} ${existEnd.hour.toString().padLeft(2, '0')}:${existEnd.minute.toString().padLeft(2, '0')}";
+        return 'Khoảng thời gian này đã có người đặt ($startStr - $endStr)';
+      }
+    }
+    return null;
   }
 
   @override
@@ -206,25 +248,64 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   Future<void> _submit(BuildContext context) async {
     final user = ref.read(authProvider).user;
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui lòng đăng nhập lại')),
-      );
+      _showErrorDialog(context, 'Vui lòng đăng nhập lại.');
+      return;
+    }
+    final isAvailable = widget.room.status?.toLowerCase() == 'trống' ||
+        widget.room.status?.toLowerCase() == 'available';
+    if (!isAvailable) {
+      _showErrorDialog(context, 'Phòng hiện tại không còn trống để đặt!');
       return;
     }
     final success =
         await ref.read(bookingProvider.notifier).submitBooking(user.userId);
     if (!mounted) return;
     if (success) {
-      _showSuccessDialog(context);
+      final bookingState = ref.read(bookingProvider);
+      final bookingId = bookingState.createdBookingId;
+      if (bookingId != null) {
+        context.go(
+          '/payment/$bookingId',
+          extra: {
+            'totalAmount': bookingState.totalPayment,
+            'roomId': widget.room.roomId ?? '',
+          },
+        );
+      } else {
+        _showSuccessDialog(context);
+      }
     } else {
       final error = ref.read(bookingProvider).error;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error ?? 'Đặt phòng thất bại!'),
-          backgroundColor: AppTheme.error,
-        ),
-      );
+      _showErrorDialog(context, error ?? 'Đặt phòng thất bại!');
     }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: const [
+            Icon(Icons.error_outline, color: Colors.red),
+            SizedBox(width: 8),
+            Text('Lỗi đặt phòng', style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+        content: Text(message, style: const TextStyle(fontSize: 14)),
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.primary,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            ),
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Đồng ý'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showSuccessDialog(BuildContext context) {
@@ -608,6 +689,8 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   // ── Time section ─────────────────────────────────────────────────────────────
   Widget _buildTimeSection(BuildContext context, BookingState state) {
     final isLocked = state.selectedCombo != BookingComboType.hourly;
+    final overlapError = _validateTimeOverlap(state);
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -639,6 +722,33 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               isError: true,
             ),
           ),
+          if (overlapError != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppTheme.error.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppTheme.error.withOpacity(0.3)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.error_outline, color: AppTheme.error, size: 16),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      overlapError,
+                      style: const TextStyle(
+                        color: AppTheme.error,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -891,6 +1001,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
 
   // ── Bottom bar ───────────────────────────────────────────────────────────────
   Widget _buildBottomBar(BuildContext context, BookingState state) {
+    final hasOverlap = _validateTimeOverlap(state) != null;
+    final isBtnDisabled = state.isLoading || hasOverlap;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 28),
       decoration: BoxDecoration(
@@ -928,14 +1041,16 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
           ),
           const SizedBox(width: 16),
           // Nút đặt phòng
+
           Expanded(
             child: SizedBox(
               height: 50,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: AppTheme.primaryGradient,
+                  gradient: isBtnDisabled ? null : AppTheme.primaryGradient,
+                  color: isBtnDisabled ? Colors.grey.shade300 : null,
                   borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
+                  boxShadow: isBtnDisabled ? null : [
                     BoxShadow(
                       color: AppTheme.primary.withOpacity(0.35),
                       blurRadius: 12,
@@ -944,7 +1059,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: state.isLoading
+                  onPressed: isBtnDisabled
                       ? null
                       : () => _submit(context),
                   style: ElevatedButton.styleFrom(
