@@ -38,7 +38,16 @@ class DiscountCodeModel {
   double calculateDiscount(double total) {
     if (quantity <= 0 || status.toLowerCase() != 'active') return 0.0;
     final now = DateTime.now();
-    if (now.isBefore(startDate) || now.isAfter(endDate)) return 0.0;
+    final endOfDay = DateTime(
+      endDate.year,
+      endDate.month,
+      endDate.day,
+      23,
+      59,
+      59,
+      999,
+    );
+    if (now.isBefore(startDate) || now.isAfter(endOfDay)) return 0.0;
 
     if (discountType.toUpperCase() == 'PERCENT') {
       return total * (discountValue / 100.0);

@@ -6,7 +6,8 @@ import '../services/discount_code_service.dart';
 
 final discountCodeServiceProvider = Provider<DiscountCodeService>((ref) => DiscountCodeService());
 
-final activeDiscountCodesProvider = FutureProvider<List<DiscountCodeModel>>((ref) async {
+final activeDiscountCodesProvider =
+    FutureProvider.autoDispose<List<DiscountCodeModel>>((ref) async {
   final service = ref.watch(discountCodeServiceProvider);
   return service.getActiveDiscountCodes();
 });

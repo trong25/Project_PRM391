@@ -39,7 +39,7 @@ class _AddVoucherScreenState extends State<AddVoucherScreen> {
 
     if (date != null) {
       setState(() {
-        startDate = date;
+        startDate = DateTime(date.year, date.month, date.day);
       });
     }
   }
@@ -54,7 +54,16 @@ class _AddVoucherScreenState extends State<AddVoucherScreen> {
 
     if (date != null) {
       setState(() {
-        endDate = date;
+        // A voucher remains usable for the whole selected end date.
+        endDate = DateTime(
+          date.year,
+          date.month,
+          date.day,
+          23,
+          59,
+          59,
+          999,
+        );
       });
     }
   }

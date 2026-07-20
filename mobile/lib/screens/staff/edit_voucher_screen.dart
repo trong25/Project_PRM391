@@ -68,7 +68,7 @@ class _EditVoucherScreenState extends State<EditVoucherScreen> {
 
     if (date != null) {
       setState(() {
-        startDate = date;
+        startDate = DateTime(date.year, date.month, date.day);
       });
     }
   }
@@ -83,7 +83,15 @@ class _EditVoucherScreenState extends State<EditVoucherScreen> {
 
     if (date != null) {
       setState(() {
-        endDate = date;
+        endDate = DateTime(
+          date.year,
+          date.month,
+          date.day,
+          23,
+          59,
+          59,
+          999,
+        );
       });
     }
   }

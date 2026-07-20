@@ -10,34 +10,6 @@ import '../services/booking_service.dart';
 final bookingServiceProvider =
     Provider<BookingService>((_) => BookingService());
 
-// ── Voucher tĩnh (Hardcoded) ───────────────────────────────────────────────────
-final availableVouchers = [
-  const VoucherModel(
-    code: 'GENZ10',
-    label: 'Giảm 10% (tối thiểu 200k)',
-    discountPercent: 10,
-    minOrderAmount: 200000,
-  ),
-  const VoucherModel(
-    code: 'CINEMA50',
-    label: 'Giảm 50.000đ (tối thiểu 150k)',
-    discountAmount: 50000,
-    minOrderAmount: 150000,
-  ),
-  const VoucherModel(
-    code: 'WEEKEND20',
-    label: 'Giảm 20% (tối thiểu 300k)',
-    discountPercent: 20,
-    minOrderAmount: 300000,
-  ),
-  const VoucherModel(
-    code: 'NEWUSER',
-    label: 'Giảm 100.000đ cho khách mới',
-    discountAmount: 100000,
-    minOrderAmount: 100000,
-  ),
-];
-
 // ── Combo types ────────────────────────────────────────────────────────────────
 enum BookingComboType {
   hourly,  // Theo giờ (linh hoạt)

@@ -8,6 +8,7 @@ import '../../../models/room_model.dart';
 import '../../../models/booking_model.dart';
 import '../../../providers/booking_provider.dart';
 import '../../../providers/auth_provider.dart';
+import '../../../providers/discount_code_provider.dart';
 
 class BookingScreen extends ConsumerStatefulWidget {
   final RoomModel room;
@@ -168,13 +169,53 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   }
 
   // ── Bottom sheet Voucher ─────────────────────────────────────────────────────
-  void _showVoucherSheet(BuildContext context, BookingState state) {
+  Future<void> _showVoucherSheet(BuildContext context, BookingState state) async {
     _voucherController.clear();
+    try {
+      // Staff may have created or updated a voucher since the previous open.
+      ref.invalidate(activeDiscountCodesProvider);
+      final discountCodes = await ref.read(activeDiscountCodesProvider.future);
+      if (!mounted) return;
+
+      final now = DateTime.now();
+      final vouchers = discountCodes
+          .where((discount) {
+            final endOfDay = DateTime(
+              discount.endDate.year,
+              discount.endDate.month,
+              discount.endDate.day,
+              23,
+              59,
+              59,
+              999,
+            );
+            return discount.status.toLowerCase() == 'active' &&
+                discount.quantity > 0 &&
+                !now.isBefore(discount.startDate) &&
+                !now.isAfter(endOfDay);
+          })
+          .map((discount) => VoucherModel(
+                code: discount.code,
+                label: discount.description?.trim().isNotEmpty == true
+                    ? discount.description!.trim()
+                    : discount.discountType.toUpperCase() == 'PERCENT'
+                        ? 'Giảm ${discount.discountValue.toStringAsFixed(0)}%'
+                        : 'Giảm ${discount.discountValue.toStringAsFixed(0)}đ',
+                discountPercent: discount.discountType.toUpperCase() == 'PERCENT'
+                    ? discount.discountValue
+                    : 0,
+                discountAmount: discount.discountType.toUpperCase() == 'PERCENT'
+                    ? null
+                    : discount.discountValue,
+              ))
+          .toList();
+      if (!context.mounted) return;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) => _VoucherSheet(
+        vouchers: vouchers,
         appliedVoucher: state.appliedVoucher,
         roomTotal: state.roomTotal,
         onApply: (voucher) {
@@ -187,6 +228,12 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         },
       ),
     );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Không thể tải danh sách voucher')),
+      );
+    }
   }
 
   // ── Dialog lời nhắn ─────────────────────────────────────────────────────────
@@ -1097,12 +1144,14 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
 
 // ── Voucher bottom sheet ──────────────────────────────────────────────────────
 class _VoucherSheet extends StatefulWidget {
+  final List<VoucherModel> vouchers;
   final VoucherModel? appliedVoucher;
   final double roomTotal;
   final void Function(VoucherModel) onApply;
   final VoidCallback onRemove;
 
   const _VoucherSheet({
+    required this.vouchers,
     required this.appliedVoucher,
     required this.roomTotal,
     required this.onApply,
@@ -1119,7 +1168,7 @@ class _VoucherSheetState extends State<_VoucherSheet> {
 
   void _tryManualCode() {
     final code = _ctrl.text.trim().toUpperCase();
-    final found = availableVouchers.firstWhere(
+    final found = widget.vouchers.firstWhere(
       (v) => v.code == code,
       orElse: () => const VoucherModel(code: '', label: ''),
     );
@@ -1229,7 +1278,14 @@ class _VoucherSheetState extends State<_VoucherSheet> {
             ),
             const SizedBox(height: 10),
             // Danh sách voucher
-            ...availableVouchers.map((v) {
+            if (widget.vouchers.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 24),
+                child: Center(
+                  child: Text('Hiện chưa có voucher khả dụng'),
+                ),
+              ),
+            ...widget.vouchers.map((v) {
               final isApplied = widget.appliedVoucher?.code == v.code;
               final canApply = widget.roomTotal >= v.minOrderAmount;
               return GestureDetector(
