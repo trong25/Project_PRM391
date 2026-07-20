@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="9e8d78ff-2ab6-45fc-8a03-09307559305e" name="Changes" comment="Upload images">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genZ/PRM391GenZ/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_dashboard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_palette.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/admin_palette.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/dashboard/admin_dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/dashboard/admin_dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/screens/admin/user/add_edit_user_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/screens/admin/user/add_edit_user_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/services/user_management_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/services/user_management_api.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +162,8 @@
       <workItem from="1783909622181" duration="882000" />
       <workItem from="1784124744084" duration="3080000" />
       <workItem from="1784364233911" duration="3333000" />
-      <workItem from="1784470697139" duration="295000" />
+      <workItem from="1784470697139" duration="1485000" />
+      <workItem from="1784527466550" duration="1079000" />
     </task>
     <task id="LOCAL-00001" summary="Login, Forget password">
       <option name="closed" value="true" />

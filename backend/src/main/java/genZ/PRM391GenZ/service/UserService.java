@@ -47,6 +47,10 @@ public class UserService {
 
     @Transactional
     public UserResponseDto createUser(UserCreateDto dto) {
+        if ("ADMIN".equalsIgnoreCase(dto.getRoleId())) {
+            throw new RuntimeException("Hệ thống không cho phép tạo thêm tài khoản giám đốc chi nhánh");
+        }
+
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("Email đã được sử dụng");
         }
@@ -87,6 +91,13 @@ public class UserService {
         user.setImageCccd(dto.getImageCccd());
 
         if (dto.getRoleId() != null) {
+            boolean assigningAdmin = "ADMIN".equalsIgnoreCase(dto.getRoleId());
+            boolean alreadyAdmin = user.getRole() != null
+                    && "ADMIN".equalsIgnoreCase(user.getRole().getRoleId());
+            if (assigningAdmin && !alreadyAdmin) {
+                throw new RuntimeException("Không được chuyển tài khoản thành giám đốc chi nhánh");
+            }
+
             Role role = roleRepository.findById(dto.getRoleId())
                 .orElseThrow(() -> new RuntimeException("Role không tồn tại"));
             user.setRole(role);

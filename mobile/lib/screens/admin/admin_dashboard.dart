@@ -188,9 +188,10 @@ class _RevenueSnapshotCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: AdminPalette.gradient1,
+        gradient: AdminPalette.revenueSurface,
         borderRadius: BorderRadius.circular(18),
-        boxShadow: const [BoxShadow(color: Color(0x2200D9DD), blurRadius: 18, offset: Offset(0, 8))],
+        border: Border.all(color: const Color(0xFFD8D0EE)),
+        boxShadow: const [BoxShadow(color: Color(0x1430204F), blurRadius: 14, offset: Offset(0, 6))],
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -203,12 +204,12 @@ class _RevenueSnapshotCard extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE6F7F2),
+                    color: const Color(0xFFE5E0F4),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.payments_outlined,
-                    color: Color(0xFF0F766E),
+                    color: AdminPalette.revenueText,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -249,7 +250,7 @@ class _RevenueSnapshotCard extends StatelessWidget {
               child: Text(
                 _formatCurrency(overview.total.month),
                 style: const TextStyle(
-                  color: Color(0xFF0F766E),
+                  color: AdminPalette.revenueText,
                   fontSize: 30,
                   fontWeight: FontWeight.w900,
                 ),

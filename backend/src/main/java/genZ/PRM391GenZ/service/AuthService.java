@@ -91,8 +91,9 @@ public class AuthService {
             throw new RuntimeException("Số điện thoại đã được sử dụng");
         }
 
-        Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new RuntimeException("Vai trò không tồn tại"));
+        // Đăng ký công khai luôn là khách hàng; không cho client tự cấp STAFF/ADMIN.
+        Role role = roleRepository.findById("CUSTOMER")
+                .orElseThrow(() -> new RuntimeException("Vai trò khách hàng không tồn tại"));
 
         User user = User.builder()
                 .userId(UUID.randomUUID().toString())

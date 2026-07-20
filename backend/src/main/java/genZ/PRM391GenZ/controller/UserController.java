@@ -42,13 +42,6 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Tạo người dùng thành công", userService.createUser(dto)));
     }
 
-    @PostMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<UserResponseDto>> createAdmin(@Valid @RequestBody UserCreateDto dto) {
-        dto.setRoleId("ADMIN");
-        return ResponseEntity.ok(ApiResponse.success("Tạo giám đốc thành công", userService.createUser(dto)));
-    }
-
     @PostMapping("/staff")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<UserResponseDto>> createStaff(@Valid @RequestBody UserCreateDto dto) {

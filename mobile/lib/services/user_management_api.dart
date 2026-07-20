@@ -25,15 +25,19 @@ class UserManagementApi {
     try {
       String path = '/users';
       if (type == 'STAFF') path = '/users/staff';
-      if (type == 'ADMIN') path = '/users/admin';
       
       final response = await _dio.post(path, data: data);
       if (response.data['success'] == true) {
         return UserManagementModel.fromJson(response.data['data']);
       }
       throw Exception(response.data['message']);
-    } catch (e) {
-      throw Exception('Failed to create user: $e');
+    } on DioException catch (e) {
+      final message = e.response?.data is Map
+          ? e.response?.data['message']?.toString()
+          : null;
+      throw Exception(message ?? 'Không thể tạo người dùng');
+    } catch (_) {
+      throw Exception('Không thể tạo người dùng');
     }
   }
 

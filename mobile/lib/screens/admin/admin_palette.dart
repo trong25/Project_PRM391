@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 abstract final class AdminPalette {
   static const background = Color(0xFFF8F6FF);
   static const navy = Color(0xFF140B2D);
+  static const revenueText = Color(0xFF30204F);
+
+  // Phiên bản dịu hơn dành cho các thẻ chứa nhiều số liệu và chữ.
+  static const revenueSurface = LinearGradient(
+    colors: [Color(0xFFF1FBF8), Color(0xFFF1F5FF)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   static const gradient1 = LinearGradient(
     colors: [Color(0xFF00D9DD), Color(0xFFD8FF77)],

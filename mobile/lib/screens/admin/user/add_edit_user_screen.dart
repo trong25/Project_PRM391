@@ -20,6 +20,7 @@ class _AddEditUserScreenState extends ConsumerState<AddEditUserScreen> {
   String _phone = '';
   String _password = '';
   String _roleId = 'STAFF';
+  bool _isSubmitting = false;
 
   @override
   void initState() {
@@ -33,10 +34,12 @@ class _AddEditUserScreenState extends ConsumerState<AddEditUserScreen> {
   }
 
   void _submit() async {
+    if (_isSubmitting) return;
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final api = ref.read(userApiProvider);
-      
+
+      setState(() => _isSubmitting = true);
       try {
         if (widget.user == null) {
           await api.createUser({
@@ -58,7 +61,11 @@ class _AddEditUserScreenState extends ConsumerState<AddEditUserScreen> {
         ref.invalidate(usersProvider);
         if (mounted) Navigator.pop(context);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Lỗi: $e')));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Lỗi: $e')));
+        }
+      } finally {
+        if (mounted) setState(() => _isSubmitting = false);
       }
     }
   }
@@ -99,17 +106,21 @@ class _AddEditUserScreenState extends ConsumerState<AddEditUserScreen> {
               DropdownButtonFormField<String>(
                 value: _roleId,
                 decoration: const InputDecoration(labelText: 'Vai trò'),
-                items: const [
-                  DropdownMenuItem(value: 'ADMIN', child: Text('Giám đốc chi nhánh')),
-                  DropdownMenuItem(value: 'STAFF', child: Text('Nhân viên')),
-                  DropdownMenuItem(value: 'CUSTOMER', child: Text('Khách hàng')),
+                items: [
+                  if (widget.user?.roleId == 'ADMIN')
+                    const DropdownMenuItem(
+                      value: 'ADMIN',
+                      child: Text('Giám đốc chi nhánh'),
+                    ),
+                  const DropdownMenuItem(value: 'STAFF', child: Text('Nhân viên')),
+                  const DropdownMenuItem(value: 'CUSTOMER', child: Text('Khách hàng')),
                 ],
                 onChanged: (val) => setState(() => _roleId = val!),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: _submit,
-                child: const Text('Lưu thông tin'),
+                onPressed: _isSubmitting ? null : _submit,
+                child: Text(_isSubmitting ? 'Đang lưu...' : 'Lưu thông tin'),
               )
             ],
           ),

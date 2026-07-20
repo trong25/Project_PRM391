@@ -242,8 +242,12 @@ class _RevenueTrendColumn extends StatelessWidget {
             height: barHeight,
             decoration: BoxDecoration(
               gradient: point.value == maxRevenue && maxRevenue > 0
-                  ? AdminPalette.gradient1
-                  : AdminPalette.gradient2,
+                  ? AdminPalette.gradient4
+                  : const LinearGradient(
+                      colors: [Color(0xFFBCA7E8), Color(0xFF829FDA)],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -384,9 +388,10 @@ class _TotalRevenueHero extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: AdminPalette.gradient1,
+        gradient: AdminPalette.revenueSurface,
         borderRadius: BorderRadius.circular(18),
-        boxShadow: const [BoxShadow(color: Color(0x2200D9DD), blurRadius: 18, offset: Offset(0, 8))],
+        border: Border.all(color: const Color(0xFFD8D0EE)),
+        boxShadow: const [BoxShadow(color: Color(0x1430204F), blurRadius: 14, offset: Offset(0, 6))],
       ),
       child: Padding(
         padding: const EdgeInsets.all(18),
@@ -399,12 +404,12 @@ class _TotalRevenueHero extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE6F7F2),
+                    color: const Color(0xFFE5E0F4),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.analytics_outlined,
-                    color: Color(0xFF0F766E),
+                    color: AdminPalette.revenueText,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -441,7 +446,7 @@ class _TotalRevenueHero extends StatelessWidget {
               child: Text(
                 _formatCurrency(revenue),
                 style: const TextStyle(
-                  color: Color(0xFF0F766E),
+                  color: AdminPalette.revenueText,
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
                 ),
