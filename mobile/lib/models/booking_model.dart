@@ -30,6 +30,10 @@ class VoucherModel {
   final double discountPercent; // 0 nếu discountAmount cố định
   final double? discountAmount; // tiền giảm cố định
   final double minOrderAmount; // tổng đơn tối thiểu
+  final String discountType;
+  final double discountValue;
+  final DateTime? endDate;
+  final int quantity;
 
   const VoucherModel({
     required this.code,
@@ -37,6 +41,10 @@ class VoucherModel {
     this.discountPercent = 0,
     this.discountAmount,
     this.minOrderAmount = 0,
+    this.discountType = 'PERCENT',
+    this.discountValue = 0,
+    this.endDate,
+    this.quantity = 0,
   });
 
   /// Tính số tiền giảm thực tế dựa trên tổng đơn

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import '../../../config/app_theme.dart';
 import '../../../models/room_model.dart';
 import '../../../models/booking_model.dart';
@@ -207,6 +208,10 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                 discountAmount: discount.discountType.toUpperCase() == 'PERCENT'
                     ? null
                     : discount.discountValue,
+                discountType: discount.discountType,
+                discountValue: discount.discountValue,
+                endDate: discount.endDate,
+                quantity: discount.quantity,
               ))
           .toList();
       if (!context.mounted) return;
@@ -1164,30 +1169,43 @@ class _VoucherSheet extends StatefulWidget {
 
 class _VoucherSheetState extends State<_VoucherSheet> {
   final _ctrl = TextEditingController();
+  String _selectedCode = '';
   String? _errorMsg;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCode = widget.appliedVoucher?.code ?? '';
+    _ctrl.text = _selectedCode;
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   void _tryManualCode() {
     final code = _ctrl.text.trim().toUpperCase();
     final found = widget.vouchers.firstWhere(
-      (v) => v.code == code,
+      (v) => v.code.toUpperCase() == code,
       orElse: () => const VoucherModel(code: '', label: ''),
     );
     if (found.code.isEmpty) {
       setState(() => _errorMsg = 'Mã voucher không hợp lệ');
       return;
     }
-    if (widget.roomTotal < found.minOrderAmount) {
-      setState(() => _errorMsg =
-          'Tổng đơn phải đạt tối thiểu ${(found.minOrderAmount / 1000).toInt()}k');
-      return;
-    }
-    widget.onApply(found);
+    setState(() {
+      _selectedCode = found.code;
+      _ctrl.text = found.code;
+      _errorMsg = null;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      initialChildSize: 0.75,
+      initialChildSize: 0.62,
       maxChildSize: 0.9,
       minChildSize: 0.5,
       builder: (_, scrollCtrl) => Container(
@@ -1211,14 +1229,24 @@ class _VoucherSheetState extends State<_VoucherSheet> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Chọn Voucher',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.textPrimary),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Chọn Genz Cinema Voucher',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             // Ô nhập mã thủ công
             Row(
               children: [
@@ -1227,19 +1255,17 @@ class _VoucherSheetState extends State<_VoucherSheet> {
                     controller: _ctrl,
                     textCapitalization: TextCapitalization.characters,
                     decoration: InputDecoration(
-                      hintText: 'Nhập mã voucher...',
-                      hintStyle: const TextStyle(fontSize: 13),
-                      errorText: _errorMsg,
+                      hintText: 'Nhập mã voucher (ví dụ: GENZ20)',
+                      hintStyle: const TextStyle(
+                          fontSize: 13, color: AppTheme.textGray),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 12),
+                          horizontal: 16, vertical: 12),
+                      filled: true,
+                      fillColor: const Color(0xFFF5F3FF),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(
-                              color: Color(0xFFE5E7EB))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(
-                              color: AppTheme.primary, width: 2)),
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                     onChanged: (_) =>
                         setState(() => _errorMsg = null),
@@ -1249,7 +1275,7 @@ class _VoucherSheetState extends State<_VoucherSheet> {
                 DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: AppTheme.primaryGradient,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: ElevatedButton(
                     onPressed: _tryManualCode,
@@ -1257,7 +1283,7 @@ class _VoucherSheetState extends State<_VoucherSheet> {
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                          borderRadius: BorderRadius.circular(8)),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
                     ),
@@ -1268,9 +1294,16 @@ class _VoucherSheetState extends State<_VoucherSheet> {
                 ),
               ],
             ),
+            if (_errorMsg != null) ...[
+              const SizedBox(height: 6),
+              Text(
+                _errorMsg!,
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ],
             const SizedBox(height: 20),
             const Text(
-              'Voucher khả dụng',
+              'Mã Giảm Giá Phù Hợp',
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -1286,92 +1319,202 @@ class _VoucherSheetState extends State<_VoucherSheet> {
                 ),
               ),
             ...widget.vouchers.map((v) {
-              final isApplied = widget.appliedVoucher?.code == v.code;
-              final canApply = widget.roomTotal >= v.minOrderAmount;
+              final isSelected =
+                  _selectedCode.toUpperCase() == v.code.toUpperCase();
               return GestureDetector(
-                onTap: canApply ? () => widget.onApply(v) : null,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                onTap: () {
+                  setState(() {
+                    _selectedCode = v.code;
+                    _ctrl.text = v.code;
+                    _errorMsg = null;
+                  });
+                },
+                child: Container(
                   margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: isApplied
-                        ? AppTheme.primary.withOpacity(0.07)
-                        : Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: isApplied
-                          ? AppTheme.primary
-                          : const Color(0xFFE5E7EB),
-                      width: isApplied ? 1.5 : 1,
-                    ),
-                  ),
                   child: Row(
                     children: [
                       Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          gradient: canApply
-                              ? AppTheme.primaryGradient
-                              : const LinearGradient(
-                                  colors: [Colors.grey, Colors.grey]),
-                          borderRadius: BorderRadius.circular(10),
+                        width: 90,
+                        height: 80,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xFFFF5722), Color(0xFFFF8A65)],
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            bottomLeft: Radius.circular(8),
+                          ),
                         ),
-                        child: const Icon(Icons.local_offer_rounded,
-                            color: Colors.white, size: 20),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Icon(
+                              v.discountType.toUpperCase() == 'PERCENT'
+                                  ? Icons.percent
+                                  : Icons.card_giftcard,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                            const SizedBox(height: 4),
                             Text(
-                              v.code,
-                              style: TextStyle(
+                              v.discountType.toUpperCase() == 'PERCENT'
+                                  ? '${v.discountValue.toStringAsFixed(0)}%'
+                                  : '${(v.discountValue / 1000).toStringAsFixed(0)}k',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: canApply
-                                    ? AppTheme.textPrimary
-                                    : Colors.grey,
                               ),
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              v.label,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: canApply
-                                      ? AppTheme.textGray
-                                      : Colors.grey.shade400),
-                            ),
-                            if (!canApply)
-                              Text(
-                                'Cần tối thiểu ${(v.minOrderAmount / 1000).toInt()}k',
-                                style: const TextStyle(
-                                    fontSize: 11, color: AppTheme.error),
-                              ),
                           ],
                         ),
                       ),
-                      if (isApplied)
-                        const Icon(Icons.check_circle_rounded,
-                            color: AppTheme.primary, size: 22),
+                      Expanded(
+                        child: Container(
+                          height: 80,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: isSelected
+                                  ? const Color(0xFFFF5722)
+                                  : const Color(0xFFF0EFFF),
+                              width: isSelected ? 1.5 : 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                v.code,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: AppTheme.textPrimary,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                v.label,
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: AppTheme.textGray,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    v.endDate == null
+                                        ? ''
+                                        : 'Hạn dùng: ${DateFormat('dd/MM/yyyy').format(v.endDate!)}',
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Còn lại: ${v.quantity}',
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: AppTheme.textGray,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Radio<String>(
+                        value: v.code,
+                        groupValue: _selectedCode,
+                        activeColor: AppTheme.primary,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedCode = value ?? '';
+                            _ctrl.text = value ?? '';
+                            _errorMsg = null;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
               );
             }),
-            if (widget.appliedVoucher != null) ...[
-              const SizedBox(height: 6),
-              TextButton.icon(
-                onPressed: widget.onRemove,
-                icon: const Icon(Icons.remove_circle_outline,
-                    color: AppTheme.error, size: 18),
-                label: const Text('Bỏ voucher đang áp dụng',
-                    style: TextStyle(color: AppTheme.error, fontSize: 13)),
-              ),
-            ],
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    onPressed: widget.onRemove,
+                    child: const Text(
+                      'Bỏ chọn',
+                      style: TextStyle(
+                        color: AppTheme.textGray,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.primary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_selectedCode.isEmpty) {
+                        setState(() =>
+                            _errorMsg = 'Vui lòng chọn mã voucher');
+                        return;
+                      }
+                      final selected = widget.vouchers.firstWhere(
+                        (v) =>
+                            v.code.toUpperCase() ==
+                            _selectedCode.toUpperCase(),
+                        orElse: () =>
+                            const VoucherModel(code: '', label: ''),
+                      );
+                      if (selected.code.isEmpty) {
+                        setState(() =>
+                            _errorMsg = 'Mã voucher không còn khả dụng');
+                        return;
+                      }
+                      widget.onApply(selected);
+                    },
+                    child: const Text(
+                      'Áp dụng',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
