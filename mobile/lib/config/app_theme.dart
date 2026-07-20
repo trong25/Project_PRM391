@@ -26,6 +26,9 @@ class AppTheme {
       brightness: Brightness.light,
     ),
     scaffoldBackgroundColor: surface,
+    snackBarTheme: const SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       foregroundColor: textPrimary,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,7 @@ class StaffBookingManagementScreen extends ConsumerStatefulWidget {
 class _StaffBookingManagementScreenState
     extends ConsumerState<StaffBookingManagementScreen> {
   String _searchText = '';
-  String _selectedFilter = 'Tất cả'; // Tất cả, Chờ nhận phòng, Đang ở, Đã trả phòng, Đã hủy
+  String _selectedFilter = 'Tất cả'; // Tất cả, Chờ nhận phòng, Đang thuê, Đã trả phòng, Đã hủy
 
   final List<String> _filters = [
     'Tất cả',
@@ -572,76 +573,24 @@ class _StaffBookingManagementScreenState
     final double discount = booking.discountAmount ?? 0;
     final double finalAmount = (basePrice - discount).clamp(0.0, double.infinity);
 
+    // Khách đã thanh toán trước qua app → kiểm tra marker trong note
+    // Dùng note thay vì status vì status có thể đã đổi sang "Đang ở" sau check-in
+    final bool isPrepaid = booking.note?.contains('[PREPAID_ONLINE]') == true;
+
     final confirm = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Center(
-          child: Text(
-            'HÓA ĐƠN THANH TOÁN',
-            style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.primaryDark, fontSize: 18),
-          ),
+      builder: (ctx) => ProviderScope(
+        parent: ProviderScope.containerOf(context),
+        child: _CheckoutInvoiceDialog(
+          booking: booking,
+          checkInStr: checkInStr,
+          checkOutStr: checkOutStr,
+          basePrice: basePrice,
+          discount: discount,
+          finalAmount: finalAmount,
+          isPrepaid: isPrepaid,
         ),
-        content: SizedBox(
-          width: 320,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Divider(thickness: 1.5),
-              const SizedBox(height: 8),
-              _buildInvoiceRow('Mã Đặt Phòng:', '#${booking.bookingId}'),
-              _buildInvoiceRow('Phòng:', booking.roomId),
-              _buildInvoiceRow('Mã Khách:', booking.userId),
-              _buildInvoiceRow('Loại hình:', booking.typeBookingId),
-              const SizedBox(height: 8),
-              const Divider(),
-              const SizedBox(height: 8),
-              _buildInvoiceRow('Nhận phòng:', checkInStr),
-              _buildInvoiceRow('Trả phòng:', checkOutStr),
-              const SizedBox(height: 8),
-              const Divider(),
-              const SizedBox(height: 8),
-              _buildInvoiceRow('Tiền phòng:', NumberFormat.currency(locale: 'vi_VN', symbol: 'đ').format(basePrice)),
-              if (discount > 0)
-                _buildInvoiceRow('Khuyến mãi (Voucher):', '- ${NumberFormat.currency(locale: 'vi_VN', symbol: 'đ').format(discount)}', valueColor: Colors.red),
-              const SizedBox(height: 12),
-              const Divider(thickness: 1.5),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'TỔNG CỘNG:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  Text(
-                    NumberFormat.currency(locale: 'vi_VN', symbol: 'đ').format(finalAmount),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: AppTheme.primaryDark,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Hủy'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF10B981),
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Xác nhận & Thanh toán'),
-          ),
-        ],
       ),
     );
 
@@ -3400,6 +3349,241 @@ class __ShopeeVoucherPickerBottomSheetState
           ),
         ],
       ),
+    );
+  }
+}
+
+class _CheckoutInvoiceDialog extends ConsumerStatefulWidget {
+  final BookingModel booking;
+  final String checkInStr;
+  final String checkOutStr;
+  final double basePrice;
+  final double discount;
+  final double finalAmount;
+  final bool isPrepaid; // true = khách đã thanh toán trước qua app
+
+  const _CheckoutInvoiceDialog({
+    required this.booking,
+    required this.checkInStr,
+    required this.checkOutStr,
+    required this.basePrice,
+    required this.discount,
+    required this.finalAmount,
+    this.isPrepaid = false,
+  });
+
+  @override
+  ConsumerState<_CheckoutInvoiceDialog> createState() => _CheckoutInvoiceDialogState();
+}
+
+class _CheckoutInvoiceDialogState extends ConsumerState<_CheckoutInvoiceDialog> {
+  bool _isPaid = false;
+  bool _isDisposed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startPolling();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  void _startPolling() async {
+    // Polling ngầm tuần tự không chồng chéo luồng kết nối
+    while (!_isDisposed && !_isPaid) {
+      try {
+        final latest = await ref.read(bookingServiceProvider).getBookingById(widget.booking.bookingId!);
+        debugPrint('PRM391_POLLING: Booking #${widget.booking.bookingId} status from server: "${latest.status}"');
+        if (latest.status != null && latest.status!.toLowerCase() == 'đã thanh toán') {
+          if (_isDisposed) return;
+          setState(() {
+            _isPaid = true;
+          });
+          // Chờ 1.5 giây để nhân viên thấy màn hình thông báo rồi đóng
+          await Future.delayed(const Duration(milliseconds: 1500));
+          if (mounted && !_isDisposed) {
+            Navigator.pop(context, true);
+          }
+          break;
+        }
+      } catch (e) {
+        debugPrint('PRM391_POLLING_ERROR: Lỗi quét trạng thái: $e');
+      }
+      await Future.delayed(const Duration(seconds: 4));
+    }
+  }
+
+  Widget _buildInvoiceRow(String label, String value, {Color? valueColor}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(color: AppTheme.textGray, fontSize: 13)),
+          Text(value, style: TextStyle(fontWeight: FontWeight.w600, color: valueColor ?? AppTheme.textPrimary, fontSize: 13)),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isPaid) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 12),
+            const Icon(Icons.check_circle_rounded, color: AppTheme.success, size: 64),
+            const SizedBox(height: 16),
+            const Text(
+              'THANH TOÁN THÀNH CÔNG!',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppTheme.success),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Đơn đặt phòng #${widget.booking.bookingId} đã nhận được tiền từ hệ thống chuyển khoản ngân hàng.',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 13, color: AppTheme.textPrimary),
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
+      );
+    }
+
+    final fmt = NumberFormat.currency(locale: 'vi_VN', symbol: 'đ');
+
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Center(
+        child: Text(
+          widget.isPrepaid ? 'XÁC NHẬN TRẢ PHÒNG' : 'HÓA ĐƠN THANH TOÁN',
+          style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.primaryDark, fontSize: 18),
+        ),
+      ),
+      content: SizedBox(
+        width: 320,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Divider(thickness: 1.5),
+              const SizedBox(height: 8),
+              _buildInvoiceRow('Mã Đặt Phòng:', '#${widget.booking.bookingId}'),
+              _buildInvoiceRow('Phòng:', widget.booking.roomId),
+              _buildInvoiceRow('Mã Khách:', widget.booking.userId),
+              _buildInvoiceRow('Loại hình:', widget.booking.typeBookingId),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              _buildInvoiceRow('Nhận phòng:', widget.checkInStr),
+              _buildInvoiceRow('Trả phòng:', widget.checkOutStr),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              _buildInvoiceRow('Tiền phòng:', fmt.format(widget.basePrice)),
+              if (widget.discount > 0)
+                _buildInvoiceRow('Khuyến mãi (Voucher):', '- ${fmt.format(widget.discount)}', valueColor: Colors.red),
+              const SizedBox(height: 12),
+              const Divider(thickness: 1.5),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('TỔNG CỘNG:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  Text(
+                    fmt.format(widget.finalAmount),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppTheme.primaryDark),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // ── Đã thanh toán trước qua app ──────────────────────────────
+              if (widget.isPrepaid) ...
+                [
+                  const Divider(),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFECFDF5),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppTheme.success.withOpacity(0.4)),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.check_circle_rounded, color: AppTheme.success, size: 22),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            'Khách đã thanh toán trước qua ứng dụng.\nKhông cần thu tiền thêm.',
+                            style: TextStyle(color: AppTheme.success, fontWeight: FontWeight.w600, fontSize: 13),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+
+              // ── Chưa thanh toán → hiện QR ─────────────────────────────
+              if (!widget.isPrepaid) ...
+                [
+                  const Divider(),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'QUÉT MÃ QR ĐỂ THANH TOÁN',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xFFEDE7FF)),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: Image.network(
+                      'https://img.vietqr.io/image/TPB-00001041606-print.png?amount=${widget.finalAmount.toInt()}&addInfo=GENZ%20${widget.booking.bookingId}',
+                      width: 160,
+                      height: 160,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => const Center(
+                        child: Text('Không thể tải mã QR thanh toán', style: TextStyle(fontSize: 12, color: Colors.red)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Cú pháp CK: GENZ ${widget.booking.bookingId}',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppTheme.primary),
+                  ),
+                ],
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: const Text('Hủy'),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF10B981),
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () => Navigator.pop(context, true),
+          child: Text(widget.isPrepaid ? 'Xác nhận trả phòng' : 'Xác nhận nhận tiền mặt'),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,6 @@
 // lib/providers/booking_provider.dart
 
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
@@ -81,6 +82,7 @@ class BookingState {
   final bool isLoading;
   final String? error;
   final bool isSuccess;
+  final int? createdBookingId;   // ID đặt phòng vừa tạo (dùng cho màn hình thanh toán)
 
   const BookingState({
     this.room,
@@ -93,6 +95,7 @@ class BookingState {
     this.isLoading = false,
     this.error,
     this.isSuccess = false,
+    this.createdBookingId,
   });
 
   /// Tổng tiền phòng (trước giảm giá voucher)
@@ -147,6 +150,7 @@ class BookingState {
     bool? isLoading,
     String? error,
     bool? isSuccess,
+    int? createdBookingId,
     bool clearVoucher = false,
     bool clearError = false,
     bool clearCheckOut = false,
@@ -163,6 +167,7 @@ class BookingState {
         isLoading: isLoading ?? this.isLoading,
         error: clearError ? null : (error ?? this.error),
         isSuccess: isSuccess ?? this.isSuccess,
+        createdBookingId: createdBookingId ?? this.createdBookingId,
       );
 }
 
@@ -283,13 +288,24 @@ class BookingNotifier extends StateNotifier<BookingState> {
             : null,
         note: state.note.isNotEmpty ? state.note : null,
       );
-      await _service.createBooking(booking);
-      state = state.copyWith(isLoading: false, isSuccess: true);
+      final created = await _service.createBooking(booking);
+      state = state.copyWith(
+        isLoading: false,
+        isSuccess: true,
+        createdBookingId: created.bookingId,
+      );
       return true;
     } catch (e) {
+      String errMsg = 'Đặt phòng thất bại. Vui lòng thử lại!';
+      if (e is DioException && e.response?.data != null) {
+        final resData = e.response!.data;
+        if (resData is Map && resData['message'] != null) {
+          errMsg = resData['message'].toString();
+        }
+      }
       state = state.copyWith(
           isLoading: false,
-          error: 'Đặt phòng thất bại. Vui lòng thử lại!');
+          error: errMsg);
       return false;
     }
   }

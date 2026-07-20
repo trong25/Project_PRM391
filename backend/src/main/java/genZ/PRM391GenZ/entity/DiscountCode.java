@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "DiscountCode")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,13 +25,13 @@ public class DiscountCode {
     @Column(name = "Code", unique = true, nullable = false, length = 50)
     private String code;
 
-    @Column(name = "Description", columnDefinition = "NVARCHAR(255)")
+    @Column(name = "Description", length = 255)
     private String description;
 
     @Column(name = "DiscountType", nullable = false, length = 20)
-    private String discountType; // PERCENT or AMOUNT
+    private String discountType;
 
-    @Column(name = "DiscountValue", nullable = false)
+    @Column(name = "DiscountValue", nullable = false, precision = 18, scale = 2)
     private BigDecimal discountValue;
 
     @Column(name = "StartDate", nullable = false)
@@ -42,6 +43,6 @@ public class DiscountCode {
     @Column(name = "Quantity")
     private Integer quantity;
 
-    @Column(name = "Status", columnDefinition = "NVARCHAR(50)")
-    private String status; // Active, Expired, Disable
+    @Column(name = "Status", length = 50)
+    private String status;
 }

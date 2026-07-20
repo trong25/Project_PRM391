@@ -97,6 +97,7 @@ CREATE TABLE PasswordResetToken (
     FOREIGN KEY (UserId) REFERENCES [User](UserId)
 );
 
+
 --Bảng quản lý phiên chat
 CREATE TABLE Conversation (
     ConversationId VARCHAR(50) PRIMARY KEY,
@@ -112,6 +113,7 @@ CREATE TABLE Conversation (
 );
 
 -- Bảng CSKH (ChatMessage)
+
 
 CREATE TABLE [dbo].[ChatMessage] (
     [id]              BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,

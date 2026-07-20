@@ -39,7 +39,8 @@ public class SecurityConfig {
                                 "/auth/request-reset",
                                 "/auth/verify-token",
                                 "/auth/reset-password",
-                                "/auth/logout"
+                                "/auth/logout",
+                                "/webhook/sepay"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/rooms",
